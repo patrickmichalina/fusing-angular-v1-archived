@@ -39,6 +39,15 @@ Provides an extremely fast seed project for the development of Angular Universal
 
 Built by [AngularUniversal.com](https://www.angularuniversal.com). For additional help please checkout our [services](https://www.angularuniversal.com/services)
 
+# Table of Contents
+* [Testing](#quick-start)
+* [Testing](#testing)
+* [@Types](#types)
+* [Environment Variables](#environment-variables)
+* [File Structure](#file-structure)
+* [Change Log](#change-log)
+* [License](#license)
+
 # Quick Start
 
 **Note that we strongly recommend node >= v7.0.0 and npm >= 4.0.0.**
@@ -80,20 +89,6 @@ $ npm run start.prod.aot
 
 ```
 
-# Table of Contents
-* [Testing](#testing)
-* [Configuration](#configuration)
-* [Environment Variables](#environment-variables)
-* [@Types](#types)
-* [File Structure](#file-structure)
-* [Change Log](#change-log)
-* [License](#license)
-
-# Bundling
-Checkout how blazing fast bundling can be using FuseBox!
-
-![fuse-box](https://thumbs.gfycat.com/WarmheartedUnfinishedHind-small.gif)
-
 # Testing
 ```bash
 # single test run
@@ -110,13 +105,6 @@ $ npm run test.e2e.ci
 
 # continuous e2e testing
 $ npm run test.e2e.watch
-```
-
-![jest](https://thumbs.gfycat.com/CooperativeMammothEland-small.gif)
-
-# Configuration
-```shell
-Coming Soon
 ```
 
 # @Types
