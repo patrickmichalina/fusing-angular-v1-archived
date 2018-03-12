@@ -51,7 +51,7 @@ export const BUILD_CONFIG: BuildConfiguration = {
     {
       inHead: true,
       element: 'script',
-      content: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create', '${process.env.GA_TRACKING_ID}', 'auto');`,
+      content: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create', '${process.env.GOOGLE_ANALYTICS_TRACKING_ID}', 'auto');`,
       shouldExecute: (dep: Dependency) => process.env.GOOGLE_ANALYTICS_TRACKING_ID && process.env.GOOGLE_ANALYTICS_ENABLED,
       attributes: {
         async: true
