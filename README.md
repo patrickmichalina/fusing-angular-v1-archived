@@ -10,30 +10,30 @@
 
 # Features
 Provides an extremely fast seed project for the development of Angular Universal (isomorphic) projects.
-- [x] [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework
-- [x] [FuseBox](http://fuse-box.org) as the TypeScript/JavaScript bundler
-- [x] [Jest](https://facebook.github.io/jest) for unit and component testing
-- [x] [Nightmare](https://github.com/segmentio/nightmare) for UI testing
-- [x] [Sparky](http://fuse-box.org/page/sparky) as the task runner
-- [x] Fully typed build tools using [TypeScript](https://www.typescriptlang.org)
-- [x] Manage your type definitions using [@types](https://www.npmjs.com/~types)
-- [x] Simple [Heroku](https://www.heroku.com) Deployment
-- [x] [SCSS](http://sass-lang.com) support for professional grade CSS management
-- [x] [Brotli compression](https://github.com/google/brotli) with [gzip](http://www.gzip.org) fallback
-- [x] [CircleCI](https://circleci.com) unit testing support 
-- [x] Full favicon icon generation for multiple devices derived from a single seed image
-- [x] SEO support for Title and Meta tags
-- [x] OG (Open Graph) tags for social sharing
-- [x] Simple Ad-Blocker detection service
-- [x] Vendor-agnostic analytics using [angulartics2](https://github.com/angulartics/angulartics2)
-- [x] Generic token based Authentication service with [JWT](https://jwt.io) cookie support.
-- [x] [Ahead-of-Time](https://angular.io/guide/aot-compiler) (AOT) compilation support
-- [x] [angular-tslint-rules](https://github.com/fulls1z3/angular-tslint-rules) as configuration preset for [TSLint](https://github.com/palantir/tslint) and [codelyzer](https://github.com/mgechev/codelyzer).
-- [x] Automatic static file cache invalidation
-- [x] [Lazy Loaded](https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html) modules
-- [x] Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
-- [x] Support for [Angular Mobile Toolkit](https://mobile.angular.io) (Service Worker)
-- [x] [Tree-Shaking](https://angular.io/guide/aot-compiler) for production builds
+- [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework
+- [FuseBox](http://fuse-box.org) as the TypeScript/JavaScript bundler
+- [Jest](https://facebook.github.io/jest) for unit and component testing
+- [Nightmare](https://github.com/segmentio/nightmare) for UI testing
+- [Sparky](http://fuse-box.org/page/sparky) as the task runner
+- Fully typed build tools using [TypeScript](https://www.typescriptlang.org)
+- Manage your type definitions using [@types](https://www.npmjs.com/~types)
+- Simple [Heroku](https://www.heroku.com) Deployment
+- [SCSS](http://sass-lang.com) support for professional grade CSS management
+- [Brotli compression](https://github.com/google/brotli) with [gzip](http://www.gzip.org) fallback
+- [CircleCI](https://circleci.com) unit testing support 
+- Full favicon icon generation for multiple devices derived from a single seed image
+- SEO support for Title and Meta tags
+- OG (Open Graph) tags for social sharing
+- Simple Ad-Blocker detection service
+- Vendor-agnostic analytics using [angulartics2](https://github.com/angulartics/angulartics2)
+- Generic token based Authentication service with [JWT](https://jwt.io) cookie support.
+- [Ahead-of-Time](https://angular.io/guide/aot-compiler) (AOT) compilation support
+- [angular-tslint-rules](https://github.com/fulls1z3/angular-tslint-rules) as configuration preset for [TSLint](https://github.com/palantir/tslint) and [codelyzer](https://github.com/mgechev/codelyzer).
+- Automatic static file cache invalidation
+- [Lazy Loaded](https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html) modules
+- Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
+- Support for [Angular Mobile Toolkit](https://mobile.angular.io) (Service Worker)
+- [Tree-Shaking](https://angular.io/guide/aot-compiler) for production builds
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
