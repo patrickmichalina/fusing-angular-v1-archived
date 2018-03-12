@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFoundComponent should compile 1`] = `
+<test-component>
+  <pm-not-found>
+    NOT FOUND
+  </pm-not-found>
+</test-component>
+`;

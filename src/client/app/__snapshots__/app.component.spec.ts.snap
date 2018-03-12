@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component should build without a problem 1`] = `
+<div
+  id="root0"
+  ng-version="6.0.0-beta.7"
+>
+  <pm-app>
+    <pm-navbar>
+      <nav
+        class="mat-elevation-z6"
+      >
+        <ul>
+          <li>
+            <a
+              routerlink=""
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              routerlink="about"
+            >
+              About
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </pm-navbar>
+    <router-outlet />
+  </pm-app>
+</div>
+`;

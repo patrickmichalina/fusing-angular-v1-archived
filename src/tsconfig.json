@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "noImplicitAny": true,
+    "noImplicitUseStrict": false,
+    "strictNullChecks": true,
+    "noEmitHelpers": false,
+    "noLib": false,
+    "noUnusedLocals": true,
+    "outDir": "dist/",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "lib": ["es6", "dom"],
+    "skipLibCheck": true
+  },
+  "include": [
+    "./**/**.ts",
+    "../tools/manual-typings/**/**.ts"
+  ],
+  "exclude": [
+    "client/main.aot-prod.ts",
+    "client/main.aot.ts"
+  ]
+}

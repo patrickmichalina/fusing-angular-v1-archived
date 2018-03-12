@@ -1,0 +1,72 @@
+import { SharedModule } from './shared/shared.module'
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { APP_BASE_HREF } from '@angular/common'
+import { Route } from '@angular/router'
+import { RouterTestingModule } from '@angular/router/testing'
+import { Component } from '@angular/core'
+import { HomeComponent } from './home/home.component'
+import { AppModule } from './app.module'
+import { AppBrowserModule } from './app.browser.module'
+import { EnvConfig } from '../../../tools/config/app.config'
+import { ENV_CONFIG } from './app.config'
+import { EnvironmentService } from './shared/services/environment.service'
+import { Angulartics2Module } from 'angulartics2'
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { NavbarService } from './shared/navbar/navbar.service'
+import '../operators'
+
+export const TESTING_CONFIG: EnvConfig = {
+  // tslint:disable-next-line:max-line-length
+  endpoints: {
+    api: 'http://localhost:8000/api',
+    websocketServer: 'ws://localhost:8001'
+  }
+}
+
+@Component({
+  selector: 'test-cmp',
+  template: '<pm-app></pm-app>'
+})
+class TestComponent { }
+
+describe('App component', () => {
+  const config: Array<Route> = [
+    { path: '', component: HomeComponent }
+  ]
+
+  let fixture: ComponentFixture<TestComponent>
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        AppModule,
+        AppBrowserModule,
+        SharedModule,
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes(config),
+        Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
+      ],
+      declarations: [TestComponent, HomeComponent],
+      providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
+        { provide: ENV_CONFIG, useValue: TESTING_CONFIG },
+        EnvironmentService,
+        NavbarService
+      ]
+    }).compileComponents()
+  }))
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestComponent)
+  }))
+
+  afterEach(async(() => {
+    TestBed.resetTestingModule()
+  }))
+
+  it('should build without a problem', async(() => {
+    expect(fixture.nativeElement).toBeTruthy()
+    expect(fixture.nativeElement).toMatchSnapshot()
+  }))
+})
