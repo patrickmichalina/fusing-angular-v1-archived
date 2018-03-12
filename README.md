@@ -10,10 +10,7 @@
 
 Provides an extremely fast seed project for the development of Angular Universal (isomorphic) projects. Check out the [live app](https://angular.patrickmichalina.com)
 
-# Project Goals
-This starter project is designed to get a basic application up and running with basic implementations of core features most applications need. It uses [Firebase](https://firebase.google.com) for the authentication and the database layers.
-
-Note: Firebase doesn't have official support for Angular Universal at this time. However, we have implemented some of the basic features to render and transfer server state to the browser. Once an official support is released, we will use that.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 # Features
 - [x] [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework

@@ -2,7 +2,7 @@ machine:
   node:
     version: 9.8.0
   npm:
-    version: 5.6.0
+    version:  5.7.1
 
 general:
   artifacts:

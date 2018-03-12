@@ -1,34 +1,17 @@
 {
   "name": "fusing-angular",
+  "description": "Angular Universal seed project featuring Server-Side Rendering, @fuse-box bundling, Jest, Nightmare, and more",
+  "repository": "https://github.com/patrickmichalina/aero-typescript-starter",
+  "logo": "https://raw.githubusercontent.com/patrickmichalina/aero-typescript-starter/master/docs/aero.png",
+  "keywords": ["node", "angular4", "high performance", "universal", "typescript", "ssr", "angular5", "angular6"],
   "env": {
-    "CI": {
-      "required": true
-    },
-    "HOST": {
-      "required": true
-    },
-    "HEROKU": {
-      "required": true
-    },
     "NODE_MODULES_CACHE": {
       "required": true
     },
     "NPM_CONFIG_PRODUCTION": {
-      "required": true
+      "required": false
     },
     "HEROKU_APP_NAME": {
-      "required": true
-    },
-    "HEROKU_PARENT_APP_NAME": {
-      "required": true
-    },
-    "FB_SERVICE_ACCOUNT_PRIVATE_KEY": {
-      "required": true
-    },
-    "FB_SERVICE_ACCOUNT_PRIVATE_KEY_ID": {
-      "required": true
-    },
-    "FB_AUTH_KEY": {
       "required": true
     }
   }

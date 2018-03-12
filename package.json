@@ -165,7 +165,7 @@
   },
   "engines": {
     "node": ">= 9.8.0",
-    "npm": ">= 5.6.0"
+    "npm": ">=  5.7.1"
   },
   "release": {
     "branch": "master",
