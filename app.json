@@ -5,16 +5,16 @@
   "logo": "https://raw.githubusercontent.com/patrickmichalina/fusing-angular/master/docs/angular.png",
   "keywords": ["node", "angular4", "angular5", "angular6" , "high performance", "universal", "typescript", "ssr"],
   "env": {
+    "HEROKU_APP_NAME": {
+      "description": "Your application's name.",
+      "required": true
+    },
     "NODE_MODULES_CACHE": {
       "description": "Set to true if you wish for Heroku to cache the NPM modules.",
       "required": true
     },
     "NPM_CONFIG_PRODUCTION": {
       "description": "This value must be false if you are using heroku to build AND deploy. Build will fail becuase devDependencies will not be downloaded unless this is set to false.",
-      "required": true
-    },
-    "HEROKU_APP_NAME": {
-      "description": "Your application's name.",
       "required": true
     }
   }
