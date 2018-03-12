@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs/Observable'
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 
 @Component({
   selector: 'pm-app',
@@ -9,11 +8,5 @@ import { Observable } from 'rxjs/Observable'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor(http: HttpClient) {
-    http
-      .get('https://jsonplaceholder.typicode.com/posts/1')
-      .take(1)
-      .catch(err => Observable.of(1))
-      .subscribe()
-  }
+  constructor(public analytics: Angulartics2GoogleAnalytics) { }
 }
