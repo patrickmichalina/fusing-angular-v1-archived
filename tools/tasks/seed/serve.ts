@@ -7,7 +7,6 @@ Sparky.task(taskName(__filename), [
   'config',
   'index.copy',
   'fonts',
-  'changelog',
   'web',
   'assets',
   'sass',

@@ -1,17 +1,20 @@
 {
   "name": "fusing-angular",
   "description": "Angular Universal seed project featuring Server-Side Rendering, @fuse-box bundling, Jest, Nightmare, and more",
-  "repository": "https://github.com/patrickmichalina/aero-typescript-starter",
-  "logo": "https://raw.githubusercontent.com/patrickmichalina/aero-typescript-starter/master/docs/aero.png",
-  "keywords": ["node", "angular4", "high performance", "universal", "typescript", "ssr", "angular5", "angular6"],
+  "repository": "https://github.com/patrickmichalina/fusing-angular",
+  "logo": "https://raw.githubusercontent.com/patrickmichalina/fusing-angular/master/docs/angular.png",
+  "keywords": ["node", "angular4", "angular5", "angular6" , "high performance", "universal", "typescript", "ssr"],
   "env": {
     "NODE_MODULES_CACHE": {
+      "description": "Set to true if you wish for Heroku to cache the NPM modules.",
       "required": true
     },
     "NPM_CONFIG_PRODUCTION": {
-      "required": false
+      "description": "This value must be false if you are using heroku to build AND deploy. Build will fail becuase devDependencies will not be downloaded unless this is set to false.",
+      "required": true
     },
     "HEROKU_APP_NAME": {
+      "description": "Your application's name.",
       "required": true
     }
   }
