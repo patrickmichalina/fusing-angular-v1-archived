@@ -7,9 +7,7 @@ exports[`App component should build without a problem 1`] = `
 >
   <pm-app>
     <pm-navbar>
-      <nav
-        class="mat-elevation-z6"
-      >
+      <nav>
         <ul>
           <li>
             <a

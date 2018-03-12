@@ -1,13 +1,14 @@
 import { async, TestBed } from '@angular/core/testing'
 import { INavbarService, NavbarService } from './navbar.service'
 import { Observable } from 'rxjs/Observable'
-import '../../../operators'
+import { AppTestingModule } from '../../../../testing/app-testing.module'
 
 describe(NavbarService.name, () => {
   let service: INavbarService
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [AppTestingModule],
       providers: [NavbarService]
     })
   }))

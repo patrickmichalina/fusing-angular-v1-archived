@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, Output } from '@angular/core'
-import { NavbarService } from './navbar.service'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 
 export interface User {
   readonly photoURL: string
@@ -14,16 +13,4 @@ export interface User {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
-  @HostListener('click', ['$event.target']) click() {
-    this.clicked.next()
-  }
-  @Output() menuIconClick = new EventEmitter()
-  @Output() clicked = new EventEmitter()
-  @Input() user: User
-
-  constructor(public navbarService: NavbarService) { }
-
-  trackByFn(index: number, item: any) {
-    return item.route
-  }
 }

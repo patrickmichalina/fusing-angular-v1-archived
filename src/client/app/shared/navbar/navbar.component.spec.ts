@@ -3,7 +3,6 @@ import { NavbarComponent } from './navbar.component'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { NavbarService } from './navbar.service'
 import { Component } from '@angular/core'
-import '../../../operators'
 
 describe(NavbarComponent.name, () => {
   let fixture: ComponentFixture<NavbarComponent>
