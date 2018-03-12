@@ -5,6 +5,17 @@ import { OVERRIDES } from './build.ci.replace'
 
 export const BUILD_CONFIG: BuildConfiguration = {
   baseHref: '/',
+  outputDir: 'dist',
+  sourceDir: 'src',
+  clientDir: 'src/client',
+  clientAssetsDir: 'src/client/assets',
+  prodOutDir: './dist/prod',
+  assetParentDir: 'src/client',
+  toolsDir: './tools',
+  minifyIndex: true,
+  browserSyncPort: 8000,
+  host: 'http://localhost',
+  port: 8001,
   favicon: {
     src: './tools/sources/favicon.png',
     config: {
@@ -18,17 +29,6 @@ export const BUILD_CONFIG: BuildConfiguration = {
       lang: 'en'
     }
   },
-  outputDir: 'dist',
-  sourceDir: 'src',
-  clientDir: 'src/client',
-  clientAssetsDir: 'src/client/assets',
-  prodOutDir: './dist/prod',
-  assetParentDir: 'src/client',
-  toolsDir: './tools',
-  minifyIndex: true,
-  browserSyncPort: 8000,
-  host: 'http://localhost',
-  port: 8001,
   dependencies: [
     {
       order: 1,
@@ -74,9 +74,7 @@ export const typeHelper = (sync = true, throwOnTsLint = true) => {
     name: 'App typechecker',
     throwOnTsLint
   })
-  if (sync) {
-    _runner.runSync()
-  } else {
-    _runner.runAsync()
-  }
+  sync
+    ? _runner.runSync()
+    : _runner.runAsync()
 }

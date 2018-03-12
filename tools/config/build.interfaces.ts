@@ -3,6 +3,17 @@ import { Dependency } from '../plugins/web-index'
 export interface BuildConfiguration {
   dependencies: Dependency[]
   baseHref: string
+  outputDir: string
+  clientAssetsDir: string
+  sourceDir: string
+  clientDir: string
+  prodOutDir: string
+  assetParentDir: string
+  minifyIndex: boolean
+  toolsDir: string
+  browserSyncPort: number
+  host: string
+  port: number,
   favicon: {
     src: string,
     config: {
@@ -15,16 +26,5 @@ export interface BuildConfiguration {
       start_url: string,
       lang: string
     }
-  },
-  outputDir: string
-  clientAssetsDir: string
-  sourceDir: string
-  clientDir: string
-  prodOutDir: string
-  assetParentDir: string
-  minifyIndex: boolean
-  toolsDir: string
-  browserSyncPort: number
-  host: string
-  port: number
+  }
 }

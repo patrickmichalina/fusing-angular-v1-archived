@@ -16,6 +16,18 @@
     "NPM_CONFIG_PRODUCTION": {
       "description": "This value must be false if you are using heroku to build AND deploy. Build will fail becuase devDependencies will not be downloaded unless this is set to false.",
       "required": true
+    },
+    "GA_ENABLED": {
+      "description": "Set to true to enable Google Analytics.",
+      "required": false
+    },
+    "GA_TRACKING_ID": {
+      "description": "Google Analytics tracking ID (ex: UA-18280491-A)",
+      "required": false
+    },
+    "GOOGLE_VERIFICATION_CODE": {
+      "description": "Google search console verification code (ex: RW-hcjXEgPMoy2NF8dTl8IEzP8gnj3cEZ6aF1HDUiOz)",
+      "required": false
     }
   }
 }
