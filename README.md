@@ -9,7 +9,7 @@
 [![Fusebox-bundler](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg)](https://gitter.im/fusing-angular/Lobby)
 
 # Features
-Provides an extremely fast seed project for the development of Angular Universal (isomorphic) projects. Check out the [live app](https://angular.patrickmichalina.com)
+Provides an extremely fast seed project for the development of Angular Universal (isomorphic) projects.
 - [x] [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework
 - [x] [FuseBox](http://fuse-box.org) as the TypeScript/JavaScript bundler
 - [x] [Jest](https://facebook.github.io/jest) for unit and component testing
@@ -40,7 +40,7 @@ Provides an extremely fast seed project for the development of Angular Universal
 Built by [AngularUniversal.com](https://www.angularuniversal.com). For additional help please checkout our [services](https://www.angularuniversal.com/services)
 
 # Table of Contents
-* [Testing](#quick-start)
+* [Quick Start](#quick-start)
 * [Testing](#testing)
 * [@Types](#types)
 * [Environment Variables](#environment-variables)
