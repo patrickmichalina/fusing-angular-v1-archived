@@ -42,6 +42,7 @@ Built by [AngularUniversal.com](https://www.angularuniversal.com). For additiona
 # Table of Contents
 * [Quick Start](#quick-start)
 * [Testing](#testing)
+* [Favicons](#favicons)
 * [@Types](#types)
 * [Environment Variables](#environment-variables)
 * [File Structure](#file-structure)
@@ -105,6 +106,16 @@ $ npm run test.e2e.ci
 
 # continuous e2e testing
 $ npm run test.e2e.watch
+```
+
+# Favicons
+```bash
+# replace the image at /tools/sources/favicon.png
+
+# generate new images and html
+npm run gen.favicon
+
+# commit your changes
 ```
 
 # @Types
