@@ -25,6 +25,10 @@
       "description": "Google Analytics tracking ID (ex: UA-18280491-A)",
       "required": false
     },
+    "GOOGLE_VERIFICATION_ENABLED": {
+      "description": "Set to true to enable Google search console verification",
+      "required": false
+    },
     "GOOGLE_VERIFICATION_CODE": {
       "description": "Google search console verification code (ex: RW-hcjXEgPMoy2NF8dTl8IEzP8gnj3cEZ6aF1HDUiOz)",
       "required": false

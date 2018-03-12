@@ -2,6 +2,7 @@ import { BuildConfiguration } from './build.interfaces'
 import { argv } from 'yargs'
 import { basename } from 'path'
 import { OVERRIDES } from './build.ci.replace'
+import { Dependency } from '../plugins/web-index'
 
 export const BUILD_CONFIG: BuildConfiguration = {
   baseHref: '/',
@@ -31,15 +32,41 @@ export const BUILD_CONFIG: BuildConfiguration = {
   },
   dependencies: [
     {
-      order: 1,
       inHead: true,
       element: 'meta',
       attributes: {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
+        content: 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0'
+      }
+    },
+    {
+      inHead: true,
+      element: 'meta',
+      shouldExecute: (dep: Dependency) => process.env.GOOGLE_VERIFICATION_CODE && process.env.GOOGLE_VERIFICATION_ENABLED,
+      attributes: {
+        name: 'google-site-verification',
+        content: process.env.GOOGLE_VERIFICATION_CODE
+      }
+    },
+    {
+      inHead: true,
+      element: 'script',
+      content: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create', '${process.env.GA_TRACKING_ID}', 'auto');`,
+      shouldExecute: (dep: Dependency) => process.env.GA_TRACKING_ID && process.env.GA_ENABLED,
+      attributes: {
+        async: true
+      }
+    },
+    {
+      inHead: false,
+      element: 'script',
+      shouldExecute: (dep: Dependency) => process.env.GA_TRACKING_ID && process.env.GA_ENABLED,
+      attributes: {
+        src: 'https://www.google-analytics.com/analytics.js',
+        async: true
       }
     }
-  ]
+  ] as any[]
 }
 
 let envConfig
