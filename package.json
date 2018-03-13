@@ -107,7 +107,7 @@
     "node-run-cmd": "1.0.1",
     "node-sass": "4.8.1",
     "opn": "5.2.0",
-    "pretty": "^2.0.0",
+    "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1",
     "rimraf": "^2.6.2",
     "semantic-release": "15.0.2",
