@@ -34,6 +34,7 @@ const baseOptions = {
   homeDir: './src',
   output: `${BUILD_CONFIG.outputDir}/$name.js`,
   plugins: [
+    EnvPlugin(ENV_CONFIG_INSTANCE),
     Ng2TemplatePlugin(),
     ['*.component.html', RawPlugin()],
     ['*.component.css',
@@ -74,9 +75,7 @@ const serverOptions = {
   ...baseOptions,
   target: 'server',
   sourceMaps: false,
-  globals: { default: "ssr" },
   plugins: [
-    EnvPlugin(ENV_CONFIG_INSTANCE),
     ...baseOptions.plugins
   ]
 }

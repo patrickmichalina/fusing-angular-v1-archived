@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { EnvironmentService } from './shared/services/environment.service'
 
 @Component({
   selector: 'pm-app',
@@ -8,5 +9,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor(public analytics: Angulartics2GoogleAnalytics) { }
+  constructor(public analytics: Angulartics2GoogleAnalytics, es: EnvironmentService) {
+    console.log('logging environment: ', es.config)
+  }
 }

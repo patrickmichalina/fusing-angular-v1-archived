@@ -18,10 +18,14 @@ import { SEOService } from './services/seo.service'
 import { KeysPipe } from './pipes/keys.pipe'
 import { KeyValuePipe } from './pipes/key-value.pipe'
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe'
-import * as config from '../../../config.json'
+import { EnvConfig } from '../../../../tools/config/app.config'
+
+declare const __process_env__: EnvConfig
 
 export function fuseBoxConfigFactory() {
-  return config
+  return typeof __process_env__ !== 'undefined'
+    ? __process_env__
+    : {}
 }
 
 @NgModule({

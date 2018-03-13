@@ -7,6 +7,7 @@ import { MinifierService } from '../client/app/shared/services/minifier.service'
 import { TransferState } from '@angular/platform-browser'
 import { ServerModule, ServerTransferStateModule } from '@angular/platform-server'
 import { ROLLBAR_CONFIG, ROLLBAR_TS_KEY } from '../client/app/shared/services/error-handlers/rollbar.error-handler.service'
+import { ENV_CONFIG } from '../client/app/app.config'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
@@ -14,9 +15,13 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../client/operators'
 
-declare var __process_env__: EnvConfig
+const envConfig = process.env as EnvConfig
 
-__process_env__.env !== 'dev' && enableProdMode()
+envConfig.env !== 'dev' && enableProdMode()
+
+export function fuseBoxConfigFactory() {
+  return envConfig
+}
 
 export function onBootstrap(
   appRef: ApplicationRef,
@@ -50,6 +55,7 @@ export function rollbarFactory(ts: TransferState) {
     AppModule
   ],
   providers: [
+    { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
     { provide: ROLLBAR_CONFIG, useFactory: rollbarFactory, deps: [TransferState] },
     {
       provide: APP_BOOTSTRAP_LISTENER,
