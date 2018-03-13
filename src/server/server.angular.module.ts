@@ -7,7 +7,7 @@ import { MinifierService } from '../client/app/shared/services/minifier.service'
 import { TransferState } from '@angular/platform-browser'
 import { ServerModule, ServerTransferStateModule } from '@angular/platform-server'
 import { ROLLBAR_CONFIG, ROLLBAR_TS_KEY } from '../client/app/shared/services/error-handlers/rollbar.error-handler.service'
-import { ENV_CONFIG } from '../client/app/app.config'
+import { ENV_CONFIG, ENV_CONFIG_TS_KEY } from '../client/app/app.config'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
@@ -15,8 +15,7 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../client/operators'
 
-const envConfig = process.env as EnvConfig
-
+const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
 
 export function fuseBoxConfigFactory() {
@@ -34,7 +33,8 @@ export function onBootstrap(
       .first()
       .take(1)
       .subscribe(() => {
-        transferState.set<any>(ROLLBAR_TS_KEY, process.env.ROLLBAR_ACCESS_TOKEN)
+        transferState.set<string | undefined>(ROLLBAR_TS_KEY, process.env.ROLLBAR_ACCESS_TOKEN)
+        transferState.set<EnvConfig | undefined>(ENV_CONFIG_TS_KEY, envConfig)
       })
   }
 }

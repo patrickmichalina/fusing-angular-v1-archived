@@ -1,13 +1,18 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser'
+import { BrowserModule, BrowserTransferStateModule, TransferState } from '@angular/platform-browser'
 import { AppModule } from './app.module'
 import { NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
+import { ENV_CONFIG, ENV_CONFIG_TS_KEY } from './app.config'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 import 'hammerjs'
 
 // const sw = process.env.NODE_ENV !== 'development' && [ServiceWorkerModule.register('./ngsw-worker.js')] || []
+
+export function fuseBoxConfigFactory(ts: TransferState) {
+  return ts.get(ENV_CONFIG_TS_KEY, {})
+}
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -15,7 +20,10 @@ import 'hammerjs'
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
     BrowserTransferStateModule,
     BrowserAnimationsModule,
-    AppModule]
+    AppModule],
+  providers: [
+    { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory, deps: [TransferState] }
+  ]
 })
 export class AppBrowserModule {
   // constructor(updates: SwUpdate) {

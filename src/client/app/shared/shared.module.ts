@@ -8,7 +8,6 @@ import { ModuleWithProviders, NgModule } from '@angular/core'
 import { WebSocketService } from './services/web-socket.service'
 import { EnvironmentService } from './services/environment.service'
 import { COOKIE_HOST_WHITELIST } from './services/http-cookie-interceptor.service'
-import { ENV_CONFIG } from '../app.config'
 import { NavbarService } from './navbar/navbar.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { InjectionService } from './services/injection.service'
@@ -18,15 +17,6 @@ import { SEOService } from './services/seo.service'
 import { KeysPipe } from './pipes/keys.pipe'
 import { KeyValuePipe } from './pipes/key-value.pipe'
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe'
-import { EnvConfig } from '../../../../tools/config/app.config'
-
-declare const __process_env__: EnvConfig
-
-export function fuseBoxConfigFactory() {
-  return typeof __process_env__ !== 'undefined'
-    ? __process_env__
-    : {}
-}
 
 @NgModule({
   imports: [
@@ -52,7 +42,6 @@ export function fuseBoxConfigFactory() {
     SanitizeHtmlPipe
   ],
   providers: [
-    { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
     { provide: COOKIE_HOST_WHITELIST, useValue: ['angular.patrickmichalina.com'] },
     PlatformService,
     CookieService,

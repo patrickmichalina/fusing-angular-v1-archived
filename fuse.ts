@@ -34,7 +34,6 @@ const baseOptions = {
   homeDir: './src',
   output: `${BUILD_CONFIG.outputDir}/$name.js`,
   plugins: [
-    EnvPlugin(ENV_CONFIG_INSTANCE),
     Ng2TemplatePlugin(),
     ['*.component.html', RawPlugin()],
     ['*.component.css',
@@ -61,11 +60,11 @@ const appOptions = {
       additionalDeps: BUILD_CONFIG.dependencies as any[]
     }),
     isProdBuild && QuantumPlugin({
-      target: "universal",
       warnings: false,
       uglify: true,
       treeshake: true,
       bakeApiIntoBundle: vendorBundleName,
+      replaceProcessEnv: false,
       processPolyfill: true
     })
   ]
@@ -76,6 +75,7 @@ const serverOptions = {
   target: 'server',
   sourceMaps: false,
   plugins: [
+    EnvPlugin({ ngConfig: JSON.stringify(ENV_CONFIG_INSTANCE) }),
     ...baseOptions.plugins
   ]
 }
