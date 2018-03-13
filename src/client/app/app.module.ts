@@ -1,22 +1,33 @@
-import { NgModule } from '@angular/core'
+import { ErrorHandler, NgModule } from '@angular/core'
 import { HttpCookieInterceptor } from './shared/services/http-cookie-interceptor.service'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
 import { NotFoundModule } from './not-found/not-found.module'
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule, TransferState } from '@angular/platform-browser'
 import { ServerResponseService } from './shared/services/server-response.service'
 import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpResponse } from '@angular/common/http'
 import { CACHE_TAG_CONFIG, CACHE_TAG_FACTORY, CacheTagConfig, HttpCacheTagModule } from './shared/http-cache-tag/http-cache-tag.module'
 import { TransferHttpCacheModule } from '@nguniversal/common'
+import { ROLLBAR_CONFIG, ROLLBAR_TS_KEY, RollbarErrorHandler } from './shared/services/error-handlers/rollbar.error-handler.service'
+import * as Rollbar from 'rollbar'
 
 export function cacheTagFactory(srs: ServerResponseService): any {
   return (httpResponse: HttpResponse<any>, config: CacheTagConfig) => {
     const cacheHeader = httpResponse.headers.get(config.headerKey)
     cacheHeader && srs.appendHeader(config.headerKey, cacheHeader)
   }
+}
+
+export function rollbarFactory(ts: TransferState) {
+  const accessToken = ts.get(ROLLBAR_TS_KEY, undefined)
+  return accessToken && new Rollbar({
+    accessToken,
+    captureUncaught: true,
+    captureUnhandledRejections: true
+  })
 }
 
 @NgModule({
@@ -43,7 +54,9 @@ export function cacheTagFactory(srs: ServerResponseService): any {
       })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpCookieInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpCookieInterceptor, multi: true },
+    { provide: ROLLBAR_CONFIG, useFactory: rollbarFactory, deps: [TransferState] },
+    { provide: ErrorHandler, useClass: RollbarErrorHandler }
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
