@@ -4,6 +4,12 @@ import { Component } from '@angular/core'
 import { HomeModule } from './home.module'
 import { AppTestingModule } from '../../../testing/app-testing.module'
 
+@Component({
+  selector: 'test-component',
+  template: '<pm-home></pm-home>'
+})
+class TestComponent { }
+
 describe(HomeComponent.name, () => {
   let fixture: ComponentFixture<HomeComponent>
 
@@ -27,9 +33,3 @@ describe(HomeComponent.name, () => {
     expect(fixture).toMatchSnapshot()
   }))
 })
-
-@Component({
-  selector: 'test-component',
-  template: '<pm-home></pm-home>'
-})
-class TestComponent { }
