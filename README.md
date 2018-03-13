@@ -8,6 +8,10 @@
 [![Angular Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)
 [![Fusebox-bundler](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg)](https://gitter.im/fusing-angular/Lobby)
 
+The goal of this project is to provide a developer friendly Angular Universal starter application. It differs from the Angular-CLI by focusing soley on Universal applications and uses faster testing frameworks and javascript bundler. With this project you can deploy a boilerplate application with a single click via Heroku.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 # Features
 Provides an extremely fast seed project for the development of Angular Universal (isomorphic) projects.
 - [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework
@@ -15,27 +19,32 @@ Provides an extremely fast seed project for the development of Angular Universal
 - [Jest](https://facebook.github.io/jest) for unit and component testing
 - [Nightmare](https://github.com/segmentio/nightmare) for E2E UI testing
 - [Sparky](http://fuse-box.org/page/sparky) as the task runner
-- Fully typed build tools using [TypeScript](https://www.typescriptlang.org)
-- Manage your type definitions using [@types](https://www.npmjs.com/~types)
 - [Heroku](https://www.heroku.com) Single Click Deployment
 - [SCSS](http://sass-lang.com) support for professional grade CSS management
 - [Brotli compression](https://github.com/google/brotli) with [gzip](http://www.gzip.org) fallback
 - [CircleCI](https://circleci.com) integration 
-- Full favicon icon generation for multiple devices derived from a single seed image
+- [Tree-Shaking](https://fuse-box.org/page/quantum) for production builds
+- [Ahead-of-Time](https://angular.io/guide/aot-compiler) (AOT) compilation support
+- [angular-tslint-rules](https://github.com/fulls1z3/angular-tslint-rules) as configuration preset for [TSLint](https://github.com/palantir/tslint) and [codelyzer](https://github.com/mgechev/codelyzer).
+- [Lazy Loaded](https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html) modules
+- Fully typed build tools using [TypeScript](https://www.typescriptlang.org)
+- Manage your type definitions using [@types](https://www.npmjs.com/~types)
+- Favicon icon generation for multiple devices derived from a single seed image
 - Search Engine (SEO) support for Title and Meta tags
 - OG (Open Graph) tags for social sharing
 - Vendor-agnostic analytics using [angulartics2](https://github.com/angulartics/angulartics2)
 - Generic token based Authentication service with [JWT](https://jwt.io) cookie support.
-- [Ahead-of-Time](https://angular.io/guide/aot-compiler) (AOT) compilation support
-- [angular-tslint-rules](https://github.com/fulls1z3/angular-tslint-rules) as configuration preset for [TSLint](https://github.com/palantir/tslint) and [codelyzer](https://github.com/mgechev/codelyzer).
-- [Lazy Loaded](https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html) modules
 - Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
 - Support for Angular Service Worker
-- [Tree-Shaking](https://fuse-box.org/page/quantum) for production builds
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Built by [AngularUniversal.com](https://www.angularuniversal.com). For additional help please checkout our [services](https://www.angularuniversal.com/services)
+
+# Specialty Branches
+In order to better support different configurations, we have created several branches with different combinations of features. Be sure to clone the correct branch.
+- [minimal-no-heroku](https://github.com/patrickmichalina/fusing-angular/tree/minimal-no-heroku) Minimal, fusebox build tooling only
+- [heroku-only](https://github.com/patrickmichalina/fusing-angular/tree/heroku-only) Heroku
+- [heroku-s3](https://github.com/patrickmichalina/fusing-angular/tree/heroku-s3) Heroku, S3/CF backed static assets
+- [master](https://github.com/patrickmichalina/fusing-angular/tree/master) Heroku, S3/CF backed static assets, Auth0
 
 # Table of Contents
 * [Quick Start](#quick-start)
