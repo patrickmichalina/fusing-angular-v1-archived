@@ -48,6 +48,7 @@
     "postmerge": "./tools/scripts/post-merge.sh || true",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "lint": "ts-node fuse.ts lint --build-type prod",
+    "bundlesize": "node_modules/.bin/bundlesize",
     "gen.config": "ts-node fuse.ts config",
     "gen.favicon": "ts-node fuse.ts favicon"
   },
@@ -80,6 +81,7 @@
     "@types/yargs": "11.0.0",
     "angular-tslint-rules": "1.2.1",
     "browser-sync": "2.23.6",
+    "bundlesize": "^0.16.0",
     "codelyzer": "4.2.1",
     "concurrently": "3.5.1",
     "condition-circle": "2.0.1",
@@ -195,5 +197,19 @@
         "tsConfigFile": "tsconfig.json"
       }
     }
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./dist/js/*-vendors.js",
+      "maxSize": "175 kB"
+    },
+    {
+      "path": "./dist/js/*-app.js",
+      "maxSize": "15 kB"
+    },
+    {
+      "path": "./dist/js/modules/**.js",
+      "maxSize": "15 kB"
+    }
+  ]
 }
