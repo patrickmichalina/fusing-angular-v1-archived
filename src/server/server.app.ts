@@ -8,8 +8,9 @@ import { createLogger } from '@expo/bunyan'
 import { ngExpressEngine } from '@nguniversal/express-engine'
 import { AppServerModule } from './server.angular.module'
 import { argv } from 'yargs'
-import ms = require('ms')
 import { resolve } from 'path'
+import { rollbar } from './add-ons/rollbar'
+import ms = require('ms')
 
 const shrinkRay = require('shrink-ray')
 const minifyHTML = require('express-minify-html')
@@ -22,8 +23,8 @@ xhr2.prototype._restrictedHeaders.cookie = false
 require('ts-node/register')
 
 const app = express()
+rollbar(app)
 const isProd = argv['build-type'] === 'prod' || argv['prod']
-const isTest = argv['e2e']
 
 const staticOptions = {
   index: false,
@@ -34,17 +35,18 @@ const staticOptions = {
       : new Date(Date.now() + ms('0')).toUTCString())
   }
 }
+
 const logger = createLogger({
-  name: 'Angular Universal App',
-  type: 'http',
+  name: 'Fusing-Angular',
+  type: 'node-only',
   streams: [{
     level: 'error',
-    stream: { write: (err: any) => console.log },
-    type: 'raw'
+    type: 'raw',
+    stream: { write: (err: any) => console.log }
   }] as any
 })
 
-!isTest && app.use(bunyanMiddleware({ logger, excludeHeaders: ['authorization', 'cookie'] }))
+app.use(bunyanMiddleware({ logger, excludeHeaders: ['authorization', 'cookie'] }))
 
 const dir = resolve('dist')
 

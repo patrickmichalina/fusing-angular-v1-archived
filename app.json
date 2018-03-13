@@ -5,7 +5,8 @@
   "logo": "https://raw.githubusercontent.com/patrickmichalina/fusing-angular/master/docs/angular.png",
   "keywords": ["node", "angular4", "angular5", "angular6" , "high performance", "universal", "typescript", "ssr"],
   "addons": [
-    "newrelic:wayne"
+    "newrelic:wayne",
+    "rollbar:free"
   ],
   "env": {
     "HEROKU_APP_NAME": {
