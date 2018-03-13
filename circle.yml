@@ -19,7 +19,7 @@ test:
           TEST_REPORT_PATH: $CIRCLE_TEST_REPORTS
           TEST_REPORT_FILENAME: test-results.xml
     - npm run test.ci.after
-    - npm run start.prod.ci && npm run bundlesize 
+    - npm run start.prod.ci.aot && npm run bundlesize 
 
   post:
     - bash <(curl -s https://codecov.io/bash)
