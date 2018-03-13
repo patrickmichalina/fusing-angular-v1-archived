@@ -4,6 +4,9 @@
   "repository": "https://github.com/patrickmichalina/fusing-angular",
   "logo": "https://raw.githubusercontent.com/patrickmichalina/fusing-angular/master/docs/angular.png",
   "keywords": ["node", "angular4", "angular5", "angular6" , "high performance", "universal", "typescript", "ssr"],
+  "addons": [
+    "newrelic:hawke"
+  ],
   "env": {
     "HEROKU_APP_NAME": {
       "description": "Your application's name.",
@@ -32,6 +35,15 @@
     "GOOGLE_VERIFICATION_CODE": {
       "description": "Google search console verification code (ex: RW-hcjXEgPMoy2NF8dTl8IEzP8gnj3cEZ6aF1HDUiOz)",
       "required": false
+    },
+    "NEW_RELIC_APP_NAME": {
+      "description": "Give this an application name to track in New Relic APM",
+      "required": false
+    },
+    "NEW_RELIC_NO_CONFIG_FILE": {
+      "description": "Setting this to true means new relic is configured via environment variables",
+      "required": false,
+      "value": true
     }
   }
 }

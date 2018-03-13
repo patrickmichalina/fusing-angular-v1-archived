@@ -1,5 +1,5 @@
-// tslint:disable-next-line:no-require-imports
-require('newrelic')
+import { newRelic } from './add-ons/new-relic'
+newRelic()
 import { createServer } from 'http'
 import { argv } from 'yargs'
 import { app } from './server.app'
