@@ -1,12 +1,10 @@
-import * as Rollbar from 'rollbar'
 import * as express from 'express'
 
-export const rollbar = (app: express.Application) => {
+// tslint:disable:no-require-imports
+export const rollbarInit = (app: express.Application) => {
   if (process.env.ROLLBAR_ACCESS_TOKEN && process.env.ROLLBAR_ENDPOINT) {
-    const rb = new Rollbar({
-      accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-      endpoint: process.env.ROLLBAR_ENDPOINT
-    })
-    app.use(rb.lambdaHandler)
+    const rollbar = require('rollbar')
+    const instance = new rollbar(process.env.ROLLBAR_ACCESS_TOKEN)
+    app.use(instance.errorHandler())
   }
 }

@@ -9,7 +9,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine'
 import { AppServerModule } from './server.angular.module'
 import { argv } from 'yargs'
 import { resolve } from 'path'
-import { rollbar } from './add-ons/rollbar'
+import { rollbarInit } from './add-ons/rollbar'
 import ms = require('ms')
 
 const shrinkRay = require('shrink-ray')
@@ -23,7 +23,7 @@ xhr2.prototype._restrictedHeaders.cookie = false
 require('ts-node/register')
 
 const app = express()
-rollbar(app)
+rollbarInit(app)
 const isProd = argv['build-type'] === 'prod' || argv['prod']
 
 const staticOptions = {
