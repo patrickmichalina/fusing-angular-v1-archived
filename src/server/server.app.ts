@@ -75,10 +75,7 @@ app.use('/ngsw-worker.js', express.static(`${dir}/ngsw-worker.js`, staticOptions
 app.use('/robots.txt', express.static(`${dir}/web/robots.txt`, staticOptions))
 app.use('/assets', express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false }))
 app.use('/manifest.json', express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false }))
-
-app.get('/favicon.ico', (req, res) => {
-  res.sendStatus(404)
-})
+app.use('/favicon.ico', express.static(`${dir}/assets/favicons/favicon-16x16.png`, { ...staticOptions, fallthrough: false }))
 
 app.get('**', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   return res.render('index', {
