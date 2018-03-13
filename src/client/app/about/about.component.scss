@@ -1,3 +1,6 @@
+$some-var: pink;
+
 :host {
   display: block;
+  background-color: $some-var;
 }

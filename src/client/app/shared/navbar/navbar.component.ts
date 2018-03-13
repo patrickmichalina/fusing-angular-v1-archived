@@ -9,7 +9,7 @@ export interface User {
 @Component({
   selector: 'pm-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  styleUrls: ['./navbar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {

@@ -78,3 +78,5 @@ documentation
 
 src/config.json
 .serverless
+
+src/client/**/*.css

@@ -1,8 +1,8 @@
-import { Ng2TemplatePlugin } from 'ng2-fused';
-import { argv } from 'yargs';
-import { BUILD_CONFIG, ENV_CONFIG_INSTANCE, isProdBuild, typeHelper } from './tools/config/build.config';
-import { WebIndexPlugin } from './tools/plugins/web-index';
-import { init, reload, active } from 'browser-sync';
+import { Ng2TemplatePlugin } from 'ng2-fused'
+import { argv } from 'yargs'
+import { BUILD_CONFIG, ENV_CONFIG_INSTANCE, isProdBuild, typeHelper } from './tools/config/build.config'
+import { WebIndexPlugin } from './tools/plugins/web-index'
+import { init, reload, active } from 'browser-sync'
 import {
   EnvPlugin,
   FuseBox,
@@ -12,8 +12,8 @@ import {
   SassPlugin,
   Sparky,
   QuantumPlugin
-} from 'fuse-box';
-import './tools/tasks';
+} from 'fuse-box'
+import './tools/tasks'
 import { NgAotPlugin } from './tools/plugins/ng-aot'
 
 const death = require('death')
@@ -36,8 +36,9 @@ const baseOptions = {
   plugins: [
     Ng2TemplatePlugin(),
     ['*.component.html', RawPlugin()],
-    ['*.component.scss',
-      SassPlugin({ indentedSyntax: false, importer: true, sourceMap: false, outputStyle: 'compressed' } as any), RawPlugin()],
+    ['*.component.css',
+      SassPlugin({ indentedSyntax: false, importer: true, sourceMap: false, outputStyle: 'compressed' } as any),
+      RawPlugin()],
     JSONPlugin(),
     HTMLPlugin({ useDefault: false })
   ]

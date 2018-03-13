@@ -4,7 +4,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 @Component({
   selector: 'pm-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
