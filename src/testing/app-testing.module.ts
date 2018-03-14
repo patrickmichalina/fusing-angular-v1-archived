@@ -27,6 +27,15 @@ import './client/operators'
     BrowserAnimationsModule,
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
+  exports: [
+    HttpClientModule,
+    HttpClientTestingModule,
+    RouterTestingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    BrowserAnimationsModule
+  ],
   providers: [
     PlatformService,
     { provide: CookieService, useClass: MockCookieService },

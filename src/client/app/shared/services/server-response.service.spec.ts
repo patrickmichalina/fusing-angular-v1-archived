@@ -1,6 +1,7 @@
 import { IServerResponseService, ServerResponseService } from './server-response.service'
 import { async, TestBed } from '@angular/core/testing'
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
+import { AppTestingModule } from '../../../../testing/app-testing.module'
 
 // tslint:disable:readonly-keyword
 // tslint:disable:no-object-mutation
@@ -10,6 +11,7 @@ describe(ServerResponseService.name, () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [AppTestingModule.forRoot()],
       providers: [
         ServerResponseService,
         { provide: RESPONSE, useValue: new MockResponse() }

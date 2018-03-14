@@ -14,7 +14,7 @@ import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NavbarService } from './shared/navbar/navbar.service'
-import '../operators'
+import { AppTestingModule } from '../../testing/app-testing.module'
 
 export const TESTING_CONFIG: EnvConfig = {
   // tslint:disable-next-line:max-line-length
@@ -40,6 +40,7 @@ describe('App component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        AppTestingModule.forRoot(),
         AppModule,
         AppBrowserModule,
         SharedModule,

@@ -2,12 +2,14 @@ import { PlatformService } from './platform.service'
 import { ILoggingService, LOGGER_CONFIG, LoggingService } from './logging.service'
 import { async, TestBed } from '@angular/core/testing'
 import { PLATFORM_ID } from '@angular/core'
+import { AppTestingModule } from '../../../../testing/app-testing.module'
 
 describe(LoggingService.name, () => {
   describe('browser', () => {
     let service: ILoggingService
     beforeEach(async(() => {
       TestBed.configureTestingModule({
+        imports: [AppTestingModule.forRoot()],
         providers: [
           LoggingService,
           PlatformService,

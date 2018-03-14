@@ -5,9 +5,9 @@ import {
 } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { async, TestBed } from '@angular/core/testing'
-import '../../../operators'
 import { IPlatformService, PlatformService } from '../platform.service'
 import { ENV_CONFIG } from '../../../app.config'
+import { AppTestingModule } from '../../../../../testing/app-testing.module'
 
 describe(HttpCookieInterceptor.name, () => {
   describe('when on platform server', () => {
@@ -17,7 +17,7 @@ describe(HttpCookieInterceptor.name, () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, HttpClientModule],
+        imports: [AppTestingModule.forRoot()],
         providers: [
           HttpCookieInterceptor,
           { provide: HTTP_INTERCEPTORS, useClass: HttpCookieInterceptor, multi: true },

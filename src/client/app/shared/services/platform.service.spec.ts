@@ -1,6 +1,7 @@
 import { IPlatformService, PlatformService } from './platform.service'
 import { async, TestBed } from '@angular/core/testing'
 import { PLATFORM_ID } from '@angular/core'
+import { AppTestingModule } from '../../../../testing/app-testing.module'
 
 describe(PlatformService.name, () => {
   let service: IPlatformService
@@ -8,6 +9,7 @@ describe(PlatformService.name, () => {
   describe(`${PlatformService.name}.browser`, () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
+        imports: [AppTestingModule.forRoot()],
         providers: [
           PlatformService,
           { provide: PLATFORM_ID, useValue: 'browser' }

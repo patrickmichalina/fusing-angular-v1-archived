@@ -17,6 +17,7 @@
     "no-unnecessary-class": [
       false
     ],
+    "prefer-object-spread": true,
     "no-var-keyword": true,
     "no-let": false,
     "no-parameter-reassignment": true,
@@ -25,6 +26,7 @@
     "no-object-mutation": true,
     "no-delete": true,
     "no-method-signature": false,
+    "trackBy-function": [true],
     "typedef": [
       false
     ],
@@ -32,6 +34,14 @@
       true,
       "check-interpolation",
       "check-semicolon"
+    ],
+    "templates-no-negated-async": [
+      true
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
     ],
     "space-within-parens": [
       false
