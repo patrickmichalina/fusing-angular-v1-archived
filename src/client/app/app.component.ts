@@ -10,6 +10,7 @@ import { EnvironmentService } from './shared/services/environment.service'
 })
 export class AppComponent {
   constructor(public analytics: Angulartics2GoogleAnalytics, es: EnvironmentService) {
+    // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
   }
 }

@@ -8,5 +8,6 @@ const port = process.env.PORT || argv['port'] || 8001
 const host = process.env.HOST || argv['host'] || 'http://localhost'
 
 createServer(app).listen(port, () => {
+  // tslint:disable-next-line:no-console
   console.log(`Angular Universal Server listening at ${host}:${port}`)
 })

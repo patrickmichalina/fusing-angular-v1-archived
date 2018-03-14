@@ -1,7 +1,7 @@
 export interface EnvConfig {
-  env?: string
-  endpoints?: {
-    api?: string,
-    websocketServer?: string
+  readonly env?: string
+  readonly endpoints?: {
+    readonly api?: string,
+    readonly websocketServer?: string
   }
 }

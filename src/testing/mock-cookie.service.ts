@@ -4,8 +4,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 @Injectable()
 export class MockCookieService implements ICookieService {
-  private cookieSource = new BehaviorSubject<{ [key: string]: any }>(this.getAll())
-  public cookies$ = this.cookieSource.asObservable()
+  private readonly cookieSource = new BehaviorSubject<{ readonly [key: string]: any }>(this.getAll())
+  public readonly cookies$ = this.cookieSource.asObservable()
+  // tslint:disable-next-line:readonly-keyword
   public mockCookieStore: any = { }
 
   get(name: string): any {
@@ -17,12 +18,14 @@ export class MockCookieService implements ICookieService {
   }
 
   set(name: string, value: any, options?: Cookies.CookieAttributes | undefined): void {
+    // tslint:disable-next-line:no-object-mutation
     this.mockCookieStore[name] = value
     this.cookieSource.next(this.getAll())
   }
 
   remove(name: string, options?: Cookies.CookieAttributes | undefined): void {
     const { [name]: omit, ...newObject } = this.mockCookieStore
+    // tslint:disable-next-line:no-object-mutation
     this.mockCookieStore = newObject
     this.cookieSource.next(this.getAll())
   }

@@ -18,6 +18,7 @@ const bunyanMiddleware = require('bunyan-middleware')
 const xhr2 = require('xhr2')
 const cors = require('cors')
 
+// tslint:disable-next-line:no-object-mutation
 xhr2.prototype._restrictedHeaders.cookie = false
 
 require('ts-node/register')

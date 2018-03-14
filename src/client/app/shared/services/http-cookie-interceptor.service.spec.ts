@@ -172,6 +172,6 @@ describe(HttpCookieInterceptor.name, () => {
 })
 
 class MockPlatformService implements IPlatformService {
-  isServer: boolean = !this.isServer
+  readonly isServer: boolean = !this.isServer
   constructor(public isBrowser = true) { }
 }

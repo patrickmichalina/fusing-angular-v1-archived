@@ -1,6 +1,7 @@
 {
   "editor.tabSize": 2,
   "git.ignoreLimitWarning": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
   "files.exclude": {
     "**/*.js.map": true,
     "**/*.css": {

@@ -3,24 +3,17 @@ import { Observable } from 'rxjs/Observable'
 import { Inject, Injectable, Renderer2 } from '@angular/core'
 import { sha1 } from 'object-hash'
 import { DOCUMENT } from '@angular/common'
-import { makeStateKey, TransferState } from '@angular/platform-browser'
 
 export interface DOMInjectable {
-  inHead: boolean
-  element: string
-  value?: string
-  attributes?: { [key: string]: string | boolean }
+  readonly inHead: boolean
+  readonly element: string
+  readonly value?: string
+  readonly attributes?: { readonly [key: string]: string | boolean }
 }
-
-const injectionKey = makeStateKey<string[]>('Settings.RawInjections')
 
 @Injectable()
 export class InjectionService {
-  doc: HTMLDocument
-
-  constructor( @Inject(DOCUMENT) doc: any, private ts: TransferState) {
-    this.doc = doc
-  }
+  constructor(@Inject(DOCUMENT) private doc: HTMLDocument) { }
 
   createElement<T extends HTMLElement>(renderer: Renderer2, injectable: DOMInjectable): T | undefined {
     if (!injectable || !injectable.element) return undefined
@@ -77,16 +70,7 @@ export class InjectionService {
     return this.doc.getElementById(elm.id)
   }
 
-  injectCollection(renderer: Renderer2, injectables: DOMInjectable[]) {
+  injectCollection(renderer: Renderer2, injectables: ReadonlyArray<DOMInjectable>) {
     return Observable.forkJoin(injectables.map(injectable => this.inject(renderer, injectable)))
-  }
-
-  injectRaw(raw: string) {
-    if (!raw) return
-    const injected = this.ts.get(injectionKey, [])
-    const alredyInjected = injected.find(a => a === sha1(raw))
-    if (alredyInjected) return
-    this.doc.head.innerHTML = this.doc.head.innerHTML + raw
-    this.ts.set(injectionKey, [...injected, sha1(raw)])
   }
 }

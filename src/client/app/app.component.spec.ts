@@ -31,7 +31,7 @@ export const TESTING_CONFIG: EnvConfig = {
 class TestComponent { }
 
 describe('App component', () => {
-  const config: Array<Route> = [
+  const config: ReadonlyArray<Route> = [
     { path: '', component: HomeComponent }
   ]
 
@@ -44,7 +44,7 @@ describe('App component', () => {
         AppBrowserModule,
         SharedModule,
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes(config),
+        RouterTestingModule.withRoutes(config as any),
         Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
       ],
       declarations: [TestComponent, HomeComponent],

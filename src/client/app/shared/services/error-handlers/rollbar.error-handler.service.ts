@@ -14,8 +14,9 @@ export const ROLLBAR_TS_KEY = makeStateKey<string>('app.rollbar.ts')
 export class RollbarErrorHandler implements ErrorHandler {
   constructor(@Inject(ROLLBAR_CONFIG) private rollbar: Rollbar | undefined) { }
 
+  // tslint:disable:no-console
   handleError(err: any): void {
     this.rollbar && this.rollbar.error(err.originalError || err)
-    !this.rollbar && console.error(err.originalError || err)
+    console.error(err.originalError || err)
   }
 }

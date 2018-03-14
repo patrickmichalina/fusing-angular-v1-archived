@@ -3,5 +3,5 @@ import { IEnvironmentService } from '../client/app/shared/services/environment.s
 
 @Injectable()
 export class MockEnvironmentService implements IEnvironmentService {
-  config: any = {}
+  readonly config: any = {}
 }

@@ -4,12 +4,12 @@ import { PlatformService } from './platform.service'
 import { Observable } from 'rxjs/Observable'
 
 export interface IAdblockService {
-  adBlockerIsActive$: Observable<boolean>
+  readonly adBlockerIsActive$: Observable<boolean>
 }
 
 @Injectable()
 export class AdblockService implements IAdblockService {
-  public adBlockerIsActive$ = this.platformService.isBrowser
+  public readonly adBlockerIsActive$ = this.platformService.isBrowser
     ? this.http.get('./ad-server.js')
       .switchMap(a => Observable.of(false))
       .catch(a => Observable.of(true))

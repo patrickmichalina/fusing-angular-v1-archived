@@ -49,13 +49,13 @@ describe(AdblockService.name, () => {
   }))
 
   it('should return false when not on platform browser', async(() => {
-    const ps = TestBed.get(PlatformService) as MockPlatformService
-    ps.isServer = true
+    // const ps = TestBed.get(PlatformService) as MockPlatformService
+    // ps.isServer = true
     service.adBlockerIsActive$.subscribe(result => expect(result).toBe(false))
   }))
 })
 
 class MockPlatformService implements IPlatformService {
-  public isBrowser = true
-  public isServer = false
+  public readonly isServer = !this.isBrowser
+  constructor(public isBrowser = false) { }
 }
