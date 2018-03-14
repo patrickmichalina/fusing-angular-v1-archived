@@ -7,7 +7,6 @@ import { PlatformService } from './services/platform.service'
 import { ModuleWithProviders, NgModule } from '@angular/core'
 import { WebSocketService } from './services/web-socket.service'
 import { EnvironmentService } from './services/environment.service'
-import { COOKIE_HOST_WHITELIST } from './services/http-cookie-interceptor.service'
 import { NavbarService } from './navbar/navbar.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { InjectionService } from './services/injection.service'
@@ -17,6 +16,7 @@ import { SEOService } from './services/seo.service'
 import { KeysPipe } from './pipes/keys.pipe'
 import { KeyValuePipe } from './pipes/key-value.pipe'
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe'
+import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-interceptor.service'
 
 @NgModule({
   imports: [

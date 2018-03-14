@@ -1,5 +1,5 @@
 import { ErrorHandler, NgModule } from '@angular/core'
-import { HttpCookieInterceptor } from './shared/services/http-cookie-interceptor.service'
+import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'

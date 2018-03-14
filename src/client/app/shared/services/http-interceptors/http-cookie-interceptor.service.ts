@@ -1,9 +1,9 @@
 import { REQUEST } from '@nguniversal/express-engine/tokens'
-import { PlatformService } from './platform.service'
 import { Observable } from 'rxjs/Observable'
 import { Injectable, InjectionToken, Injector } from '@angular/core'
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
 import * as express from 'express'
+import { PlatformService } from '../platform.service'
 
 // tslint:disable-next-line:no-require-imports
 const URL = require('url-parse')

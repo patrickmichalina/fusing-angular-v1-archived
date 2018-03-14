@@ -2,9 +2,11 @@ import { IServerResponseService, ServerResponseService } from './server-response
 import { async, TestBed } from '@angular/core/testing'
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
 
+// tslint:disable:readonly-keyword
+// tslint:disable:no-object-mutation
 describe(ServerResponseService.name, () => {
   let service: IServerResponseService
-  let _RESPONSE: MockResponse
+  let response: MockResponse
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -17,7 +19,7 @@ describe(ServerResponseService.name, () => {
 
   beforeEach(() => {
     service = TestBed.get(ServerResponseService)
-    _RESPONSE = TestBed.get(RESPONSE)
+    response = TestBed.get(RESPONSE)
   })
 
   it('should construct', async(() => {
@@ -66,31 +68,31 @@ describe(ServerResponseService.name, () => {
 
   it('should set standard not-found response', async(() => {
     expect.assertions(1)
-    _RESPONSE.statusCode = 0
+    response.statusCode = 0
     service.setNotFound()
-    expect(_RESPONSE.statusCode).toEqual(404)
+    expect(response.statusCode).toEqual(404)
   }))
 
   it('should set standard error response', async(() => {
     expect.assertions(2)
-    _RESPONSE.statusCode = 0
+    response.statusCode = 0
     service.setError()
-    expect(_RESPONSE.statusCode).toEqual(500)
-    expect(_RESPONSE.statusMessage).toEqual('internal server error')
+    expect(response.statusCode).toEqual(500)
+    expect(response.statusMessage).toEqual('internal server error')
   }))
 
   it('should set status', async(() => {
     expect.assertions(2)
-    _RESPONSE.statusCode = 0
-    _RESPONSE.statusMessage = ''
+    response.statusCode = 0
+    response.statusMessage = ''
     service.setStatus(304, 'cool')
-    expect(_RESPONSE.statusCode).toEqual(304)
-    expect(_RESPONSE.statusMessage).toEqual('cool')
+    expect(response.statusCode).toEqual(304)
+    expect(response.statusMessage).toEqual('cool')
   }))
 })
 
 class MockResponse {
-  store: any = {}
+  readonly store: any = {}
   statusCode: number
   statusMessage: string
 
