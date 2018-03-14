@@ -95,7 +95,7 @@
     "greenkeeper-lockfile": "1.14.0",
     "hash-files": "1.1.1",
     "html-minifier": "3.5.10",
-    "husky": "0.14.3",
+    "husky": "^0.14.3",
     "is-reachable": "2.4.0",
     "jest": "22.4.2",
     "jest-junit-reporter": "1.1.0",
