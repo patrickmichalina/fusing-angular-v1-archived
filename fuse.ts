@@ -86,10 +86,15 @@ Sparky.task('build.universal', () => {
   const path = isAot ? 'client/.aot/src/client/app' : 'client/app';
   const serverBundle = fuseServer.bundle('server').instructions(serverBundleInstructions);
   const vendorBundle = fuseApp.bundle(`${vendorBundleName}`).instructions(vendorBundleInstructions)
+
+  const addInstructs = isAot
+    ? `${appBundleInstructions}`
+    : `${appBundleInstructions} + [${path}/**/!(*.spec|*.e2e-spec|*.ngsummary|*.snap).*]`
+
   const appBundle = fuseApp
     .bundle(appBundleName)
     .splitConfig({ dest: 'js/modules' })
-    .instructions(`${appBundleInstructions} + [${path}/**/!(*.spec|*.e2e-spec|*.ngsummary|*.snap).*]`)
+    .instructions(addInstructs)
 
   if (!isBuildServer && !argv['build-only']) {
     const proxy = `${BUILD_CONFIG.host}:${BUILD_CONFIG.port}`
