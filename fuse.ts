@@ -1,6 +1,11 @@
 import { Ng2TemplatePlugin } from 'ng2-fused'
 import { argv } from 'yargs'
-import { BUILD_CONFIG, ENV_CONFIG_INSTANCE, isProdBuild, typeHelper } from './tools/config/build.config'
+import {
+  BUILD_CONFIG,
+  ENV_CONFIG_INSTANCE,
+  isProdBuild,
+  typeHelper
+} from './tools/config/build.config'
 import { WebIndexPlugin } from './tools/plugins/web-index'
 import { init, reload, active } from 'browser-sync'
 import {
@@ -17,16 +22,16 @@ import './tools/tasks'
 import { NgAotPlugin } from './tools/plugins/ng-aot'
 
 const death = require('death')
-const isReachable = require('is-reachable');
-const isAot = argv.aot;
-const isBuildServer = argv.ci;
-const baseEntry = isAot ? 'main.aot' : 'main';
-const appBundleName = `js/app`;
-const vendorBundleName = `js/vendors`;
-const mainEntryFileName = isProdBuild ? `${baseEntry}-prod` : `${baseEntry}`;
-const vendorBundleInstructions = ` ~ client/${mainEntryFileName}.ts`;
-const appBundleInstructions = ` !> [client/${mainEntryFileName}.ts]`;
-const serverBundleInstructions = ' > [server/server.ts]';
+const isReachable = require('is-reachable')
+const isAot = argv.aot
+const isBuildServer = argv.ci
+const baseEntry = isAot ? 'main.aot' : 'main'
+const appBundleName = `js/app`
+const vendorBundleName = `js/vendors`
+const mainEntryFileName = isProdBuild ? `${baseEntry}-prod` : `${baseEntry}`
+const vendorBundleInstructions = ` ~ client/${mainEntryFileName}.ts`
+const appBundleInstructions = ` !> [client/${mainEntryFileName}.ts]`
+const serverBundleInstructions = ' > [server/server.ts]'
 
 isProdBuild && typeHelper()
 
@@ -36,9 +41,16 @@ const baseOptions = {
   plugins: [
     Ng2TemplatePlugin(),
     ['*.component.html', RawPlugin()],
-    ['*.component.css',
-      SassPlugin({ indentedSyntax: false, importer: true, sourceMap: false, outputStyle: 'compressed' } as any),
-      RawPlugin()],
+    [
+      '*.component.css',
+      SassPlugin({
+        indentedSyntax: false,
+        importer: true,
+        sourceMap: false,
+        outputStyle: 'compressed'
+      } as any),
+      RawPlugin()
+    ],
     JSONPlugin(),
     HTMLPlugin({ useDefault: false })
   ]
@@ -59,14 +71,15 @@ const appOptions = {
       },
       additionalDeps: BUILD_CONFIG.dependencies as any[]
     }),
-    isProdBuild && QuantumPlugin({
-      warnings: false,
-      uglify: true,
-      treeshake: true,
-      bakeApiIntoBundle: vendorBundleName,
-      replaceProcessEnv: false,
-      processPolyfill: true
-    })
+    isProdBuild &&
+      QuantumPlugin({
+        warnings: false,
+        uglify: true,
+        treeshake: true,
+        bakeApiIntoBundle: vendorBundleName,
+        replaceProcessEnv: false,
+        processPolyfill: true
+      })
   ]
 }
 
@@ -81,15 +94,19 @@ const serverOptions = {
 }
 
 Sparky.task('build.universal', () => {
-  const fuseApp = FuseBox.init(appOptions as any);
-  const fuseServer = FuseBox.init(serverOptions as any);
-  const path = isAot ? 'client/.aot/src/client/app' : 'client/app';
-  const serverBundle = fuseServer.bundle('server').instructions(serverBundleInstructions);
-  const vendorBundle = fuseApp.bundle(`${vendorBundleName}`).instructions(vendorBundleInstructions)
+  const fuseApp = FuseBox.init(appOptions as any)
+  const fuseServer = FuseBox.init(serverOptions as any)
+  const path = isAot ? 'client/.aot/src/client/app' : 'client/app'
+  const serverBundle = fuseServer
+    .bundle('server')
+    .instructions(serverBundleInstructions)
+  const vendorBundle = fuseApp
+    .bundle(`${vendorBundleName}`)
+    .instructions(vendorBundleInstructions)
 
   const addInstructs = isAot
     ? `${appBundleInstructions}`
-    : `${appBundleInstructions} + [${path}/**/!(*.spec|*.e2e-spec|*.ngsummary|*.snap).*]`
+    : `${appBundleInstructions} + [${path}/**/!(*.spec|*.e2e-spec|*.ngsummary|*.snap).*(!scss)]`
 
   const appBundle = fuseApp
     .bundle(appBundleName)
@@ -103,23 +120,23 @@ Sparky.task('build.universal', () => {
     return fuseApp.run().then(() => {
       serverBundle.watch('src/**').completed(proc => {
         typeHelper(false, false)
-        proc.start();
+        proc.start()
         isReachable(proxy).then(() => {
           active
             ? reload()
             : init({
-              port: BUILD_CONFIG.browserSyncPort,
-              proxy
-            })
+                port: BUILD_CONFIG.browserSyncPort,
+                proxy
+              })
         })
-        death(function (signal: any, err: any) {
+        death(function(signal: any, err: any) {
           proc.kill()
           process.exit()
         })
       })
       return fuseServer.run()
-    });
+    })
   } else {
     return fuseApp.run().then(() => fuseServer.run())
   }
-});
+})
