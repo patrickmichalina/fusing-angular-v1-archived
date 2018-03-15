@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Renderer2 } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
 import { TransferState } from '@angular/platform-browser'
@@ -15,17 +15,16 @@ export class AppComponent {
     public analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
     ts: TransferState,
-    rd: Renderer2,
     is: InjectionService
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', JSON.parse(ts.toJson()))
-    this.setBase(rd, is, es.config.siteUrl)
+    this.setBase(is, es.config.siteUrl)
   }
 
-  setBase(rd: Renderer2, is: InjectionService, href = '/') {
+  setBase(is: InjectionService, href = '/') {
     is
-      .inject(rd, {
+      .inject({
         inHead: true,
         element: 'base',
         attributes: {

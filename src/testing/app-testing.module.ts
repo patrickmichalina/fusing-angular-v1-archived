@@ -1,12 +1,18 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterTestingModule } from '@angular/router/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core'
+import {
+  Injector,
+  ModuleWithProviders,
+  NgModule,
+  Optional,
+  SkipSelf
+} from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 import { PlatformService } from '../client/app/shared/services/platform.service'
 import { CookieService } from '../client/app/shared/services/cookie.service'
 import { EnvironmentService } from '../client/app/shared/services/environment.service'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { APP_BASE_HREF } from '@angular/common'
 import { MockCookieService } from './mock-cookie.service'
 import { MockEnvironmentService } from './mock-environment.service'
@@ -43,7 +49,13 @@ import './client/operators'
   ]
 })
 export class AppTestingModule {
-  static forRoot(requestProvider?: any, windowTokenProvider?: any, authConfigProvider?: any): ModuleWithProviders {
+  // tslint:disable-next-line:readonly-keyword
+  static injector: Injector
+  static forRoot(
+    requestProvider?: any,
+    windowTokenProvider?: any,
+    authConfigProvider?: any
+  ): ModuleWithProviders {
     return {
       ngModule: AppTestingModule,
       providers: [
@@ -52,8 +64,14 @@ export class AppTestingModule {
       ]
     } as ModuleWithProviders
   }
-  constructor(@Optional() @SkipSelf() parentModule: AppTestingModule) {
-    if (parentModule)
-      throw new Error('AppTestingModule already loaded.')
+  constructor(
+    @Optional()
+    @SkipSelf()
+    parentModule: AppTestingModule,
+    injector: Injector
+  ) {
+    // tslint:disable-next-line:no-object-mutation
+    AppTestingModule.injector = injector
+    if (parentModule) throw new Error('AppTestingModule already loaded.')
   }
 }

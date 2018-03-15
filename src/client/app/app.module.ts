@@ -1,11 +1,11 @@
+import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
-import { ErrorHandler, NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
 import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
-import { Angulartics2Module } from 'angulartics2'
+import { ErrorHandler, Injector, NgModule } from '@angular/core'
 import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import {
   HTTP_INTERCEPTORS,
@@ -87,4 +87,11 @@ export function rollbarFactory(ts: TransferState) {
   bootstrap: [AppComponent],
   exports: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  // tslint:disable:readonly-keyword
+  // tslint:disable:no-object-mutation
+  static injector: Injector
+  constructor(injector: Injector) {
+    AppModule.injector = injector
+  }
+}
