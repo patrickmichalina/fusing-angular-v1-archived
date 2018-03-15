@@ -10,21 +10,17 @@ import { EnvironmentService } from './services/environment.service'
 import { NavbarService } from './navbar/navbar.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { InjectionService } from './services/injection.service'
-import { MinifierService } from './services/minifier.service'
 import { ServerResponseService } from './services/server-response.service'
 import { SEOService } from './services/seo.service'
 import { KeysPipe } from './pipes/keys.pipe'
 import { KeyValuePipe } from './pipes/key-value.pipe'
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe'
 import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-interceptor.service'
+import { WindowService } from './services/utlities/window.service'
+import { MinifierService } from './services/utlities/minifier.service'
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
     CommonModule,
     RouterModule,
@@ -35,14 +31,12 @@ import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-
     KeyValuePipe,
     SanitizeHtmlPipe
   ],
-  declarations: [
-    NavbarComponent,
-    KeysPipe,
-    KeyValuePipe,
-    SanitizeHtmlPipe
-  ],
+  declarations: [NavbarComponent, KeysPipe, KeyValuePipe, SanitizeHtmlPipe],
   providers: [
-    { provide: COOKIE_HOST_WHITELIST, useValue: ['angular.patrickmichalina.com'] },
+    {
+      provide: COOKIE_HOST_WHITELIST,
+      useValue: ['angular.patrickmichalina.com']
+    },
     PlatformService,
     CookieService,
     EnvironmentService,
@@ -52,7 +46,8 @@ import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-
     InjectionService,
     MinifierService,
     ServerResponseService,
-    SEOService
+    SEOService,
+    WindowService
   ]
 })
 export class SharedModule {

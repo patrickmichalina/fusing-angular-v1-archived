@@ -31,23 +31,30 @@ const staticOptions = {
   index: false,
   maxAge: isProd ? ms('1yr') : ms('0'),
   setHeaders: (res: express.Response, path: any) => {
-    res.setHeader('Expires', isProd
-      ? new Date(Date.now() + ms('1yr')).toUTCString()
-      : new Date(Date.now() + ms('0')).toUTCString())
+    res.setHeader(
+      'Expires',
+      isProd
+        ? new Date(Date.now() + ms('1yr')).toUTCString()
+        : new Date(Date.now() + ms('0')).toUTCString()
+    )
   }
 }
 
 const logger = createLogger({
   name: 'Fusing-Angular',
   type: 'node-only',
-  streams: [{
-    level: 'error',
-    type: 'raw',
-    stream: { write: (err: any) => console.log }
-  }] as any
+  streams: [
+    {
+      level: 'error',
+      type: 'raw',
+      stream: { write: (err: any) => console.log }
+    }
+  ] as any
 })
 
-app.use(bunyanMiddleware({ logger, excludeHeaders: ['authorization', 'cookie'] }))
+app.use(
+  bunyanMiddleware({ logger, excludeHeaders: ['authorization', 'cookie'] })
+)
 
 const dir = resolve('dist')
 
@@ -57,32 +64,53 @@ app.set('views', dir)
 app.use(cookieParser())
 app.use(shrinkRay())
 app.use(cors())
-app.use(minifyHTML({
-  override: true,
-  exception_url: false,
-  htmlMinifier: {
-    removeComments: true,
-    collapseWhitespace: true,
-    collapseBooleanAttributes: true,
-    removeAttributeQuotes: false,
-    minifyJS: true
-  }
-}))
+app.use(
+  minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+      removeComments: true,
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes: false,
+      minifyJS: true
+    }
+  })
+)
 
 app.use('/css', express.static(`${dir}/css`, staticOptions))
 app.use('/js', express.static(`${dir}/js`, staticOptions))
 app.use('/ngsw.json', express.static(`${dir}/ngsw.json`, staticOptions))
-app.use('/ngsw-worker.js', express.static(`${dir}/ngsw-worker.js`, staticOptions))
+app.use(
+  '/ngsw-worker.js',
+  express.static(`${dir}/ngsw-worker.js`, staticOptions)
+)
 app.use('/robots.txt', express.static(`${dir}/web/robots.txt`, staticOptions))
-app.use('/assets', express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false }))
-app.use('/manifest.json', express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false }))
-app.use('/favicon.ico', express.static(`${dir}/assets/favicons/favicon-16x16.png`, { ...staticOptions, fallthrough: false }))
-
-app.get('**', (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  return res.render('index', {
-    req,
-    res
+app.use('/ping.html', express.static(`${dir}/web/ping.html`, staticOptions))
+app.use(
+  '/assets',
+  express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false })
+)
+app.use(
+  '/manifest.json',
+  express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false })
+)
+app.use(
+  '/favicon.ico',
+  express.static(`${dir}/assets/favicons/favicon-16x16.png`, {
+    ...staticOptions,
+    fallthrough: false
   })
-})
+)
+
+app.get(
+  '**',
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    return res.render('index', {
+      req,
+      res
+    })
+  }
+)
 
 export { app }
