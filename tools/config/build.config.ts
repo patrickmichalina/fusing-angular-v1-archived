@@ -36,13 +36,15 @@ export const BUILD_CONFIG: BuildConfiguration = {
       element: 'meta',
       attributes: {
         name: 'viewport',
-        content: 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0'
+        content: 'width=device-width,initial-scale=1'
       }
     },
     {
       inHead: true,
       element: 'meta',
-      shouldExecute: (dep: Dependency) => process.env.GOOGLE_VERIFICATION_CODE && process.env.GOOGLE_VERIFICATION_ENABLED,
+      shouldExecute: (dep: Dependency) =>
+        process.env.GOOGLE_VERIFICATION_CODE &&
+        process.env.GOOGLE_VERIFICATION_ENABLED,
       attributes: {
         name: 'google-site-verification',
         content: process.env.GOOGLE_VERIFICATION_CODE
@@ -51,8 +53,12 @@ export const BUILD_CONFIG: BuildConfiguration = {
     {
       inHead: true,
       element: 'script',
-      content: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create', '${process.env.GOOGLE_ANALYTICS_TRACKING_ID}', 'auto');`,
-      shouldExecute: (dep: Dependency) => process.env.GOOGLE_ANALYTICS_TRACKING_ID && process.env.GOOGLE_ANALYTICS_ENABLED,
+      content: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create', '${
+        process.env.GOOGLE_ANALYTICS_TRACKING_ID
+      }', 'auto');`,
+      shouldExecute: (dep: Dependency) =>
+        process.env.GOOGLE_ANALYTICS_TRACKING_ID &&
+        process.env.GOOGLE_ANALYTICS_ENABLED,
       attributes: {
         async: true
       }
@@ -60,7 +66,9 @@ export const BUILD_CONFIG: BuildConfiguration = {
     {
       inHead: false,
       element: 'script',
-      shouldExecute: (dep: Dependency) => process.env.GOOGLE_ANALYTICS_TRACKING_ID && process.env.GOOGLE_ANALYTICS_ENABLED,
+      shouldExecute: (dep: Dependency) =>
+        process.env.GOOGLE_ANALYTICS_TRACKING_ID &&
+        process.env.GOOGLE_ANALYTICS_ENABLED,
       attributes: {
         src: 'https://www.google-analytics.com/analytics.js',
         async: true
@@ -77,12 +85,15 @@ const selectedBuildType = argv['build-type'] || 'dev'
 try {
   envConfig = { ...require(`../env/${selectedEnv}`), ...OVERRIDES }
 } catch (err) {
-  throw new Error(`Unable to find environment configuration for '${selectedEnv}' `)
+  throw new Error(
+    `Unable to find environment configuration for '${selectedEnv}' `
+  )
 }
 
 const TypeHelper = require('fuse-box-typechecker').TypeHelper
 
-export const taskName = (nodeFilename: string) => basename(nodeFilename).replace('.ts', '')
+export const taskName = (nodeFilename: string) =>
+  basename(nodeFilename).replace('.ts', '')
 export const ENV_CONFIG_INSTANCE = envConfig
 export const cdn = process.env.CDN_ORIGIN ? process.env.CDN_ORIGIN : undefined
 export const isBuildServer: boolean = argv.ci
@@ -101,7 +112,5 @@ export const typeHelper = (sync = true, throwOnTsLint = true) => {
     name: 'App typechecker',
     throwOnTsLint
   })
-  sync
-    ? _runner.runSync()
-    : _runner.runAsync()
+  sync ? _runner.runSync() : _runner.runAsync()
 }

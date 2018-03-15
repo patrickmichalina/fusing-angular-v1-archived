@@ -1,5 +1,10 @@
+import {
+  ENV_CONFIG,
+  ENV_CONFIG_TS_KEY,
+  IRequest,
+  REQUEST_TS_KEY
+} from '../client/app/app.config'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
-import { AppModule } from './../client/app/app.module'
 import { AppComponent } from './../client/app/app.component'
 import { EnvConfig } from '../../tools/config/app.config'
 import {
@@ -17,7 +22,7 @@ import {
   ROLLBAR_CONFIG,
   ROLLBAR_TS_KEY
 } from '../client/app/shared/services/error-handlers/rollbar.error-handler.service'
-import { ENV_CONFIG, ENV_CONFIG_TS_KEY } from '../client/app/app.config'
+import { AppModule } from './../client/app/app.module'
 import { WINDOW } from '../client/app/shared/services/utlities/window.service'
 import { MinifierService } from '../client/app/shared/services/utlities/minifier.service'
 import * as express from 'express'
@@ -50,6 +55,10 @@ export function onBootstrap(
           process.env.ROLLBAR_ACCESS_TOKEN
         )
         transferState.set<EnvConfig | undefined>(ENV_CONFIG_TS_KEY, envConfig)
+        transferState.set<IRequest>(REQUEST_TS_KEY, {
+          hostname: req.hostname,
+          entryReferer: req.get('referer')
+        })
       })
   }
 }
@@ -69,13 +78,13 @@ export function rollbarFactory(ts: TransferState) {
 @NgModule({
   imports: [ServerModule, ServerTransferStateModule, AppModule],
   providers: [
+    { provide: WINDOW, useValue: {} },
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
     {
       provide: ROLLBAR_CONFIG,
       useFactory: rollbarFactory,
       deps: [TransferState]
     },
-    { provide: WINDOW, useValue: {} },
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: onBootstrap,

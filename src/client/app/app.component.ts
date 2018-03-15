@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
-import { WindowService } from './shared/services/utlities/window.service'
+import { TransferState } from '@angular/platform-browser'
 
 @Component({
   selector: 'pm-app',
@@ -13,9 +13,9 @@ export class AppComponent {
   constructor(
     public analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
-    ws: WindowService
+    ts: TransferState
   ) {
     // tslint:disable-next-line:no-console
-    console.log('logging environment: ', es.config)
+    console.log('logging environment: ', JSON.parse(ts.toJson()))
   }
 }

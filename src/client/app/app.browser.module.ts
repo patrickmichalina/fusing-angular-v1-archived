@@ -7,8 +7,9 @@ import {
 import { AppModule } from './app.module'
 import { NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
-import { ENV_CONFIG, ENV_CONFIG_TS_KEY } from './app.config'
+import { ENV_CONFIG, ENV_CONFIG_TS_KEY, REQUEST_TS_KEY } from './app.config'
 import { WINDOW } from './shared/services/utlities/window.service'
+import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 import 'hammerjs'
@@ -17,6 +18,10 @@ import 'hammerjs'
 
 export function fuseBoxConfigFactory(ts: TransferState) {
   return ts.get(ENV_CONFIG_TS_KEY, {})
+}
+
+export function requestFactory(transferState: TransferState): any {
+  return transferState.get<any>(REQUEST_TS_KEY, {})
 }
 
 @NgModule({
@@ -28,12 +33,17 @@ export function fuseBoxConfigFactory(ts: TransferState) {
     AppModule
   ],
   providers: [
+    { provide: WINDOW, useValue: window },
     {
       provide: ENV_CONFIG,
       useFactory: fuseBoxConfigFactory,
       deps: [TransferState]
     },
-    { provide: WINDOW, useValue: window }
+    {
+      provide: REQUEST,
+      useFactory: requestFactory,
+      deps: [TransferState]
+    }
   ]
 })
 export class AppBrowserModule {
