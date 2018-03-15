@@ -1,13 +1,16 @@
-import { AppModule } from '../../app.module'
+import { staticAppInjectorRef } from '../../app.module'
 import { DOMInjectable, InjectionService } from '../services/injection.service'
 
 // tslint:disable:no-object-mutation
 // tslint:disable:readonly-array
 // tslint:disable:no-invalid-this
 export function Injections(injections: DOMInjectable[] = []): ClassDecorator {
-  return AppModule.injector
-    ? (constructor: any) => {
-        const is = AppModule.injector.get(InjectionService)
+  const ref = staticAppInjectorRef()
+  return !ref
+    ? () => undefined
+    : constructor => {
+        const injector = ref.injector
+        const is = injector.get(InjectionService)
         const ngOnInit = constructor.prototype.ngOnInit
         const ngOnDestroy = constructor.prototype.ngOnDestroy
         let elements: HTMLElement[] = []
@@ -28,5 +31,4 @@ export function Injections(injections: DOMInjectable[] = []): ClassDecorator {
           ngOnDestroy && ngOnDestroy.apply(this, args)
         }
       }
-    : () => undefined
 }

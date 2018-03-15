@@ -9,6 +9,7 @@ import {
 import { makeStateKey } from '@angular/platform-browser'
 import { LoggingService } from '../logging.service'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { PlatformService } from '../platform.service'
 
 export const ROLLBAR_CONFIG = new InjectionToken<Rollbar>('cfg.rb')
 export const ROLLBAR_TS_KEY = makeStateKey<string>('cfg.rb.ts')
@@ -24,9 +25,12 @@ export class GlobalErrorHandler implements ErrorHandler {
   handleError(err: any): void {
     this.rollbar && this.rollbar.error(err.originalError || err)
     const log = this.inj.get(LoggingService)
+    const ps = this.inj.get(PlatformService)
     const analytics = this.inj.get(Angulartics2GoogleAnalytics)
 
     log && log.error(err.originalError || err)
-    analytics && analytics.exceptionTrack(err.originalError || err)
+    ps.isBrowser &&
+      analytics &&
+      analytics.exceptionTrack(err.originalError || err)
   }
 }

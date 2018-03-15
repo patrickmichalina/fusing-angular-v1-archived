@@ -1,4 +1,4 @@
-import { AppModule } from '../../app.module'
+import { staticAppInjectorRef } from '../../app.module'
 import { OgPageType, SEOImage, SEOService } from '../services/seo.service'
 
 interface ISEOStatic {
@@ -13,9 +13,12 @@ interface ISEOStatic {
 // tslint:disable:readonly-array
 // tslint:disable:no-invalid-this
 export function SEO(obj: ISEOStatic = {}): ClassDecorator {
-  return AppModule.injector
-    ? (constructor: any) => {
-        const seo = AppModule.injector.get(SEOService)
+  const ref = staticAppInjectorRef()
+  return !ref
+    ? () => undefined
+    : constructor => {
+        const injector = ref.injector
+        const seo = injector.get(SEOService)
         const ngOnInit = constructor.prototype.ngOnInit
         const ngOnDestroy = constructor.prototype.ngOnDestroy
 
@@ -37,5 +40,4 @@ export function SEO(obj: ISEOStatic = {}): ClassDecorator {
           ngOnDestroy && ngOnDestroy.apply(this, args)
         }
       }
-    : () => undefined
 }

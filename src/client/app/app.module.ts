@@ -1,4 +1,4 @@
-import { ErrorHandler, Injector, NgModule } from '@angular/core'
+import { ErrorHandler, Injector, NgModule, NgModuleRef } from '@angular/core'
 import { Angulartics2Module } from 'angulartics2'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
@@ -91,7 +91,13 @@ export class AppModule {
   // tslint:disable:readonly-keyword
   // tslint:disable:no-object-mutation
   static injector: Injector
+  static instance: AppModule
   constructor(injector: Injector) {
     AppModule.injector = injector
+    AppModule.instance = this
   }
+}
+
+export function staticAppInjectorRef(): NgModuleRef<AppModule> {
+  return AppModule.injector as any
 }

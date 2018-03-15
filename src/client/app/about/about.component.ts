@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core'
 import { SEO } from '../shared/decorators/seo.decorator'
 
 @Component({
@@ -11,4 +16,11 @@ import { SEO } from '../shared/decorators/seo.decorator'
   title: 'About',
   description: 'About page desc'
 })
-export class AboutComponent {}
+export class AboutComponent implements OnInit, OnDestroy {
+  ngOnInit() {
+    // AOT does not work with the SEO decorator unless this is present
+  }
+  ngOnDestroy() {
+    // AOT does not work with the SEO decorator unless this is present
+  }
+}
