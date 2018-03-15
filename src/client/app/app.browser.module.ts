@@ -10,12 +10,16 @@ import { AppComponent } from './app.component'
 import { ENV_CONFIG, ENV_CONFIG_TS_KEY, REQUEST_TS_KEY } from './app.config'
 import { WINDOW } from './shared/services/utlities/window.service'
 import { REQUEST } from '@nguniversal/express-engine/src/tokens'
-// import { ServiceWorkerModule } from '@angular/service-worker'
-// import { Observable } from 'rxjs/Observable'
-import 'hammerjs'
+import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 import { ResponseService } from './shared/services/response.service'
+import { Observable } from 'rxjs/Observable'
+import 'hammerjs'
 
-// const sw = process.env.NODE_ENV !== 'development' && [ServiceWorkerModule.register('./ngsw-worker.js')] || []
+const sw =
+  (process.env.NODE_ENV !== 'development' && [
+    ServiceWorkerModule.register('./ngsw-worker.js')
+  ]) ||
+  []
 
 export function fuseBoxConfigFactory(ts: TransferState) {
   return ts.get(ENV_CONFIG_TS_KEY, {})
@@ -31,7 +35,8 @@ export function requestFactory(transferState: TransferState): any {
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
     BrowserTransferStateModule,
     BrowserAnimationsModule,
-    AppModule
+    AppModule,
+    ...sw
   ],
   providers: [
     { provide: WINDOW, useValue: window },
@@ -49,15 +54,16 @@ export function requestFactory(transferState: TransferState): any {
   ]
 })
 export class AppBrowserModule {
-  // constructor(updates: SwUpdate) {
-  //   Observable.interval(100000).subscribe(() => updates.checkForUpdate())
-  //   updates.available.subscribe(event => {
-  //     console.log('current version is', event.current)
-  //     console.log('available version is', event.available)
-  //   })
-  //   updates.activated.subscribe(event => {
-  //     console.log('old version was', event.previous)
-  //     console.log('new version is', event.current)
-  //   })
-  // }
+  // tslint:disable:no-console
+  constructor(updates: SwUpdate) {
+    Observable.interval(100000).subscribe(() => updates.checkForUpdate())
+    updates.available.subscribe(event => {
+      console.log('current version is', event.current)
+      console.log('available version is', event.available)
+    })
+    updates.activated.subscribe(event => {
+      console.log('old version was', event.previous)
+      console.log('new version is', event.current)
+    })
+  }
 }
