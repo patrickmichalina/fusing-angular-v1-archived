@@ -88,19 +88,26 @@ app.use(
 app.use('/robots.txt', express.static(`${dir}/web/robots.txt`, staticOptions))
 app.use('/ping.html', express.static(`${dir}/web/ping.html`, staticOptions))
 app.use(
+  '/favicon.ico',
+  express.static(`${dir}/assets/favicons/favicon-16x16.png`, {
+    ...staticOptions,
+    fallthrough: false
+  })
+)
+app.use(
+  '/assets/favicons/favicon.ico',
+  express.static(`${dir}/assets/favicons/favicon-16x16.png`, {
+    ...staticOptions,
+    fallthrough: false
+  })
+)
+app.use(
   '/assets',
   express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false })
 )
 app.use(
   '/manifest.json',
   express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false })
-)
-app.use(
-  '/favicon.ico',
-  express.static(`${dir}/assets/favicons/favicon-16x16.png`, {
-    ...staticOptions,
-    fallthrough: false
-  })
 )
 
 app.get(
