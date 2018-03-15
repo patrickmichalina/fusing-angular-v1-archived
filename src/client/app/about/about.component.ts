@@ -9,6 +9,6 @@ import { SEO } from '../shared/decorators/seo.decorator'
 })
 @SEO({
   title: 'About',
-  description: 'About this page'
+  description: 'About page desc'
 })
 export class AboutComponent {}

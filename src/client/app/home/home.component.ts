@@ -10,7 +10,8 @@ import { Injections } from '../shared/decorators/injection.decorator'
 })
 @SEO({
   title: 'Home',
-  description: 'Some cool desc that needs to show up in meta tags'
+  pageType: 'article',
+  description: 'Home page desc'
 })
 @Injections([
   {

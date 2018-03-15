@@ -1,35 +1,39 @@
 import { AppModule } from '../../app.module'
-import { Meta, Title } from '@angular/platform-browser'
+import { OgPageType, SEOImage, SEOService } from '../services/seo.service'
 
-interface ISEO {
+interface ISEOStatic {
   readonly title?: string
   readonly description?: string
+  readonly pageType?: OgPageType
+  readonly articleTags?: ReadonlyArray<string>
+  readonly images?: ReadonlyArray<SEOImage>
 }
 
 // tslint:disable:no-object-mutation
 // tslint:disable:readonly-array
 // tslint:disable:no-invalid-this
-export function SEO(obj: ISEO = {}): ClassDecorator {
+export function SEO(obj: ISEOStatic = {}): ClassDecorator {
   return AppModule.injector
     ? (constructor: any) => {
-        const ts = AppModule.injector.get(Title)
-        const ms = AppModule.injector.get(Meta)
+        const seo = AppModule.injector.get(SEOService)
         const ngOnInit = constructor.prototype.ngOnInit
         const ngOnDestroy = constructor.prototype.ngOnDestroy
 
         constructor.prototype.ngOnInit = (...args: any[]) => {
-          obj.title && ts.setTitle(obj.title)
-          obj.description &&
-            ms.updateTag({
-              name: 'description',
-              content: obj.description
-            })
+          seo.setTitle(obj.title)
+          seo.setDescription(obj.description)
+          seo.updateArticleTags(obj.articleTags)
+          seo.updatePageType(obj.pageType)
+          seo.updateImages(obj.images)
           ngOnInit && ngOnInit.apply(this, args)
         }
 
         constructor.prototype.ngOnDestroy = (...args: any[]) => {
-          ts.setTitle('')
-          ms.removeTag('name="description"')
+          seo.removePageType()
+          seo.removeTitle()
+          seo.removeDescription()
+          seo.removeArticleTags()
+          seo.removeImages()
           ngOnDestroy && ngOnDestroy.apply(this, args)
         }
       }
