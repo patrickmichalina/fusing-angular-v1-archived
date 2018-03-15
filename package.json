@@ -46,6 +46,7 @@
     "precommit": "pretty-quick --staged",
     "prepush": "npm run lint && npm test",
     "postmerge": "./tools/scripts/post-merge.sh || true",
+    "postinstall": "",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "lint": "ts-node fuse.ts lint --build-type prod",
     "bundlesize": "node_modules/.bin/bundlesize",

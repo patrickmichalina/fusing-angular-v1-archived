@@ -2,6 +2,7 @@ import { IResponseService, ResponseService } from './response.service'
 import { async, TestBed } from '@angular/core/testing'
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
 import { AppTestingModule } from '../../../../testing/app-testing.module'
+import { ServerResponseService } from '../../../../server/angular/server.response.service'
 
 // tslint:disable:readonly-keyword
 // tslint:disable:no-object-mutation
@@ -14,7 +15,10 @@ describe(ResponseService.name, () => {
       TestBed.configureTestingModule({
         imports: [AppTestingModule.forRoot()],
         providers: [
-          ResponseService,
+          {
+            provide: ResponseService,
+            useClass: ServerResponseService
+          },
           { provide: RESPONSE, useValue: new MockResponse() }
         ]
       })
@@ -112,7 +116,7 @@ describe(ResponseService.name, () => {
       response.statusCode = 0
       service.setError()
       expect(response.statusCode).toEqual(500)
-      expect(response.statusMessage).toEqual('internal server error')
+      expect(response.statusMessage).toEqual('Internal Server Error')
     })
   )
 

@@ -1,12 +1,12 @@
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { ErrorHandler, NgModule } from '@angular/core'
-import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
 import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
 import { Angulartics2Module } from 'angulartics2'
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import {
   HTTP_INTERCEPTORS,
   HttpClientModule,

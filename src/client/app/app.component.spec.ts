@@ -17,6 +17,7 @@ import { NavbarService } from './shared/navbar/navbar.service'
 import { AppTestingModule } from '../../testing/app-testing.module'
 
 export const TESTING_CONFIG: EnvConfig = {
+  siteUrl: 'http://localhost:8000',
   // tslint:disable-next-line:max-line-length
   endpoints: {
     api: 'http://localhost:8000/api',
@@ -28,46 +29,53 @@ export const TESTING_CONFIG: EnvConfig = {
   selector: 'test-cmp',
   template: '<pm-app></pm-app>'
 })
-class TestComponent { }
+class TestComponent {}
 
 describe('App component', () => {
-  const config: ReadonlyArray<Route> = [
-    { path: '', component: HomeComponent }
-  ]
+  const config: ReadonlyArray<Route> = [{ path: '', component: HomeComponent }]
 
   let fixture: ComponentFixture<TestComponent>
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        AppTestingModule.forRoot(),
-        AppModule,
-        AppBrowserModule,
-        SharedModule,
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes(config as any),
-        Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
-      ],
-      declarations: [TestComponent, HomeComponent],
-      providers: [
-        { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: ENV_CONFIG, useValue: TESTING_CONFIG },
-        EnvironmentService,
-        NavbarService
-      ]
-    }).compileComponents()
-  }))
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          AppTestingModule.forRoot(),
+          AppModule,
+          AppBrowserModule,
+          SharedModule,
+          HttpClientTestingModule,
+          RouterTestingModule.withRoutes(config as any),
+          Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
+        ],
+        declarations: [TestComponent, HomeComponent],
+        providers: [
+          { provide: APP_BASE_HREF, useValue: '/' },
+          { provide: ENV_CONFIG, useValue: TESTING_CONFIG },
+          EnvironmentService,
+          NavbarService
+        ]
+      }).compileComponents()
+    })
+  )
 
-  beforeEach(async(() => {
-    fixture = TestBed.createComponent(TestComponent)
-  }))
+  beforeEach(
+    async(() => {
+      fixture = TestBed.createComponent(TestComponent)
+    })
+  )
 
-  afterEach(async(() => {
-    TestBed.resetTestingModule()
-  }))
+  afterEach(
+    async(() => {
+      TestBed.resetTestingModule()
+    })
+  )
 
-  it('should build without a problem', async(() => {
-    expect(fixture.nativeElement).toBeTruthy()
-    expect(fixture.nativeElement).toMatchSnapshot()
-  }))
+  it(
+    'should build without a problem',
+    async(() => {
+      expect(fixture.nativeElement).toBeTruthy()
+      expect(fixture.nativeElement).toMatchSnapshot()
+    })
+  )
 })

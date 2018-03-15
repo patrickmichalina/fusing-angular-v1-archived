@@ -22,6 +22,7 @@ import {
 } from '@angular/common/http'
 import { ResponseService } from '../services/response.service'
 import '../../../operators'
+import { ServerResponseService } from '../../../../server/angular/server.response.service'
 
 export class ExpressResponse {
   readonly store = new Map()
@@ -76,7 +77,10 @@ describe(HttpCacheTagInterceptor.name, () => {
               cacheableResponseCodes: [200, 201]
             }
           },
-          ResponseService,
+          {
+            provide: ResponseService,
+            useClass: ServerResponseService
+          },
           {
             provide: CACHE_TAG_FACTORY,
             useFactory: (rs: ResponseService) => {

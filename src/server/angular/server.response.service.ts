@@ -1,5 +1,6 @@
 // tslint:disable:no-require-imports
 // tslint:disable:no-object-mutation
+
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
 import { Inject, Injectable } from '@angular/core'
 import { IResponseService } from '../../client/app/shared/services/response.service'
@@ -19,20 +20,20 @@ export class ServerResponseService implements IResponseService {
 
   appendHeader(key: string, value: string, delimiter = ','): void {
     const current = this.getHeader(key)
-    !current && this.setHeader(key, value)
 
-    const newValue = [...current.split(delimiter), value]
-      .filter((el, i, a) => i === a.indexOf(el))
-      .join(delimiter)
+    if (!current) {
+      this.setHeader(key, value)
+    } else {
+      const newValue = [...current.split(delimiter), value]
+        .filter((el, i, a) => i === a.indexOf(el))
+        .join(delimiter)
 
-    this.response.header(key, newValue)
+      this.response.header(key, newValue)
+    }
   }
 
   setHeaders(dictionary: { readonly [key: string]: string }): void {
-    this.response &&
-      Object.keys(dictionary).forEach(key =>
-        this.setHeader(key, dictionary[key])
-      )
+    Object.keys(dictionary).forEach(key => this.setHeader(key, dictionary[key]))
   }
 
   setStatus(code: number, message?: string): void {

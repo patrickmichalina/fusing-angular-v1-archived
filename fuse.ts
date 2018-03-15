@@ -63,6 +63,7 @@ const appOptions = {
     NgAotPlugin(),
     ...baseOptions.plugins,
     WebIndexPlugin({
+      base: ENV_CONFIG_INSTANCE.host,
       bundles: [vendorBundleName, appBundleName],
       startingDocumentPath: 'dist/index.html',
       appElement: {
