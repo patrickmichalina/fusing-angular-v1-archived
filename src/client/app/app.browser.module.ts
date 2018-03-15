@@ -13,6 +13,7 @@ import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 // import { ServiceWorkerModule } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 import 'hammerjs'
+import { ResponseService } from './shared/services/response.service'
 
 // const sw = process.env.NODE_ENV !== 'development' && [ServiceWorkerModule.register('./ngsw-worker.js')] || []
 
@@ -43,7 +44,8 @@ export function requestFactory(transferState: TransferState): any {
       provide: REQUEST,
       useFactory: requestFactory,
       deps: [TransferState]
-    }
+    },
+    ResponseService
   ]
 })
 export class AppBrowserModule {

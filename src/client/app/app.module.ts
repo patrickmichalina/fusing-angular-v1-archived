@@ -5,29 +5,45 @@ import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
 import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
-import { ServerResponseService } from './shared/services/server-response.service'
 import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpResponse } from '@angular/common/http'
-import { CACHE_TAG_CONFIG, CACHE_TAG_FACTORY, CacheTagConfig, HttpCacheTagModule } from './shared/http-cache-tag/http-cache-tag.module'
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpResponse
+} from '@angular/common/http'
+import {
+  CACHE_TAG_CONFIG,
+  CACHE_TAG_FACTORY,
+  CacheTagConfig,
+  HttpCacheTagModule
+} from './shared/http-cache-tag/http-cache-tag.module'
 import { TransferHttpCacheModule } from '@nguniversal/common'
-import { ROLLBAR_CONFIG, ROLLBAR_TS_KEY, RollbarErrorHandler } from './shared/services/error-handlers/rollbar.error-handler.service'
+import {
+  ROLLBAR_CONFIG,
+  ROLLBAR_TS_KEY,
+  RollbarErrorHandler
+} from './shared/services/error-handlers/rollbar.error-handler.service'
+import { ResponseService } from './shared/services/response.service'
 import * as Rollbar from 'rollbar'
 
-export function cacheTagFactory(srs: ServerResponseService): any {
+export function cacheTagFactory(rs: ResponseService): any {
   return (httpResponse: HttpResponse<any>, config: CacheTagConfig) => {
     const cacheHeader = httpResponse.headers.get(config.headerKey)
-    cacheHeader && srs.appendHeader(config.headerKey, cacheHeader)
+    cacheHeader && rs.appendHeader(config.headerKey, cacheHeader)
   }
 }
 
 export function rollbarFactory(ts: TransferState) {
   const accessToken = ts.get(ROLLBAR_TS_KEY, undefined)
-  return accessToken && new Rollbar({
-    accessToken,
-    captureUncaught: true,
-    captureUnhandledRejections: true
-  })
+  return (
+    accessToken &&
+    new Rollbar({
+      accessToken,
+      captureUncaught: true,
+      captureUnhandledRejections: true
+    })
+  )
 }
 
 @NgModule({
@@ -50,16 +66,25 @@ export function rollbarFactory(ts: TransferState) {
       {
         provide: CACHE_TAG_FACTORY,
         useFactory: cacheTagFactory,
-        deps: [ServerResponseService]
-      })
+        deps: [ResponseService]
+      }
+    )
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpCookieInterceptor, multi: true },
-    { provide: ROLLBAR_CONFIG, useFactory: rollbarFactory, deps: [TransferState] },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpCookieInterceptor,
+      multi: true
+    },
+    {
+      provide: ROLLBAR_CONFIG,
+      useFactory: rollbarFactory,
+      deps: [TransferState]
+    },
     { provide: ErrorHandler, useClass: RollbarErrorHandler }
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   exports: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,12 +1,26 @@
-import { CACHE_TAG_CONFIG, CACHE_TAG_FACTORY, CacheTagConfig } from './http-cache-tag.module'
+import {
+  CACHE_TAG_CONFIG,
+  CACHE_TAG_FACTORY,
+  CacheTagConfig
+} from './http-cache-tag.module'
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
 import { ENV_CONFIG } from './../../app.config'
 import { HttpCacheTagInterceptor } from './http-cache-tag-interceptor.service'
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
+import {
+  HttpClientTestingModule,
+  HttpTestingController
+} from '@angular/common/http/testing'
 import { async, TestBed } from '@angular/core/testing'
 import { Response } from 'express'
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule, HttpHeaders, HttpInterceptor, HttpResponse } from '@angular/common/http'
-import { ServerResponseService } from '../services/server-response.service'
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpResponse
+} from '@angular/common/http'
+import { ResponseService } from '../services/response.service'
 import '../../../operators'
 
 export class ExpressResponse {
@@ -31,142 +45,239 @@ function testDeps() {
 }
 
 describe(HttpCacheTagInterceptor.name, () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientModule],
-      providers: [
-        { provide: HttpCacheTagInterceptor, useClass: HttpCacheTagInterceptor, deps: [CACHE_TAG_CONFIG, CACHE_TAG_FACTORY] },
-        { provide: HTTP_INTERCEPTORS, useExisting: HttpCacheTagInterceptor, multi: true },
-        { provide: RESPONSE, useClass: ExpressResponse },
-        {
-          provide: ENV_CONFIG,
-          useValue: {
-            endpoints: {
-              discovery: 'http://some.endpoint/api'
-            }
-          }
-        },
-        {
-          provide: CACHE_TAG_CONFIG,
-          useValue: {
-            headerKey: 'Cache-Tag',
-            cacheableResponseCodes: [200, 201]
-          }
-        },
-        ServerResponseService,
-        {
-          provide: CACHE_TAG_FACTORY,
-          useFactory: (srs: ServerResponseService) => {
-            return (httpResponse: HttpResponse<any>, d: CacheTagConfig) => {
-              const cacheHeader = httpResponse.headers.get(testDeps().config.headerKey)
-              if (cacheHeader) {
-                srs.appendHeader(testDeps().config.headerKey, cacheHeader)
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, HttpClientModule],
+        providers: [
+          {
+            provide: HttpCacheTagInterceptor,
+            useClass: HttpCacheTagInterceptor,
+            deps: [CACHE_TAG_CONFIG, CACHE_TAG_FACTORY]
+          },
+          {
+            provide: HTTP_INTERCEPTORS,
+            useExisting: HttpCacheTagInterceptor,
+            multi: true
+          },
+          { provide: RESPONSE, useClass: ExpressResponse },
+          {
+            provide: ENV_CONFIG,
+            useValue: {
+              endpoints: {
+                discovery: 'http://some.endpoint/api'
               }
             }
           },
-          deps: [ServerResponseService]
-        }
-      ]
+          {
+            provide: CACHE_TAG_CONFIG,
+            useValue: {
+              headerKey: 'Cache-Tag',
+              cacheableResponseCodes: [200, 201]
+            }
+          },
+          ResponseService,
+          {
+            provide: CACHE_TAG_FACTORY,
+            useFactory: (rs: ResponseService) => {
+              return (httpResponse: HttpResponse<any>, d: CacheTagConfig) => {
+                const cacheHeader = httpResponse.headers.get(
+                  testDeps().config.headerKey
+                )
+                if (cacheHeader) {
+                  rs.appendHeader(testDeps().config.headerKey, cacheHeader)
+                }
+              }
+            },
+            deps: [ResponseService]
+          }
+        ]
+      })
     })
-  }))
+  )
 
   afterEach(() => {
     TestBed.resetTestingModule()
   })
 
-  it('should construct', async(() => {
-    expect(testDeps().interceptor).toBeDefined()
-  }))
-
-  it('should append cache headers to server response', async(() => {
-    expect.assertions(4)
-    testDeps().http.get('http://www.google.com/api/some-thing/123', { observe: 'response' }).subscribe(response => {
-      expect(response).toBeTruthy()
-      expect(response.headers.get(testDeps().config.headerKey)).toEqual('Thing-123')
-      expect(testDeps().serverResponse.getHeader(testDeps().config.headerKey)).toEqual('Thing-123')
+  it(
+    'should construct',
+    async(() => {
+      expect(testDeps().interceptor).toBeDefined()
     })
+  )
 
-    const req1 = testDeps().httpMock.expectOne(r => r.url === 'http://www.google.com/api/some-thing/123')
-    expect(req1.request.method).toEqual('GET')
+  it(
+    'should append cache headers to server response',
+    async(() => {
+      expect.assertions(4)
+      testDeps()
+        .http.get('http://www.google.com/api/some-thing/123', {
+          observe: 'response'
+        })
+        .subscribe(response => {
+          expect(response).toBeTruthy()
+          expect(response.headers.get(testDeps().config.headerKey)).toEqual(
+            'Thing-123'
+          )
+          expect(
+            testDeps().serverResponse.getHeader(testDeps().config.headerKey)
+          ).toEqual('Thing-123')
+        })
 
-    req1.flush({ hello: 'world' }, {
-      headers: new HttpHeaders().set(testDeps().config.headerKey, 'Thing-123')
+      const req1 = testDeps().httpMock.expectOne(
+        r => r.url === 'http://www.google.com/api/some-thing/123'
+      )
+      expect(req1.request.method).toEqual('GET')
+
+      req1.flush(
+        { hello: 'world' },
+        {
+          headers: new HttpHeaders().set(
+            testDeps().config.headerKey,
+            'Thing-123'
+          )
+        }
+      )
+
+      testDeps().httpMock.verify()
     })
+  )
 
-    testDeps().httpMock.verify()
-  }))
+  it(
+    'should append cache headers to server response with other status code',
+    async(() => {
+      expect.assertions(4)
+      testDeps()
+        .http.get('http://www.google.com/api/some-thing/123', {
+          observe: 'response'
+        })
+        .subscribe(response => {
+          expect(response).toBeTruthy()
+          expect(response.headers.get(testDeps().config.headerKey)).toEqual(
+            'Thing-123'
+          )
+          expect(
+            testDeps().serverResponse.getHeader(testDeps().config.headerKey)
+          ).toEqual('Thing-123')
+        })
 
-  it('should append cache headers to server response with other status code', async(() => {
-    expect.assertions(4)
-    testDeps().http.get('http://www.google.com/api/some-thing/123', { observe: 'response' }).subscribe(response => {
-      expect(response).toBeTruthy()
-      expect(response.headers.get(testDeps().config.headerKey)).toEqual('Thing-123')
-      expect(testDeps().serverResponse.getHeader(testDeps().config.headerKey)).toEqual('Thing-123')
+      const req1 = testDeps().httpMock.expectOne(
+        r => r.url === 'http://www.google.com/api/some-thing/123'
+      )
+      expect(req1.request.method).toEqual('GET')
+
+      req1.flush(
+        { hello: 'world' },
+        {
+          status: 201,
+          statusText: 'OK',
+          headers: new HttpHeaders().set(
+            testDeps().config.headerKey,
+            'Thing-123'
+          )
+        }
+      )
+
+      testDeps().httpMock.verify()
     })
+  )
 
-    const req1 = testDeps().httpMock.expectOne(r => r.url === 'http://www.google.com/api/some-thing/123')
-    expect(req1.request.method).toEqual('GET')
+  it(
+    'should not append cache headers when wrong header exists',
+    async(() => {
+      expect.assertions(4)
+      testDeps()
+        .http.get('http://www.google.com/api/some-thing/123', {
+          observe: 'response'
+        })
+        .subscribe(response => {
+          expect(response).toBeTruthy()
+          expect(response.headers.get(testDeps().config.headerKey)).toBeNull()
+          expect(
+            testDeps().serverResponse.getHeader(testDeps().config.headerKey)
+          ).toBeUndefined()
+        })
 
-    req1.flush({ hello: 'world' }, {
-      status: 201,
-      statusText: 'OK',
-      headers: new HttpHeaders().set(testDeps().config.headerKey, 'Thing-123')
+      const req = testDeps().httpMock.expectOne(
+        r => r.url === 'http://www.google.com/api/some-thing/123'
+      )
+      expect(req.request.method).toEqual('GET')
+
+      req.flush(
+        { hello: 'world' },
+        {
+          headers: new HttpHeaders().set('Some-Nothing-Tag', 'Thing-123')
+        }
+      )
+
+      testDeps().httpMock.verify()
     })
+  )
 
-    testDeps().httpMock.verify()
-  }))
+  it(
+    'should not append cache headers when no headers exists',
+    async(() => {
+      expect.assertions(4)
+      testDeps()
+        .http.get('http://www.google.com/api/some-thing/123', {
+          observe: 'response'
+        })
+        .subscribe(response => {
+          expect(response).toBeTruthy()
+          expect(response.headers.get(testDeps().config.headerKey)).toBeNull()
+          expect(
+            testDeps().serverResponse.getHeader(testDeps().config.headerKey)
+          ).toBeUndefined()
+        })
 
-  it('should not append cache headers when wrong header exists', async(() => {
-    expect.assertions(4)
-    testDeps().http.get('http://www.google.com/api/some-thing/123', { observe: 'response' }).subscribe(response => {
-      expect(response).toBeTruthy()
-      expect(response.headers.get(testDeps().config.headerKey)).toBeNull()
-      expect(testDeps().serverResponse.getHeader(testDeps().config.headerKey)).toBeUndefined()
+      const req1 = testDeps().httpMock.expectOne(
+        r => r.url === 'http://www.google.com/api/some-thing/123'
+      )
+      expect(req1.request.method).toEqual('GET')
+
+      req1.flush({ hello: 'world' })
+
+      testDeps().httpMock.verify()
     })
+  )
 
-    const req = testDeps().httpMock.expectOne(r => r.url === 'http://www.google.com/api/some-thing/123')
-    expect(req.request.method).toEqual('GET')
+  it(
+    'should only append headers with proper API response status codes',
+    async(() => {
+      expect.assertions(4)
+      testDeps()
+        .http.get('http://www.google.com/api/some-thing/123', {
+          observe: 'response'
+        })
+        .subscribe(response => {
+          expect(response).toBeTruthy()
+          expect(
+            response.headers.get(testDeps().config.headerKey)
+          ).toBeDefined()
+          expect(
+            testDeps().serverResponse.getHeader(testDeps().config.headerKey)
+          ).toBeUndefined()
+        })
 
-    req.flush({ hello: 'world' }, {
-      headers: new HttpHeaders().set('Some-Nothing-Tag', 'Thing-123')
+      const req = testDeps().httpMock.expectOne(
+        r => r.url === 'http://www.google.com/api/some-thing/123'
+      )
+      expect(req.request.method).toEqual('GET')
+
+      req.flush(
+        { hello: 'world' },
+        {
+          status: 206,
+          statusText: 'OK',
+          headers: new HttpHeaders().set(
+            testDeps().config.headerKey,
+            'Thing-123'
+          )
+        }
+      )
+
+      testDeps().httpMock.verify()
     })
-
-    testDeps().httpMock.verify()
-  }))
-
-  it('should not append cache headers when no headers exists', async(() => {
-    expect.assertions(4)
-    testDeps().http.get('http://www.google.com/api/some-thing/123', { observe: 'response' }).subscribe(response => {
-      expect(response).toBeTruthy()
-      expect(response.headers.get(testDeps().config.headerKey)).toBeNull()
-      expect(testDeps().serverResponse.getHeader(testDeps().config.headerKey)).toBeUndefined()
-    })
-
-    const req1 = testDeps().httpMock.expectOne(r => r.url === 'http://www.google.com/api/some-thing/123')
-    expect(req1.request.method).toEqual('GET')
-
-    req1.flush({ hello: 'world' })
-
-    testDeps().httpMock.verify()
-  }))
-
-  it('should only append headers with proper API response status codes', async(() => {
-    expect.assertions(4)
-    testDeps().http.get('http://www.google.com/api/some-thing/123', { observe: 'response' }).subscribe(response => {
-      expect(response).toBeTruthy()
-      expect(response.headers.get(testDeps().config.headerKey)).toBeDefined()
-      expect(testDeps().serverResponse.getHeader(testDeps().config.headerKey)).toBeUndefined()
-    })
-
-    const req = testDeps().httpMock.expectOne(r => r.url === 'http://www.google.com/api/some-thing/123')
-    expect(req.request.method).toEqual('GET')
-
-    req.flush({ hello: 'world' }, {
-      status: 206,
-      statusText: 'OK',
-      headers: new HttpHeaders().set(testDeps().config.headerKey, 'Thing-123')
-    })
-
-    testDeps().httpMock.verify()
-  }))
+  )
 })

@@ -3,10 +3,10 @@ import {
   ENV_CONFIG_TS_KEY,
   IRequest,
   REQUEST_TS_KEY
-} from '../client/app/app.config'
+} from '../../client/app/app.config'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
-import { AppComponent } from './../client/app/app.component'
-import { EnvConfig } from '../../tools/config/app.config'
+import { AppComponent } from './../../client/app/app.component'
+import { EnvConfig } from '../../../tools/config/app.config'
 import {
   APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
@@ -21,16 +21,18 @@ import {
 import {
   ROLLBAR_CONFIG,
   ROLLBAR_TS_KEY
-} from '../client/app/shared/services/error-handlers/rollbar.error-handler.service'
-import { AppModule } from './../client/app/app.module'
-import { WINDOW } from '../client/app/shared/services/utlities/window.service'
-import { MinifierService } from '../client/app/shared/services/utlities/minifier.service'
+} from '../../client/app/shared/services/error-handlers/rollbar.error-handler.service'
+import { AppModule } from './../../client/app/app.module'
+import { WINDOW } from '../../client/app/shared/services/utlities/window.service'
+import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
+import { ServerResponseService } from './server.response.service'
+import { ResponseService } from '../../client/app/shared/services/response.service'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
-import '../client/operators'
+import '../../client/operators'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -80,6 +82,7 @@ export function rollbarFactory(ts: TransferState) {
   providers: [
     { provide: WINDOW, useValue: {} },
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
+    { provide: ResponseService, useClass: ServerResponseService },
     {
       provide: ROLLBAR_CONFIG,
       useFactory: rollbarFactory,

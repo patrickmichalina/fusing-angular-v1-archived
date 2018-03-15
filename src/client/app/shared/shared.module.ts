@@ -10,7 +10,6 @@ import { EnvironmentService } from './services/environment.service'
 import { NavbarService } from './navbar/navbar.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { InjectionService } from './services/injection.service'
-import { ServerResponseService } from './services/server-response.service'
 import { SEOService } from './services/seo.service'
 import { KeysPipe } from './pipes/keys.pipe'
 import { KeyValuePipe } from './pipes/key-value.pipe'
@@ -45,7 +44,6 @@ import { MinifierService } from './services/utlities/minifier.service'
     WebSocketService,
     InjectionService,
     MinifierService,
-    ServerResponseService,
     SEOService,
     WindowService
   ]

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ResponseService } from '../shared/services/response.service'
 
 @Component({
   selector: 'pm-not-found',
@@ -7,4 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotFoundComponent {
+  constructor(rs: ResponseService) {
+    rs.setNotFound()
+  }
 }
