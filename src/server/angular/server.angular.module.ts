@@ -27,6 +27,7 @@ import { WINDOW } from '../../client/app/shared/services/utlities/window.service
 import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
 import { ServerResponseService } from './server.response.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
+import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
@@ -93,6 +94,13 @@ export function rollbarFactory(ts: TransferState) {
       useFactory: onBootstrap,
       multi: true,
       deps: [ApplicationRef, TransferState, REQUEST]
+    },
+    {
+      provide: LOGGER_CONFIG,
+      useValue: {
+        name: 'Universal WebApp',
+        type: 'server-side'
+      }
     },
     {
       provide: MinifierService,

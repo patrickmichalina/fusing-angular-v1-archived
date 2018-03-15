@@ -12,6 +12,7 @@ import { WINDOW } from './shared/services/utlities/window.service'
 import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 // import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 import { ResponseService } from './shared/services/response.service'
+import { LOGGER_CONFIG } from './shared/services/logging.service'
 // import { Observable } from 'rxjs/Observable'
 // import 'hammerjs'
 
@@ -42,6 +43,13 @@ export function requestFactory(transferState: TransferState): any {
       provide: REQUEST,
       useFactory: requestFactory,
       deps: [TransferState]
+    },
+    {
+      provide: LOGGER_CONFIG,
+      useValue: {
+        name: 'Universal WebApp',
+        type: 'client-side'
+      }
     },
     ResponseService
   ]

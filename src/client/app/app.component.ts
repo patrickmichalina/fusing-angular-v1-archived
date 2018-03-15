@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
-import { TransferState } from '@angular/platform-browser'
 import { InjectionService } from './shared/services/injection.service'
 
 @Component({
@@ -14,11 +13,10 @@ export class AppComponent {
   constructor(
     public analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
-    ts: TransferState,
     is: InjectionService
   ) {
     // tslint:disable-next-line:no-console
-    console.log('logging environment: ', JSON.parse(ts.toJson()))
+    console.log('logging environment: ', es.config)
     this.setBase(is, es.config.siteUrl)
   }
 

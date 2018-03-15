@@ -29,12 +29,12 @@ const isProd = argv['build-type'] === 'prod' || argv['prod']
 
 const staticOptions = {
   index: false,
-  maxAge: isProd ? ms('1yr') : ms('0'),
+  maxAge: isProd ? ms('60d') : ms('0'),
   setHeaders: (res: express.Response, path: any) => {
     res.setHeader(
       'Expires',
       isProd
-        ? new Date(Date.now() + ms('1yr')).toUTCString()
+        ? new Date(Date.now() + ms('60d')).toUTCString()
         : new Date(Date.now() + ms('0')).toUTCString()
     )
   }
@@ -42,14 +42,7 @@ const staticOptions = {
 
 const logger = createLogger({
   name: 'Fusing-Angular',
-  type: 'node-only',
-  streams: [
-    {
-      level: 'error',
-      type: 'raw',
-      stream: { write: (err: any) => console.log }
-    }
-  ] as any
+  type: 'node-express'
 })
 
 app.use(
