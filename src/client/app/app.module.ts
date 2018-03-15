@@ -1,11 +1,11 @@
+import { ErrorHandler, Injector, NgModule } from '@angular/core'
 import { Angulartics2Module } from 'angulartics2'
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
 import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
-import { ErrorHandler, Injector, NgModule } from '@angular/core'
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import {
   HTTP_INTERCEPTORS,
@@ -20,10 +20,10 @@ import {
 } from './shared/http-cache-tag/http-cache-tag.module'
 import { TransferHttpCacheModule } from '@nguniversal/common'
 import {
+  GlobalErrorHandler,
   ROLLBAR_CONFIG,
-  ROLLBAR_TS_KEY,
-  RollbarErrorHandler
-} from './shared/services/error-handlers/rollbar.error-handler.service'
+  ROLLBAR_TS_KEY
+} from './shared/services/error-handlers/global-error-handler.service'
 import { ResponseService } from './shared/services/response.service'
 import * as Rollbar from 'rollbar'
 
@@ -81,7 +81,7 @@ export function rollbarFactory(ts: TransferState) {
       useFactory: rollbarFactory,
       deps: [TransferState]
     },
-    { provide: ErrorHandler, useClass: RollbarErrorHandler }
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],

@@ -21,7 +21,7 @@ import {
 import {
   ROLLBAR_CONFIG,
   ROLLBAR_TS_KEY
-} from '../../client/app/shared/services/error-handlers/rollbar.error-handler.service'
+} from '../../client/app/shared/services/error-handlers/global-error-handler.service'
 import { AppModule } from './../../client/app/app.module'
 import { WINDOW } from '../../client/app/shared/services/utlities/window.service'
 import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
