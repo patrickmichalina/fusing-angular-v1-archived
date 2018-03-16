@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
-  OnInit
+  OnInit,
+  ViewEncapsulation
 } from '@angular/core'
 import { SEO } from '../shared/decorators/seo.decorator'
 
@@ -10,7 +11,8 @@ import { SEO } from '../shared/decorators/seo.decorator'
   selector: 'pm-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 @SEO({
   title: 'Home',

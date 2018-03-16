@@ -1,14 +1,15 @@
+import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
 import {
   ENV_CONFIG,
   ENV_CONFIG_TS_KEY,
   IRequest,
   REQUEST_TS_KEY
 } from '../../client/app/app.config'
-import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { AppComponent } from './../../client/app/app.component'
 import { EnvConfig } from '../../../tools/config/app.config'
 import {
   APP_BOOTSTRAP_LISTENER,
+  APP_INITIALIZER,
   ApplicationRef,
   enableProdMode,
   NgModule
@@ -24,7 +25,7 @@ import {
 } from '../../client/app/shared/services/error-handlers/global-error-handler.service'
 import { AppModule } from './../../client/app/app.module'
 import { WINDOW } from '../../client/app/shared/services/utlities/window.service'
-import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
+import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { ServerResponseService } from './server.response.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
@@ -34,6 +35,7 @@ import * as Rollbar from 'rollbar'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../../client/operators'
+import { InjectionService } from '../../client/app/shared/services/injection.service'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -66,6 +68,24 @@ export function onBootstrap(
   }
 }
 
+export function onInit(is: InjectionService) {
+  return () =>
+    is
+      .injectCollection([
+        {
+          element: 'script',
+          attributes: {
+            src: 'https://buttons.github.io/buttons.js',
+            async: true,
+            defer: true
+          },
+          inHead: true
+        }
+      ])
+      .take(1)
+      .subscribe()
+}
+
 export function rollbarFactory(ts: TransferState) {
   const accessToken = process.env.ROLLBAR_ACCESS_TOKEN
   return (
@@ -92,8 +112,14 @@ export function rollbarFactory(ts: TransferState) {
     {
       provide: APP_BOOTSTRAP_LISTENER,
       useFactory: onBootstrap,
-      multi: true,
-      deps: [ApplicationRef, TransferState, REQUEST]
+      deps: [ApplicationRef, TransferState, REQUEST],
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: onInit,
+      deps: [InjectionService],
+      multi: true
     },
     {
       provide: LOGGER_CONFIG,

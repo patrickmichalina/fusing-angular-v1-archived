@@ -17,6 +17,7 @@ import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe'
 import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-interceptor.service'
 import { WindowService } from './services/utlities/window.service'
 import { MinifierService } from './services/utlities/minifier.service'
+import { ExternalLinkDirective } from './directives/external-link.directive'
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -28,9 +29,16 @@ import { MinifierService } from './services/utlities/minifier.service'
     ReactiveFormsModule,
     KeysPipe,
     KeyValuePipe,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    ExternalLinkDirective
   ],
-  declarations: [NavbarComponent, KeysPipe, KeyValuePipe, SanitizeHtmlPipe],
+  declarations: [
+    NavbarComponent,
+    KeysPipe,
+    KeyValuePipe,
+    SanitizeHtmlPipe,
+    ExternalLinkDirective
+  ],
   providers: [
     {
       provide: COOKIE_HOST_WHITELIST,

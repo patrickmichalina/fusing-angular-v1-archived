@@ -46,6 +46,10 @@ export function rollbarFactory(ts: TransferState) {
   )
 }
 
+export function staticAppInjectorRef(): NgModuleRef<AppModule> {
+  return AppModule.injector as any
+}
+
 @NgModule({
   imports: [
     HttpClientModule,
@@ -91,13 +95,7 @@ export class AppModule {
   // tslint:disable:readonly-keyword
   // tslint:disable:no-object-mutation
   static injector: Injector
-  static instance: AppModule
   constructor(injector: Injector) {
     AppModule.injector = injector
-    AppModule.instance = this
   }
-}
-
-export function staticAppInjectorRef(): NgModuleRef<AppModule> {
-  return AppModule.injector as any
 }
