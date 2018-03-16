@@ -33,6 +33,16 @@ exports[`App component should build without a problem 1`] = `
               Isomorphic Demos
             </a>
           </li>
+          <li>
+            <a
+              href="https://github.com/patrickmichalina/fusing-angular"
+              pmexternallink=""
+              rel="noopener"
+              target="_blank"
+            >
+              Github
+            </a>
+          </li>
         </ul>
       </nav>
     </pm-navbar>

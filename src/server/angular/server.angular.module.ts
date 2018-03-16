@@ -29,13 +29,15 @@ import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { ServerResponseService } from './server.response.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
+import { InjectionService } from '../../client/app/shared/services/injection.service'
+import { SVGLoaderService } from '../../client/app/shared/svg/svg-loader.service'
+import { ServerSvgLoaderService } from './server.svg-loader.service'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../../client/operators'
-import { InjectionService } from '../../client/app/shared/services/injection.service'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -104,6 +106,7 @@ export function rollbarFactory(ts: TransferState) {
     { provide: WINDOW, useValue: {} },
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
     { provide: ResponseService, useClass: ServerResponseService },
+    { provide: SVGLoaderService, useClass: ServerSvgLoaderService },
     {
       provide: ROLLBAR_CONFIG,
       useFactory: rollbarFactory,

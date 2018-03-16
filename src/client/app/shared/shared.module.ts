@@ -18,6 +18,7 @@ import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-
 import { WindowService } from './services/utlities/window.service'
 import { MinifierService } from './services/utlities/minifier.service'
 import { ExternalLinkDirective } from './directives/external-link.directive'
+import { SvgDirective } from './svg/svg.directive'
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -30,14 +31,16 @@ import { ExternalLinkDirective } from './directives/external-link.directive'
     KeysPipe,
     KeyValuePipe,
     SanitizeHtmlPipe,
-    ExternalLinkDirective
+    ExternalLinkDirective,
+    SvgDirective
   ],
   declarations: [
     NavbarComponent,
     KeysPipe,
     KeyValuePipe,
     SanitizeHtmlPipe,
-    ExternalLinkDirective
+    ExternalLinkDirective,
+    SvgDirective
   ],
   providers: [
     {

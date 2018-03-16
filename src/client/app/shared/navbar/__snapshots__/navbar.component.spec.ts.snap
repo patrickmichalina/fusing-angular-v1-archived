@@ -37,6 +37,14 @@ exports[`NavbarComponent should compile 1`] = `
           Isomorphic Demos
         </a>
       </li>
+      <li>
+        <a
+          href="https://github.com/patrickmichalina/fusing-angular"
+          pmexternallink=""
+        >
+          Github
+        </a>
+      </li>
     </ul>
   </nav>
 </div>

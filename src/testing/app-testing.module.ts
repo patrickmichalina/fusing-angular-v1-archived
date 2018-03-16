@@ -1,5 +1,5 @@
+import { APP_BASE_HREF } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { RouterTestingModule } from '@angular/router/testing'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import {
   Injector,
@@ -8,18 +8,20 @@ import {
   Optional,
   SkipSelf
 } from '@angular/core'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { PlatformService } from '../client/app/shared/services/platform.service'
 import { CookieService } from '../client/app/shared/services/cookie.service'
 import { EnvironmentService } from '../client/app/shared/services/environment.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { APP_BASE_HREF } from '@angular/common'
+import { RouterTestingModule } from '@angular/router/testing'
 import { MockCookieService } from './mock-cookie.service'
 import { MockEnvironmentService } from './mock-environment.service'
 import { SharedModule } from '../client/app/shared/shared.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { SVGLoaderService } from '../client/app/shared/svg/svg-loader.service'
+import { TransferState } from '@angular/platform-browser'
 import './client/operators'
 
 @NgModule({
@@ -44,6 +46,12 @@ import './client/operators'
   ],
   providers: [
     PlatformService,
+    TransferState,
+    {
+      provide: SVGLoaderService,
+      useClass: SVGLoaderService,
+      deps: [HttpClient]
+    },
     { provide: CookieService, useClass: MockCookieService },
     { provide: EnvironmentService, useClass: MockEnvironmentService }
   ]

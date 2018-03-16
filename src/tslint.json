@@ -1,22 +1,11 @@
 {
-  "rulesDirectory": [
-    "../node_modules/codelyzer",
-    "../tools/tslint-rules"
-  ],
-  "extends": [
-    "angular-tslint-rules",
-    "tslint-immutable"
-  ],
+  "rulesDirectory": ["../node_modules/codelyzer", "../tools/tslint-rules"],
+  "extends": ["angular-tslint-rules", "tslint-immutable"],
   "rules": {
-    "i18n": [
-      true
-    ],
-    "newline-per-chained-call": [
-      false
-    ],
-    "no-unnecessary-class": [
-      false
-    ],
+    "no-unused-css": false,
+    "i18n": [true],
+    "newline-per-chained-call": [false],
+    "no-unnecessary-class": [false],
     "prefer-object-spread": true,
     "no-var-keyword": true,
     "no-let": false,
@@ -27,76 +16,29 @@
     "no-delete": true,
     "no-method-signature": false,
     "trackBy-function": [true],
-    "typedef": [
-      false
-    ],
-    "angular-whitespace": [
-      true,
-      "check-interpolation",
-      "check-semicolon"
-    ],
-    "templates-no-negated-async": [
-      true
-    ],
-    "indent": [
-      true,
-      "spaces",
-      2
-    ],
-    "space-within-parens": [
-      false
-    ],
-    "object-literal-key-quotes": [
-      false
-    ],
-    "semicolon": [
-      true,
-      "never"
-    ],
-    "align": [
-      false
-    ],
-    "no-console": [
-      true
-    ],
+    "typedef": [false],
+    "angular-whitespace": [true, "check-interpolation", "check-semicolon"],
+    "templates-no-negated-async": [true],
+    "indent": [true, "spaces", 2],
+    "space-within-parens": [false],
+    "object-literal-key-quotes": [false],
+    "semicolon": [true, "never"],
+    "align": [false],
+    "no-console": [true],
     "curly": false,
-    "member-ordering": [
-      false
-    ],
-    "member-access": [
-      false,
-      "no-public"
-    ],
+    "member-ordering": [false],
+    "member-access": [false, "no-public"],
     "newline-before-return": false,
-    "directive-selector": [
-      true,
-      "attribute",
-      [
-        "app",
-        "pm"
-      ],
-      "camelCase"
-    ],
+    "directive-selector": [true, "attribute", ["app", "pm"], "camelCase"],
     "component-selector": [
       true,
       "element",
-      [
-        "pm",
-        "app",
-        "test",
-        "i18n"
-      ],
+      ["pm", "app", "test", "i18n"],
       "kebab-case"
     ],
     "use-view-encapsulation": false,
-    "pipe-naming": [
-      true,
-      "camelCase",
-      "pm"
-    ],
-    "array-type": [
-      false
-    ],
+    "pipe-naming": [true, "camelCase", "pm"],
+    "array-type": [false],
     "validate-decorators": [
       true,
       {

@@ -12,6 +12,8 @@ import { WINDOW } from './shared/services/utlities/window.service'
 import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 import { ResponseService } from './shared/services/response.service'
 import { LOGGER_CONFIG } from './shared/services/logging.service'
+import { SVGLoaderService } from './shared/svg/svg-loader.service'
+import { HttpClient } from '@angular/common/http'
 // import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 // import 'hammerjs'
@@ -33,6 +35,11 @@ export function requestFactory(transferState: TransferState): any {
     AppModule
   ],
   providers: [
+    {
+      provide: SVGLoaderService,
+      useClass: SVGLoaderService,
+      deps: [HttpClient, TransferState]
+    },
     { provide: WINDOW, useValue: window },
     {
       provide: ENV_CONFIG,
