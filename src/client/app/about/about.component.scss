@@ -1,6 +1,6 @@
-$some-var: pink;
-
 :host {
   display: block;
-  background-color: $some-var;
+  img {
+    max-width: 100%;
+  }
 }

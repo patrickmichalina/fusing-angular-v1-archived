@@ -22,11 +22,14 @@ exports[`App component should build without a problem 1`] = `
             >
               About
             </a>
+             (I am a lazy module)
           </li>
         </ul>
       </nav>
     </pm-navbar>
-    <router-outlet />
+    <main>
+      <router-outlet />
+    </main>
   </pm-app>
 </div>
 `;

@@ -24,6 +24,7 @@ exports[`NavbarComponent should compile 1`] = `
         >
           About
         </a>
+         (I am a lazy module)
       </li>
     </ul>
   </nav>

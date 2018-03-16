@@ -2,6 +2,114 @@
 
 exports[`HomeComponent should compile 1`] = `
 <pm-home>
-  Home
+  <h1>
+    Fusing Angular
+  </h1><h2>
+    An Angular Universal seed project featuring Server-Side Rendering, @fuse-box bundling, Jest, Nightmare, and more!
+  </h2><p>
+    The goal of this project is to provide a developer friendly Angular Universal starter application. It differs from the Angular-CLI by focusing soley on Universal applications and uses faster testing frameworks and javascript bundler. With this project you can deploy a boilerplate application with a single click via Heroku.
+  </p><div>
+    <div>
+      <a
+        aria-label="Star patrickmichalina/fusing-angular on GitHub"
+        class="github-button"
+        data-icon="octicon-star"
+        data-show-count="true"
+        data-size="large"
+        href="https://github.com/patrickmichalina/fusing-angular"
+      >
+        Star
+      </a>
+      <a
+        aria-label="Download patrickmichalina/fusing-angular on GitHub"
+        class="github-button"
+        data-icon="octicon-cloud-download"
+        data-size="large"
+        href="https://github.com/patrickmichalina/fusing-angular/archive/master.zip"
+      >
+        Download
+      </a>
+    </div>
+    <br />
+    <a
+      href="https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular"
+      rel="noopener"
+      target="_blank"
+    >
+      <img
+        alt="Deploy"
+        src="https://www.herokucdn.com/deploy/button.svg"
+      />
+    </a>
+  </div><p>
+    Features:
+  </p><ul>
+    <li>
+      Angular as the application framework
+    </li>
+    <li>
+      FuseBox as the TypeScript/JavaScript bundler
+    </li>
+    <li>
+      Jest for unit and component testing
+    </li>
+    <li>
+      Nightmare for E2E UI testing
+    </li>
+    <li>
+      Sparky as the task runner
+    </li>
+    <li>
+      Heroku Single Click Deployment
+    </li>
+    <li>
+      SCSS support for professional grade CSS management
+    </li>
+    <li>
+      Brotli compression with gzip fallback
+    </li>
+    <li>
+      CircleCI integration
+    </li>
+    <li>
+      Tree-Shaking for production builds
+    </li>
+    <li>
+      Ahead-of-Time (AOT) compilation support
+    </li>
+    <li>
+      angular-tslint-rules as configuration preset for TSLint and codelyzer.
+    </li>
+    <li>
+      Lazy Loaded modules
+    </li>
+    <li>
+      Fully typed build tools using TypeScript
+    </li>
+    <li>
+      Manage your type definitions using @types
+    </li>
+    <li>
+      Favicon icon generation for multiple devices derived from a single seed image
+    </li>
+    <li>
+      Search Engine (SEO) support for Title and Meta tags
+    </li>
+    <li>
+      OG (Open Graph) tags for social sharing
+    </li>
+    <li>
+      Vendor-agnostic analytics using angulartics2
+    </li>
+    <li>
+      Generic token based Authentication service with JWT cookie support.
+    </li>
+    <li>
+      Analyze bundle sizes by using source-map-explorer
+    </li>
+    <li>
+      Support for Angular Service Worker
+    </li>
+  </ul>
 </pm-home>
 `;
