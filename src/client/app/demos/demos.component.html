@@ -1,0 +1,10 @@
+<h1>Demos</h1>
+<p>Certain things can be difficult when trying to achieve pure isomorphism. This page showcases these solved issues.</p>
+
+<h3>Caching Server XHR Requests</h3>
+<p>Don't make a second API request when the data was retrieved from the server already. This produce "flicker-free" responses. Reload this page and pay attention to how the list below does not flicker.</p>
+<div *ngIf="users$ | async as users">
+  <ul>
+    <li *ngFor="let user of users; trackBy: trackByUser">{{ user.first_name }}</li>
+  </ul>
+</div>

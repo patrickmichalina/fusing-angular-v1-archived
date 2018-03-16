@@ -12,6 +12,7 @@ exports[`NavbarComponent should compile 1`] = `
           href="/"
           ng-reflect-router-link=""
           routerlink=""
+          title="I am lazy also!"
         >
           Home
         </a>
@@ -21,10 +22,20 @@ exports[`NavbarComponent should compile 1`] = `
           href="/about"
           ng-reflect-router-link="about"
           routerlink="about"
+          title="I am a lazy module for the about page"
         >
-          About
+          Performance
         </a>
-         (I am a lazy module)
+      </li>
+      <li>
+        <a
+          href="/demos"
+          ng-reflect-router-link="demos"
+          routerlink="demos"
+          title="I am a lazy module for the demos page"
+        >
+          Isomorphic Demos
+        </a>
       </li>
     </ul>
   </nav>

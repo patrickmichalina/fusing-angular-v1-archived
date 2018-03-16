@@ -12,6 +12,7 @@ exports[`App component should build without a problem 1`] = `
           <li>
             <a
               routerlink=""
+              title="I am lazy also!"
             >
               Home
             </a>
@@ -19,10 +20,18 @@ exports[`App component should build without a problem 1`] = `
           <li>
             <a
               routerlink="about"
+              title="I am a lazy module for the about page"
             >
-              About
+              Performance
             </a>
-             (I am a lazy module)
+          </li>
+          <li>
+            <a
+              routerlink="demos"
+              title="I am a lazy module for the demos page"
+            >
+              Isomorphic Demos
+            </a>
           </li>
         </ul>
       </nav>

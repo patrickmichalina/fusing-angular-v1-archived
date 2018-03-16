@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DemosComponent should compile 1`] = `
+<test-component>
+  <pm-demos>
+    <h1>
+      Demos
+    </h1>
+    <p>
+      Certain things can be difficult when trying to achieve pure isomorphism. This page showcases these solved issues.
+    </p>
+    <h3>
+      Caching Server XHR Requests
+    </h3>
+    <p>
+      Don't make a second API request when the data was retrieved from the server already. This produce "flicker-free" responses. Reload this page and pay attention to how the list below does not flicker.
+    </p>
+    
+  </pm-demos>
+</test-component>
+`;
