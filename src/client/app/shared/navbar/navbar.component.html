@@ -4,5 +4,13 @@
     <li><a routerLink="about" title="I am a lazy module for the about page">Performance</a></li>
     <li><a routerLink="demos" title="I am a lazy module for the demos page">Isomorphic Demos</a></li>
     <li><a href="https://github.com/patrickmichalina/fusing-angular" pmExternalLink>Github</a></li>
+    <li *ngIf="userView$ | async as user" [ngSwitch]="user.show">
+      <div *ngSwitchCase="0">
+        <span>{{ user.greeting }} </span> <button (click)="auth.logout()">(Logout)</button>
+      </div>
+      <div *ngSwitchCase="1">
+        <a (click)="login()">Login</a>
+      </div>
+    </li>
   </ul>
 </nav>

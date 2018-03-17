@@ -2,40 +2,32 @@ import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { PlatformService } from './platform.service'
 import { Inject, Injectable } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
-import { Observable } from 'rxjs/Observable'
-import { CookieAttributes, getJSON, remove, set } from 'js-cookie'
-
-export interface ICookieService {
-  readonly cookies$: Observable<{ readonly [key: string]: any }>
-  getAll(): any
-  get(name: string): any
-  set(name: string, value: any, options?: CookieAttributes): void
-  remove(name: string, options?: CookieAttributes): void
-}
+import { getJSON, remove, set } from 'js-cookie'
+import { IStorageProvider } from '../auth/tokens'
 
 @Injectable()
-export class CookieService implements ICookieService {
+export class CookieService implements IStorageProvider {
   private readonly cookieSource = new Subject<{ readonly [key: string]: any }>()
-  public readonly cookies$ = this.cookieSource.asObservable()
+  public readonly valueChanges = this.cookieSource.asObservable()
 
-  constructor(private platformService: PlatformService, @Inject(REQUEST) private req: any) { }
+  constructor(private ps: PlatformService, @Inject(REQUEST) private req: any) {}
 
-  public set(name: string, value: any, options?: CookieAttributes): void {
-    if (this.platformService.isBrowser) {
-      set(name, value, options)
+  public set(name: string, value: any): void {
+    if (this.ps.isBrowser) {
+      set(name, value)
       this.updateSource()
     }
   }
 
-  public remove(name: string, options?: CookieAttributes): void {
-    if (this.platformService.isBrowser) {
-      remove(name, options)
+  public remove(name: string): void {
+    if (this.ps.isBrowser) {
+      remove(name)
       this.updateSource()
     }
   }
 
   public get(name: string): any {
-    if (this.platformService.isBrowser) {
+    if (this.ps.isBrowser) {
       return getJSON(name)
     } else {
       try {
@@ -47,7 +39,7 @@ export class CookieService implements ICookieService {
   }
 
   public getAll(): any {
-    if (this.platformService.isBrowser) {
+    if (this.ps.isBrowser) {
       return getJSON()
     } else {
       if (this.req) return this.req.cookies

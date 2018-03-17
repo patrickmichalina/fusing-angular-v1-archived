@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
+import { AppAuthService } from './app.auth.service'
 
 @Component({
   selector: 'pm-app',
@@ -13,11 +14,13 @@ export class AppComponent {
   constructor(
     public analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
-    is: InjectionService
+    is: InjectionService,
+    auth: AppAuthService
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
     this.setBase(is, es.config.siteUrl)
+    auth.user$.subscribe(console.log)
   }
 
   setBase(is: InjectionService, href = '/') {

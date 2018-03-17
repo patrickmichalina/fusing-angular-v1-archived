@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core'
-import { ICookieService } from '../client/app/shared/services/cookie.service'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 
 @Injectable()
-export class MockCookieService implements ICookieService {
-  private readonly cookieSource = new BehaviorSubject<{ readonly [key: string]: any }>(this.getAll())
+export class MockCookieService {
+  private readonly cookieSource = new BehaviorSubject<{
+    readonly [key: string]: any
+  }>(this.getAll())
   public readonly cookies$ = this.cookieSource.asObservable()
   // tslint:disable-next-line:readonly-keyword
-  public mockCookieStore: any = { }
+  public mockCookieStore: any = {}
 
   get(name: string): any {
     return this.mockCookieStore[name]
@@ -17,7 +18,11 @@ export class MockCookieService implements ICookieService {
     return this.mockCookieStore || {}
   }
 
-  set(name: string, value: any, options?: Cookies.CookieAttributes | undefined): void {
+  set(
+    name: string,
+    value: any,
+    options?: Cookies.CookieAttributes | undefined
+  ): void {
     // tslint:disable-next-line:no-object-mutation
     this.mockCookieStore[name] = value
     this.cookieSource.next(this.getAll())

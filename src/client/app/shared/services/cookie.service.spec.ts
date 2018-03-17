@@ -1,20 +1,22 @@
 import { PlatformService } from './platform.service'
-import { CookieService, ICookieService } from './cookie.service'
+import { CookieService } from './cookie.service'
 import { async, TestBed } from '@angular/core/testing'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 
 describe(CookieService.name, () => {
-  let service: ICookieService
+  let service: CookieService
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        CookieService,
-        PlatformService,
-        { provide: REQUEST, useValue: {} }
-      ]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          CookieService,
+          PlatformService,
+          { provide: REQUEST, useValue: {} }
+        ]
+      })
     })
-  }))
+  )
 
   beforeEach(() => {
     service = TestBed.get(CookieService)
@@ -24,7 +26,10 @@ describe(CookieService.name, () => {
     TestBed.resetTestingModule()
   })
 
-  it('should construct', async(() => {
-    expect(service).toBeDefined()
-  }))
+  it(
+    'should construct',
+    async(() => {
+      expect(service).toBeDefined()
+    })
+  )
 })
