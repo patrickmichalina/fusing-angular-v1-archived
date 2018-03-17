@@ -1,10 +1,5 @@
+import { ServerResponseService } from './server.response.service'
 import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
-import {
-  ENV_CONFIG,
-  ENV_CONFIG_TS_KEY,
-  IRequest,
-  REQUEST_TS_KEY
-} from '../../client/app/app.config'
 import { AppComponent } from './../../client/app/app.component'
 import { EnvConfig } from '../../../tools/config/app.config'
 import {
@@ -26,10 +21,18 @@ import {
 import { AppModule } from './../../client/app/app.module'
 import { WINDOW } from '../../client/app/shared/services/utlities/window.service'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
-import { ServerResponseService } from './server.response.service'
+import {
+  ENV_CONFIG,
+  ENV_CONFIG_TS_KEY,
+  IRequest,
+  REQUEST_TS_KEY
+} from '../../client/app/app.config'
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
-import { InjectionService } from '../../client/app/shared/services/injection.service'
+import {
+  DOMInjectable,
+  InjectionService
+} from '../../client/app/shared/services/injection.service'
 import { SVGLoaderService } from '../../client/app/shared/svg/svg-loader.service'
 import { ServerSvgLoaderService } from './server.svg-loader.service'
 import * as express from 'express'
@@ -41,6 +44,10 @@ import '../../client/operators'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
+
+export function globalInitialInjections() {
+  return [] as ReadonlyArray<DOMInjectable>
+}
 
 export function fuseBoxConfigFactory() {
   return envConfig
@@ -73,17 +80,7 @@ export function onBootstrap(
 export function onInit(is: InjectionService) {
   return () =>
     is
-      .injectCollection([
-        {
-          element: 'script',
-          attributes: {
-            src: 'https://buttons.github.io/buttons.js',
-            async: true,
-            defer: true
-          },
-          inHead: true
-        }
-      ])
+      .injectCollection(globalInitialInjections())
       .take(1)
       .subscribe()
 }
