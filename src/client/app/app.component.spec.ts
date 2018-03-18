@@ -17,11 +17,11 @@ import { NavbarService } from './shared/navbar/navbar.service'
 import { AppTestingModule } from '../../testing/app-testing.module'
 
 export const TESTING_CONFIG: EnvConfig = {
-  siteUrl: 'http://localhost:8000',
+  siteUrl: 'http://localhost:5000',
   // tslint:disable-next-line:max-line-length
   endpoints: {
-    api: 'http://localhost:8000/api',
-    websocketServer: 'ws://localhost:8001'
+    api: 'http://localhost:5000/api',
+    websocketServer: 'ws://localhost:5001'
   }
 }
 

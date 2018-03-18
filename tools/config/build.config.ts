@@ -13,9 +13,9 @@ export const BUILD_CONFIG: BuildConfiguration = {
   assetParentDir: 'src/client',
   toolsDir: './tools',
   minifyIndex: true,
-  browserSyncPort: 8000,
+  browserSyncPort: 5000,
   host: 'http://localhost',
-  port: 8001,
+  port: 5001,
   favicon: {
     src: './tools/sources/favicon.png',
     config: {
