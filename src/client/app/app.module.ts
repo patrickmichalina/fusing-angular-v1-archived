@@ -1,11 +1,9 @@
-import { TransferHttpCacheModule } from '@nguniversal/common'
+import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import {
-  ErrorHandler,
-  InjectionToken,
-  Injector,
-  NgModule,
-  NgModuleRef
-} from '@angular/core'
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpResponse
+} from '@angular/common/http'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
@@ -13,7 +11,7 @@ import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { Angulartics2Module } from 'angulartics2'
-import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
+import { TransferHttpCacheModule } from '@nguniversal/common'
 import {
   CACHE_TAG_CONFIG,
   CACHE_TAG_FACTORY,
@@ -21,41 +19,31 @@ import {
   HttpCacheTagModule
 } from './shared/http-cache-tag/http-cache-tag.module'
 import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-  HttpResponse
-} from '@angular/common/http'
+  ErrorHandler,
+  InjectionToken,
+  Injector,
+  NgModule,
+  NgModuleRef
+} from '@angular/core'
 import {
   GlobalErrorHandler,
   ROLLBAR_CONFIG,
   ROLLBAR_TS_KEY
 } from './shared/services/error-handlers/global-error-handler.service'
 import { ResponseService } from './shared/services/response.service'
-import * as Rollbar from 'rollbar'
 import { IScheduler } from 'rxjs/Scheduler'
-import { AuthModule } from './shared/auth/auth.module'
 import {
-  AUTH_REFRESH_TOKEN_STORAGE_KEY,
-  AUTH_REMOVE_SESSION_FACTORY,
-  AUTH_SET_SESSION_FACTORY,
-  AUTH_STORAGE_PROVIDER,
-  AUTH_TOKEN_DECODER_FACTORY,
-  AUTH_TOKEN_FETCH_FACTORY,
-  AUTH_TOKEN_STORAGE_KEY,
-  AUTH_TOKEN_VALIDATOR_FACTORY,
-  AUTH_USER_HYDRATION_FACTORY,
-  IFetchTokenFactory,
-  IRemoveSessionFactory,
-  ISetSessionFactory,
-  IStorageProvider,
-  ITokenDecoderFactory,
-  ITokenValidatorFactory,
-  StorageRetrievalTypes
+  AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
+  AUTH_ACCESS_TOKEN_STORAGE_KEY,
+  AUTH_ID_TOKEN_STORAGE_KEY
 } from './shared/auth/tokens'
-import { CookieService } from './shared/services/cookie.service'
-import { JwtHelper } from 'angular2-jwt'
-import { AppAuthService } from './app.auth.service'
-import { Observable } from 'rxjs/Observable'
+import { EnvironmentService } from './shared/services/environment.service'
+import {
+  AUTH0_CLIENT,
+  AuthService,
+  authZeroFactory
+} from './shared/services/auth.service'
+import * as Rollbar from 'rollbar'
 
 export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<IScheduler>(
   'cfg.rxjs.sch'
@@ -84,96 +72,12 @@ export function staticAppInjectorRef(): NgModuleRef<AppModule> {
   return AppModule.injector as any
 }
 
-// MOVE TO SPECIAL FILE
-// ------- ------- -------
-// ------- ------- -------
-// ------- ------- -------
-export function authTokenDecoderFactory(): ITokenDecoderFactory {
-  return (token?: StorageRetrievalTypes) => {
-    if (typeof token !== 'string') return undefined
-    try {
-      return new JwtHelper().decodeToken(token)
-    } catch (err) {
-      return undefined
-    }
-  }
-}
-
-export function authTokenValidatorFactory(): ITokenValidatorFactory {
-  return (token?: StorageRetrievalTypes, decodedToken?: Object) => {
-    if (typeof token !== 'string') return undefined
-    try {
-      const helper = new JwtHelper()
-      return !helper.isTokenExpired(token) && decodedToken
-    } catch (err) {
-      return undefined
-    }
-  }
-}
-
-export function authUserHydrationFactory() {
-  return (decodedToken: Object) => {
-    return { ...decodedToken }
-  }
-}
-
-export function authSetSessionFactory(): ISetSessionFactory {
-  return (
-    storage: IStorageProvider,
-    token: string,
-    authTokenStorageKey: string,
-    refreshTokenStorageKey?: string
-  ) => {
-    storage.set(authTokenStorageKey, token)
-  }
-}
-
-export function authRemoveSessionFactory(): IRemoveSessionFactory {
-  return (
-    storage: IStorageProvider,
-    authTokenStorageKey: string,
-    refreshTokenStorageKey?: string
-  ) => {
-    storage.remove(authTokenStorageKey)
-  }
-}
-
-export function authFetchTokenFactory(): IFetchTokenFactory<any> {
-  return () => {
-    return Observable.of('1')
-  }
-}
-
 @NgModule({
   imports: [
     HttpClientModule,
     AppRoutingModule,
     NotFoundModule,
     TransferHttpCacheModule,
-    AuthModule.forRoot(
-      { provide: AUTH_STORAGE_PROVIDER, useExisting: CookieService },
-      { provide: AUTH_TOKEN_STORAGE_KEY, useValue: 'access-token' },
-      { provide: AUTH_REFRESH_TOKEN_STORAGE_KEY, useValue: 'refresh-token' },
-      {
-        provide: AUTH_TOKEN_DECODER_FACTORY,
-        useFactory: authTokenDecoderFactory
-      },
-      {
-        provide: AUTH_USER_HYDRATION_FACTORY,
-        useFactory: authUserHydrationFactory
-      },
-      { provide: AUTH_SET_SESSION_FACTORY, useFactory: authSetSessionFactory },
-      {
-        provide: AUTH_REMOVE_SESSION_FACTORY,
-        useFactory: authRemoveSessionFactory
-      },
-      {
-        provide: AUTH_TOKEN_VALIDATOR_FACTORY,
-        useFactory: authTokenValidatorFactory
-      },
-      { provide: AUTH_TOKEN_FETCH_FACTORY, useFactory: authFetchTokenFactory },
-      AppAuthService
-    ),
     SharedModule.forRoot(),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
@@ -193,6 +97,18 @@ export function authFetchTokenFactory(): IFetchTokenFactory<any> {
     )
   ],
   providers: [
+    AuthService,
+    {
+      provide: AUTH0_CLIENT,
+      useFactory: authZeroFactory,
+      deps: [EnvironmentService]
+    },
+    { provide: AUTH_ID_TOKEN_STORAGE_KEY, useValue: 'id-token' },
+    { provide: AUTH_ACCESS_TOKEN_STORAGE_KEY, useValue: 'access-token' },
+    {
+      provide: AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
+      useValue: 'access-token-expiry'
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpCookieInterceptor,

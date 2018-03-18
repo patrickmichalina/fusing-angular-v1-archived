@@ -46,7 +46,35 @@ const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
 
 export function globalInitialInjections() {
-  return [] as ReadonlyArray<DOMInjectable>
+  return [
+    process.env.GOOGLE_VERIFICATION_CODE && {
+      inHead: true,
+      element: 'meta',
+      attributes: {
+        name: 'google-site-verification',
+        content: process.env.GOOGLE_VERIFICATION_CODE
+      }
+    },
+    process.env.GOOGLE_ANALYTICS_TRACKING_ID && {
+      inHead: true,
+      element: 'script',
+      // tslint:disable-next-line:max-line-length
+      value: `window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','${
+        process.env.GOOGLE_ANALYTICS_TRACKING_ID
+      }','auto');`,
+      attributes: {
+        async: true
+      }
+    },
+    process.env.GOOGLE_ANALYTICS_TRACKING_ID && {
+      inHead: false,
+      element: 'script',
+      attributes: {
+        src: 'https://www.google-analytics.com/analytics.js',
+        async: true
+      }
+    }
+  ].filter(Boolean) as ReadonlyArray<DOMInjectable>
 }
 
 export function fuseBoxConfigFactory() {

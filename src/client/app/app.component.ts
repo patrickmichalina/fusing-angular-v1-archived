@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
-import { AppAuthService } from './app.auth.service'
+import { PlatformService } from './shared/services/platform.service'
+import { AuthService } from './shared/services/auth.service'
 
 @Component({
   selector: 'pm-app',
@@ -15,12 +16,16 @@ export class AppComponent {
     public analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
     is: InjectionService,
-    auth: AppAuthService
+    auth: AuthService,
+    ps: PlatformService
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
     this.setBase(is, es.config.siteUrl)
-    auth.user$.subscribe(console.log)
+    auth.user$.subscribe(user => {
+      ps.isBrowser && user && analytics.setUsername(user.sub)
+    })
+    ps.isBrowser && auth.handleAuthentication()
   }
 
   setBase(is: InjectionService, href = '/') {

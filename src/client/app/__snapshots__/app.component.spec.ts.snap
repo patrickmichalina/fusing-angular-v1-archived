@@ -8,42 +8,7 @@ exports[`App component should build without a problem 1`] = `
   <pm-app>
     <pm-navbar>
       <nav>
-        <ul>
-          <li>
-            <a
-              routerlink=""
-              title="I am lazy also!"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              routerlink="about"
-              title="I am a lazy module for the about page"
-            >
-              Performance
-            </a>
-          </li>
-          <li>
-            <a
-              routerlink="demos"
-              title="I am a lazy module for the demos page"
-            >
-              Isomorphic Demos
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/patrickmichalina/fusing-angular"
-              pmexternallink=""
-              rel="noopener"
-              target="_blank"
-            >
-              Github
-            </a>
-          </li>
-        </ul>
+        
       </nav>
     </pm-navbar>
     <main>

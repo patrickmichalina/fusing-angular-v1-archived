@@ -6,7 +6,7 @@ export class MockCookieService {
   private readonly cookieSource = new BehaviorSubject<{
     readonly [key: string]: any
   }>(this.getAll())
-  public readonly cookies$ = this.cookieSource.asObservable()
+  public readonly valueChanges = this.cookieSource.asObservable()
   // tslint:disable-next-line:readonly-keyword
   public mockCookieStore: any = {}
 

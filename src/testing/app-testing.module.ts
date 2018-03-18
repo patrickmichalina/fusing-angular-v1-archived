@@ -22,6 +22,11 @@ import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { SVGLoaderService } from '../client/app/shared/svg/svg-loader.service'
 import { TransferState } from '@angular/platform-browser'
+import {
+  AUTH0_CLIENT,
+  AuthService
+} from '../client/app/shared/services/auth.service'
+import { Observable } from 'rxjs/Observable'
 import './client/operators'
 
 @NgModule({
@@ -53,7 +58,15 @@ import './client/operators'
       deps: [HttpClient]
     },
     { provide: CookieService, useClass: MockCookieService },
-    { provide: EnvironmentService, useClass: MockEnvironmentService }
+    { provide: EnvironmentService, useClass: MockEnvironmentService },
+    {
+      provide: AuthService,
+      useValue: {
+        user$: Observable.of({}),
+        handleAuthentication: () => undefined
+      }
+    },
+    { provide: AUTH0_CLIENT, useValue: {} }
   ]
 })
 export class AppTestingModule {

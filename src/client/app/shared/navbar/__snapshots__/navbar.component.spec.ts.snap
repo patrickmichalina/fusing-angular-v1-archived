@@ -6,6 +6,7 @@ exports[`NavbarComponent should compile 1`] = `
   ng-version="6.0.0-beta.7"
 >
   <nav>
+    
     <ul>
       <li>
         <a
@@ -44,6 +45,20 @@ exports[`NavbarComponent should compile 1`] = `
         >
           Github
         </a>
+      </li>
+      <li
+        ng-reflect-ng-switch="0"
+      >
+        
+        <div>
+          <span>
+            Welcome, undefined 
+          </span>
+          <button>
+            Logout
+          </button>
+        </div>
+        
       </li>
     </ul>
   </nav>

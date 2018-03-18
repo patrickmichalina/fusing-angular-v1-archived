@@ -45,7 +45,7 @@ import { SvgDirective } from './svg/svg.directive'
   providers: [
     {
       provide: COOKIE_HOST_WHITELIST,
-      useValue: ['angular.patrickmichalina.com']
+      useValue: []
     },
     PlatformService,
     CookieService,

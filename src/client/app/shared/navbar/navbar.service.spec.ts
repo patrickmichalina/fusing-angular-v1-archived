@@ -6,12 +6,14 @@ import { AppTestingModule } from '../../../../testing/app-testing.module'
 describe(NavbarService.name, () => {
   let service: INavbarService
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [AppTestingModule],
-      providers: [NavbarService]
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [AppTestingModule.forRoot()],
+        providers: [NavbarService]
+      })
     })
-  }))
+  )
 
   beforeEach(() => {
     service = TestBed.get(NavbarService)
@@ -21,11 +23,17 @@ describe(NavbarService.name, () => {
     TestBed.resetTestingModule()
   })
 
-  it('should construct', async(() => {
-    expect(service).toBeDefined()
-  }))
+  it(
+    'should construct',
+    async(() => {
+      expect(service).toBeDefined()
+    })
+  )
 
-  it('should return an observable when called', async(() => {
-    expect(service.menu$).toEqual(expect.any(Observable))
-  }))
+  it(
+    'should return an observable when called',
+    async(() => {
+      expect(service.menu$).toEqual(expect.any(Observable))
+    })
+  )
 })

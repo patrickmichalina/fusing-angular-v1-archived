@@ -40,8 +40,8 @@ describe('App component', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [
-          AppTestingModule.forRoot(),
           AppModule,
+          AppTestingModule.forRoot(),
           AppBrowserModule,
           SharedModule,
           HttpClientTestingModule,

@@ -2,7 +2,7 @@ import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { PlatformService } from './platform.service'
 import { Inject, Injectable } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
-import { getJSON, remove, set } from 'js-cookie'
+import { CookieAttributes, getJSON, remove, set } from 'js-cookie'
 import { IStorageProvider } from '../auth/tokens'
 
 @Injectable()
@@ -12,16 +12,16 @@ export class CookieService implements IStorageProvider {
 
   constructor(private ps: PlatformService, @Inject(REQUEST) private req: any) {}
 
-  public set(name: string, value: any): void {
+  public set(name: string, value: any, opts?: CookieAttributes): void {
     if (this.ps.isBrowser) {
-      set(name, value)
+      set(name, value, opts)
       this.updateSource()
     }
   }
 
-  public remove(name: string): void {
+  public remove(name: string, opts?: CookieAttributes): void {
     if (this.ps.isBrowser) {
-      remove(name)
+      remove(name, opts)
       this.updateSource()
     }
   }
