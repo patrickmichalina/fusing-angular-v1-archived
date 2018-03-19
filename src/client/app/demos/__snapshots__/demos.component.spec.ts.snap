@@ -34,6 +34,10 @@ exports[`DemosComponent should compile 1`] = `
       ng-reflect-pm-svg="angular"
       pmsvg="angular"
     />
+    <i
+      ng-reflect-pm-svg="auth0"
+      pmsvg="auth0"
+    />
   </pm-demos>
 </test-component>
 `;

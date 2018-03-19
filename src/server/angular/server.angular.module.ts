@@ -1,5 +1,8 @@
+import {
+  DOMInjectable,
+  InjectionService
+} from '../../client/app/shared/services/injection.service'
 import { ServerResponseService } from './server.response.service'
-import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
 import { AppComponent } from './../../client/app/app.component'
 import { EnvConfig } from '../../../tools/config/app.config'
 import {
@@ -29,18 +32,24 @@ import {
 } from '../../client/app/app.config'
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
-import {
-  DOMInjectable,
-  InjectionService
-} from '../../client/app/shared/services/injection.service'
+import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
 import { SVGLoaderService } from '../../client/app/shared/svg/svg-loader.service'
 import { ServerSvgLoaderService } from './server.svg-loader.service'
+import {
+  AUTH0_CLIENT,
+  AUTH0_USER_TRANSFER,
+  AUTH0_VALIDATION_FACTORY
+} from '../../client/app/shared/services/auth.service'
+import { Observable } from 'rxjs/Observable'
+import { verify } from 'jsonwebtoken'
+import { Observer } from 'rxjs/Observer'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../../client/operators'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -125,6 +134,49 @@ export function rollbarFactory(ts: TransferState) {
   )
 }
 
+const verifyLocally = (idToken: string, cert: string) => {
+  return Observable.create((obs: Observer<any>) => {
+    verify(idToken, cert.replace(/\\n/g, '\n') || '', (err, profile) => {
+      if (err) {
+        obs.error(err)
+        obs.complete()
+      } else {
+        obs.next(profile)
+        obs.complete()
+      }
+    })
+  })
+}
+
+const verifyRemotely = (
+  accessToken: string,
+  http: HttpClient,
+  az: auth0.WebAuth
+) => {
+  return http.get<auth0.Auth0UserProfile>(
+    `${(az.client as any).baseOptions.rootUrl}/userinfo`,
+    {
+      headers: new HttpHeaders({ Authorization: `Bearer ${accessToken}` })
+    }
+  )
+}
+
+export function auth0ServerValidationFactory(
+  ts: TransferState,
+  http: HttpClient,
+  az: auth0.WebAuth
+) {
+  return (accessToken?: string, idToken?: string) => {
+    const cert = process.env.AUTH0_CERT
+    return (!cert || !idToken
+      ? accessToken
+        ? verifyRemotely(accessToken, http, az)
+        : Observable.of(undefined)
+      : verifyLocally(idToken, cert.replace(/\\n/g, '\n') || '')
+    ).do((user: any) => ts.set(AUTH0_USER_TRANSFER, user))
+  }
+}
+
 @NgModule({
   imports: [ServerModule, ServerTransferStateModule, AppModule],
   providers: [
@@ -132,6 +184,11 @@ export function rollbarFactory(ts: TransferState) {
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
     { provide: ResponseService, useClass: ServerResponseService },
     { provide: SVGLoaderService, useClass: ServerSvgLoaderService },
+    {
+      provide: AUTH0_VALIDATION_FACTORY,
+      useFactory: auth0ServerValidationFactory,
+      deps: [TransferState, HttpClient, AUTH0_CLIENT]
+    },
     {
       provide: ROLLBAR_CONFIG,
       useFactory: rollbarFactory,

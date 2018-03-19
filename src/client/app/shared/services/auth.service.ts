@@ -8,11 +8,20 @@ import {
 import { Observable } from 'rxjs/Observable'
 import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { EnvironmentService } from './environment.service'
+import { makeStateKey } from '@angular/platform-browser'
 import * as auth0 from 'auth0-js'
 
+export type IAuth0ValidationFactory = (
+  accessToken?: string,
+  idToken?: string
+) => Observable<auth0.Auth0UserProfile | undefined>
+
 export const AUTH0_CLIENT = new InjectionToken('cfg.auth0.client')
+export const AUTH0_VALIDATION_FACTORY = new InjectionToken<
+  IAuth0ValidationFactory
+>('cfg.auth0.validation')
+export const AUTH0_USER_TRANSFER = makeStateKey('cfg.auth0.user.ts')
 
 export function authZeroFactory(es: EnvironmentService) {
   return new auth0.WebAuth(es.config.auth0 as any)
@@ -22,13 +31,14 @@ export function authZeroFactory(es: EnvironmentService) {
 export class AuthService {
   constructor(
     private cs: CookieService,
-    private http: HttpClient,
     @Inject(AUTH0_CLIENT) private az: auth0.WebAuth,
     @Inject(AUTH_ID_TOKEN_STORAGE_KEY) private idTokenStorageKey: string,
     @Inject(AUTH_ACCESS_TOKEN_STORAGE_KEY)
     private accessTokenStorageKey: string,
     @Inject(AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY)
-    private accessTokenExpiryStorageKey: string
+    private accessTokenExpiryStorageKey: string,
+    @Inject(AUTH0_VALIDATION_FACTORY)
+    private validationFactory: IAuth0ValidationFactory
   ) {
     cs.valueChanges
       .map(a => a[this.accessTokenStorageKey])
@@ -38,9 +48,11 @@ export class AuthService {
   private readonly accessTokenSource = new BehaviorSubject<string | undefined>(
     this.cs.get(this.accessTokenStorageKey)
   )
+
   private readonly accessToken$ = this.accessTokenSource
     .asObservable()
     .distinctUntilChanged()
+
   public readonly user$ = this.accessToken$
     .flatMap(accessToken => this.getUserProfile(accessToken))
     .distinctUntilChanged((x, y) => (x && sha1(x)) === (y && sha1(y)))
@@ -74,14 +86,10 @@ export class AuthService {
   private getUserProfile(
     accessToken?: string
   ): Observable<auth0.Auth0UserProfile | undefined> {
-    return !accessToken
-      ? Observable.of(undefined)
-      : this.http.get<auth0.Auth0UserProfile>(
-          `${(this.az.client as any).baseOptions.rootUrl}/userinfo`,
-          {
-            headers: new HttpHeaders({ Authorization: `Bearer ${accessToken}` })
-          }
-        )
+    return this.validationFactory(
+      accessToken,
+      this.cs.get(this.idTokenStorageKey)
+    )
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {

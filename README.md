@@ -13,40 +13,45 @@ The goal of this project is to provide a developer friendly Angular Universal st
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 # Features
+
 Provides an extremely fast seed project for the development of Angular Universal (isomorphic) projects.
-- [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework
-- [FuseBox](http://fuse-box.org) as the TypeScript/JavaScript bundler
-- [Jest](https://facebook.github.io/jest) for unit and component testing
-- [Nightmare](https://github.com/segmentio/nightmare) for E2E UI testing
-- [Sparky](http://fuse-box.org/page/sparky) as the task runner
-- [Heroku](https://www.heroku.com) Single Click Deployment
-- [SCSS](http://sass-lang.com) support for professional grade CSS management
-- [Brotli compression](https://github.com/google/brotli) with [gzip](http://www.gzip.org) fallback
-- [CircleCI](https://circleci.com) integration 
-- [Tree-Shaking](https://fuse-box.org/page/quantum) for production builds
-- [Ahead-of-Time](https://angular.io/guide/aot-compiler) (AOT) compilation support
-- [angular-tslint-rules](https://github.com/fulls1z3/angular-tslint-rules) as configuration preset for [TSLint](https://github.com/palantir/tslint) and [codelyzer](https://github.com/mgechev/codelyzer).
-- [Lazy Loaded](https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html) modules
-- Fully typed build tools using [TypeScript](https://www.typescriptlang.org)
-- Manage your type definitions using [@types](https://www.npmjs.com/~types)
-- Favicon icon generation for multiple devices derived from a single seed image
-- Search Engine (SEO) support for Title and Meta tags
-- OG (Open Graph) tags for social sharing
-- Vendor-agnostic analytics using [angulartics2](https://github.com/angulartics/angulartics2)
-- Generic token based Authentication service with [JWT](https://jwt.io) cookie support.
-- Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
-- Support for Angular Service Worker
+
+* [Angular](https://github.com/angular/angular/blob/master/CHANGELOG.md) as the application framework
+* [FuseBox](http://fuse-box.org) as the TypeScript/JavaScript bundler
+* [Jest](https://facebook.github.io/jest) for unit and component testing
+* [Nightmare](https://github.com/segmentio/nightmare) for E2E UI testing
+* [Sparky](http://fuse-box.org/page/sparky) as the task runner
+* [Heroku](https://www.heroku.com) Single Click Deployment
+* [SCSS](http://sass-lang.com) support for professional grade CSS management
+* [Brotli compression](https://github.com/google/brotli) with [gzip](http://www.gzip.org) fallback
+* [CircleCI](https://circleci.com) integration
+* [Tree-Shaking](https://fuse-box.org/page/quantum) for production builds
+* [Ahead-of-Time](https://angular.io/guide/aot-compiler) (AOT) compilation support
+* [angular-tslint-rules](https://github.com/fulls1z3/angular-tslint-rules) as configuration preset for [TSLint](https://github.com/palantir/tslint) and [codelyzer](https://github.com/mgechev/codelyzer).
+* [Lazy Loaded](https://angular-2-training-book.rangle.io/handout/modules/lazy-loading-module.html) modules
+* Fully typed build tools using [TypeScript](https://www.typescriptlang.org)
+* Manage your type definitions using [@types](https://www.npmjs.com/~types)
+* Favicon icon generation for multiple devices derived from a single seed image
+* Search Engine (SEO) support for Title and Meta tags
+* OG (Open Graph) tags for social sharing
+* Vendor-agnostic analytics using [angulartics2](https://github.com/angulartics/angulartics2)
+* Generic token based Authentication service with [JWT](https://jwt.io) cookie support.
+* Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
+* Support for Angular Service Worker
 
 Built by [AngularUniversal.com](https://www.angularuniversal.com). For additional help please checkout our [services](https://www.angularuniversal.com/services)
 
 # Specialty Branches
+
 In order to better support different configurations, we have created several branches with different combinations of features. Be sure to clone the correct branch.
-- [minimal-no-heroku](https://github.com/patrickmichalina/fusing-angular/tree/minimal-no-heroku) Minimal, fusebox build tooling only
-- [heroku-only](https://github.com/patrickmichalina/fusing-angular/tree/heroku-only) Heroku
-- [heroku-s3](https://github.com/patrickmichalina/fusing-angular/tree/heroku-s3) Heroku, S3/CF backed static assets
-- [master](https://github.com/patrickmichalina/fusing-angular/tree/master) Heroku, S3/CF backed static assets, Auth0
+
+* [minimal-no-heroku](https://github.com/patrickmichalina/fusing-angular/tree/minimal-no-heroku) Minimal, fusebox build tooling only
+* [heroku-only](https://github.com/patrickmichalina/fusing-angular/tree/heroku-only) Heroku
+* [heroku-s3](https://github.com/patrickmichalina/fusing-angular/tree/heroku-s3) Heroku, S3/CF backed static assets
+* [master](https://github.com/patrickmichalina/fusing-angular/tree/master) Heroku, S3/CF backed static assets, Auth0
 
 # Table of Contents
+
 * [Quick Start](#quick-start)
 * [Testing](#testing)
 * [Favicons](#favicons)
@@ -61,7 +66,6 @@ In order to better support different configurations, we have created several bra
 **Note that we strongly recommend node >= v7.0.0 and npm >= 4.0.0.**
 
 To start the seed use:
-
 
 ```bash
 $ git clone --depth 1 https://github.com/patrickmichalina/fusing-angular
@@ -94,13 +98,13 @@ $ npm run start.prod
 
 # start the server in production mode w/aot enabled (most optimized bundle!)
 $ npm run start.prod.aot
-
 ```
 
 # Testing
+
 ```bash
 # single test run
-$ npm test 
+$ npm test
 
 # single test with coverage results
 $ npm run test.coverage
@@ -116,6 +120,7 @@ $ npm run test.e2e.watch
 ```
 
 # Favicons
+
 ```bash
 # replace the image at /tools/sources/favicon.png
 
@@ -126,31 +131,41 @@ npm run gen.favicon
 ```
 
 # @Types
+
 When you include a module that doesn't include typings, you can include external type definitions using the npm @types repo.
 
-i.e, to have youtube api support, run this command in terminal: 
+i.e, to have youtube api support, run this command in terminal:
+
 ```shell
 npm i -D @types/youtube @types/gapi @types/gapi.youtube
-``` 
+```
 
 # Environment Variables
 
 ```bash
-# it is important to set the following environmental variables on your CI server (examples below)
-HOST : angular.patrickmichalina.com # the root origin of your application server
-CI : true 
+# REQUIRED (assing in your .env file to run locally)
+SITE_URL=http://localhost:5000
+AUTH0_CALLBACK_URL=http://localhost:5000/callback
+AUTH0_CLIENT_ID
+AUTH0_CLIENT_SECRET
+AUTH0_DOMAIN
+
+# OPTIONAL
+GOOGLE_ANALYTICS_TRACKING_ID # if you want to test GA locally, include this
+AUTH0_CERT # this is a huge performance gain but not required
 
 # for Heroku Builds
-HEROKU : true # to build on heroku, ssl settings are setup using this flag
 NPM_CONFIG_PRODUCTION : false # to download all depenedencies on Heroku, including devDependencies
 ```
 
 ## File Structure
+
 We use the component approach in our starter. This is the standard for developing Angular apps and a great way to ensure maintainable code
+
 ```
 fusing-angular/
  ├──.fusebox/                       * working folder for the js bundler
- ├──.vscode/                        * Visual Studio Code settings 
+ ├──.vscode/                        * Visual Studio Code settings
  ├──coverage/                       * stores recent reporting of test coverage
  ├──dist/                           * output files that represent the bundled application and its dependencies
  ├──node_modules/                   * project depdendencies
@@ -167,7 +182,7 @@ fusing-angular/
  |   |   └──build.transformer.ts   * build system config transform helper
  |   |
  |   ├──env/
- |   |   ├──base.ts                * base app configuration 
+ |   |   ├──base.ts                * base app configuration
  |   |   ├──dev.ts                 * dev app configuration
  |   |   ├──**.ts                  * arbitrary configuration called via the flag --env-config
  |   |   └──prod.ts                * production app configuration
