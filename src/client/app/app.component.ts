@@ -26,6 +26,7 @@ export class AppComponent {
       ps.isBrowser && user && analytics.setUsername(user.sub)
     })
     ps.isBrowser && auth.handleAuthentication()
+    ps.isBrowser && auth.scheduleRenewal()
   }
 
   setBase(is: InjectionService, href = '/') {

@@ -1,4 +1,5 @@
 import 'rxjs/add/observable/of'
+import 'rxjs/add/observable/timer'
 import 'rxjs/add/observable/throw'
 import 'rxjs/add/observable/forkJoin'
 import 'rxjs/add/observable/fromPromise'

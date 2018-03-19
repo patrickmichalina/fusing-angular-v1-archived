@@ -63,7 +63,8 @@ import './client/operators'
       provide: AuthService,
       useValue: {
         user$: Observable.of({}),
-        handleAuthentication: () => undefined
+        handleAuthentication: () => undefined,
+        scheduleRenewal: () => undefined
       }
     },
     { provide: AUTH0_CLIENT, useValue: {} }

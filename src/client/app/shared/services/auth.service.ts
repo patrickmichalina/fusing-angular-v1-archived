@@ -10,6 +10,7 @@ import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { EnvironmentService } from './environment.service'
 import { makeStateKey } from '@angular/platform-browser'
+import { Subscription } from 'rxjs/Subscription'
 import * as auth0 from 'auth0-js'
 
 export type IAuth0ValidationFactory = (
@@ -45,6 +46,9 @@ export class AuthService {
       .subscribe(user => this.accessTokenSource.next(user))
   }
 
+  // tslint:disable-next-line:readonly-keyword
+  private refreshSubscription = new Subscription()
+
   private readonly accessTokenSource = new BehaviorSubject<string | undefined>(
     this.cs.get(this.accessTokenStorageKey)
   )
@@ -69,6 +73,7 @@ export class AuthService {
     this.cs.remove(this.accessTokenStorageKey)
     this.cs.remove(this.idTokenStorageKey)
     this.cs.remove(this.accessTokenExpiryStorageKey)
+    this.unscheduleRenewal()
   }
 
   public handleAuthentication(): void {
@@ -78,9 +83,41 @@ export class AuthService {
         // this.router.navigate(['/home'])
       } else if (err) {
         // this.router.navigate(['/home'])
-        // alert(`Error: ${err.error}. Check the console for further details.`)
       }
     })
+  }
+
+  public renewToken() {
+    this.az.checkSession({}, (err, result) => {
+      if (!err) this.setSession(result)
+    })
+  }
+
+  public unscheduleRenewal() {
+    this.refreshSubscription.unsubscribe()
+  }
+
+  public scheduleRenewal() {
+    if (!this.isTokenValid()) return
+    this.unscheduleRenewal()
+
+    const expires = this.cs.get(this.accessTokenExpiryStorageKey)
+
+    const source = Observable.of(expires).flatMap(expiresAt => {
+      return Observable.timer(Math.max(1, expiresAt - Date.now()))
+    })
+
+    // tslint:disable-next-line:no-object-mutation
+    this.refreshSubscription = source.subscribe(() => {
+      this.renewToken()
+      this.scheduleRenewal()
+    })
+  }
+
+  public isTokenValid(): boolean {
+    const token = this.cs.get(this.accessTokenStorageKey)
+    const expiresAt = this.cs.get(this.accessTokenExpiryStorageKey)
+    return token && Date.now() < expiresAt
   }
 
   private getUserProfile(
@@ -101,5 +138,7 @@ export class AuthService {
     this.cs.set(this.accessTokenStorageKey, authResult.accessToken, { expires })
     this.cs.set(this.idTokenStorageKey, authResult.idToken, { expires })
     this.cs.set(this.accessTokenExpiryStorageKey, _expires, { expires })
+
+    this.scheduleRenewal()
   }
 }
