@@ -59,6 +59,7 @@ const baseOptions = {
 const appOptions = {
   ...baseOptions,
   hash: isProdBuild,
+  target: 'browser@es5',
   plugins: [
     NgAotPlugin(),
     ...baseOptions.plugins,
