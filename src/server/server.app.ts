@@ -29,12 +29,12 @@ const isProd = argv['build-type'] === 'prod' || argv['prod']
 
 const staticOptions = {
   index: false,
-  maxAge: isProd ? ms('60d') : ms('0'),
+  maxAge: isProd ? ms('1y') : ms('0'),
   setHeaders: (res: express.Response, path: any) => {
     res.setHeader(
       'Expires',
       isProd
-        ? new Date(Date.now() + ms('60d')).toUTCString()
+        ? new Date(Date.now() + ms('1y')).toUTCString()
         : new Date(Date.now() + ms('0')).toUTCString()
     )
   }
