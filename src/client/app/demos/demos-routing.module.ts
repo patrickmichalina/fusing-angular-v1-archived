@@ -7,7 +7,13 @@ import { RouterModule } from '@angular/router'
     RouterModule.forChild([
       {
         path: '',
-        component: DemosComponent
+        component: DemosComponent,
+        data: {
+          meta: {
+            title: 'Demos',
+            description: 'Demos page description'
+          }
+        }
       }
     ])
   ],

@@ -9,14 +9,14 @@ import { RouterModule } from '@angular/router'
         path: '**',
         component: NotFoundComponent,
         data: {
-          // meta: {
-          //   title: 'i18n.not-found.title',
-          //   description: 'i18n.not-found.description'
-          // }
+          meta: {
+            title: 'Not Found',
+            description: 'Sorrt that page was not found'
+          }
         }
       }
     ])
   ],
   exports: [RouterModule]
 })
-export class NotFoundRoutingModule { }
+export class NotFoundRoutingModule {}

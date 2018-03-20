@@ -7,10 +7,16 @@ import { RouterModule } from '@angular/router'
     RouterModule.forChild([
       {
         path: '',
-        component: HomeComponent
+        component: HomeComponent,
+        data: {
+          meta: {
+            title: 'Home',
+            description: 'Home page description'
+          }
+        }
       }
     ])
   ],
   exports: [RouterModule]
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

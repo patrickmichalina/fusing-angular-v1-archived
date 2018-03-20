@@ -18,13 +18,7 @@ import {
   CacheTagConfig,
   HttpCacheTagModule
 } from './shared/http-cache-tag/http-cache-tag.module'
-import {
-  ErrorHandler,
-  InjectionToken,
-  Injector,
-  NgModule,
-  NgModuleRef
-} from '@angular/core'
+import { ErrorHandler, InjectionToken, NgModule } from '@angular/core'
 import {
   GlobalErrorHandler,
   ROLLBAR_CONFIG,
@@ -66,10 +60,6 @@ export function rollbarFactory(ts: TransferState) {
       captureUnhandledRejections: true
     })
   )
-}
-
-export function staticAppInjectorRef(): NgModuleRef<AppModule> {
-  return AppModule.injector as any
 }
 
 @NgModule({
@@ -130,11 +120,4 @@ export function staticAppInjectorRef(): NgModuleRef<AppModule> {
   bootstrap: [AppComponent],
   exports: [AppComponent]
 })
-export class AppModule {
-  // tslint:disable:readonly-keyword
-  // tslint:disable:no-object-mutation
-  static injector: Injector
-  constructor(injector: Injector) {
-    AppModule.injector = injector
-  }
-}
+export class AppModule {}

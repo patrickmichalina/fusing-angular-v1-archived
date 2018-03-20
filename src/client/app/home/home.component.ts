@@ -1,11 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
-  OnInit,
   ViewEncapsulation
 } from '@angular/core'
-import { SEO } from '../shared/decorators/seo.decorator'
 
 @Component({
   selector: 'pm-home',
@@ -14,15 +11,4 @@ import { SEO } from '../shared/decorators/seo.decorator'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-@SEO({
-  title: 'Home',
-  description: 'Home page desc'
-})
-export class HomeComponent implements OnInit, OnDestroy {
-  ngOnInit() {
-    // AOT does not work with the SEO decorator unless this is present
-  }
-  ngOnDestroy() {
-    // AOT does not work with the SEO decorator unless this is present
-  }
-}
+export class HomeComponent {}

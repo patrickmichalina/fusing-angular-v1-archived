@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core'
-import { SEO } from '../shared/decorators/seo.decorator'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable'
 
@@ -23,11 +17,7 @@ interface ApiResponse {
   styleUrls: ['./demos.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-@SEO({
-  title: 'Demos',
-  description: 'Demos page desc'
-})
-export class DemosComponent implements OnInit, OnDestroy {
+export class DemosComponent {
   readonly users$ = this.http
     .get<ApiResponse>('https://reqres.in/api/users')
     .map(a => a.data)
@@ -37,12 +27,5 @@ export class DemosComponent implements OnInit, OnDestroy {
 
   trackByUser(index: number, item: User) {
     return item.id
-  }
-
-  ngOnInit() {
-    // AOT does not work with the SEO decorator unless this is present
-  }
-  ngOnDestroy() {
-    // AOT does not work with the SEO decorator unless this is present
   }
 }
