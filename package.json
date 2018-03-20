@@ -112,7 +112,7 @@
     "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1",
     "rimraf": "^2.6.2",
-    "semantic-release": "15.1.2",
+    "semantic-release": "15.1.3",
     "source-map-explorer": "1.5.0",
     "string-hash": "1.1.3",
     "superagent": "3.8.2",
