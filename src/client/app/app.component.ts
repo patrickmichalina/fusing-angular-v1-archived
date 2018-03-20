@@ -29,7 +29,9 @@ export class AppComponent {
     .mergeMap(route => route.data)
     .shareReplay(1)
 
-  private readonly routeMeta$ = this.routeData$.map(a => a.meta as RouteMeta)
+  private readonly routeMeta$ = this.routeData$.map(
+    a => a.meta as RouteMeta | undefined
+  )
 
   constructor(
     analytics: Angulartics2GoogleAnalytics,
@@ -39,7 +41,7 @@ export class AppComponent {
     private ar: ActivatedRoute,
     seo: SEOService
   ) {
-    this.routeMeta$.subscribe(meta => {
+    this.routeMeta$.filter(Boolean).subscribe((meta: RouteMeta) => {
       seo.setTitle(meta.title)
       seo.setDescription(meta.description)
     })
