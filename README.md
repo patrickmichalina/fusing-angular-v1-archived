@@ -153,6 +153,7 @@ AUTH0_DOMAIN
 # OPTIONAL
 GOOGLE_ANALYTICS_TRACKING_ID # if you want to test GA locally, include this
 AUTH0_CERT # this is a huge performance gain but not required
+ROLLBAR_CLIENT_ACCESS_TOKEN # to track errors from the browser, be sure to grab this from rollbar
 
 # for Heroku Builds
 NPM_CONFIG_PRODUCTION : false # to download all depenedencies on Heroku, including devDependencies

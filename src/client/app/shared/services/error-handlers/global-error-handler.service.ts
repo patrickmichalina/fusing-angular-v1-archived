@@ -23,13 +23,17 @@ export class GlobalErrorHandler implements ErrorHandler {
 
   // tslint:disable:no-console
   handleError(err: any): void {
-    this.rollbar && this.rollbar.error(err.originalError || err)
     const log = this.inj.get(LoggingService)
     const ws = this.inj.get(WindowService)
     const analytics = this.inj.get(Angulartics2GoogleAnalytics)
 
-    log && log.error(err.originalError || err)
-    typeof ws.window<any>().ga !== 'undefined' &&
-      analytics.exceptionTrack(err.originalError || err)
+    try {
+      this.rollbar && this.rollbar.error(err.originalError || err)
+      log && log.error(err.originalError || err)
+      typeof ws.window<any>().ga !== 'undefined' &&
+        analytics.exceptionTrack(err.originalError || err)
+    } catch (err) {
+      // noop
+    }
   }
 }

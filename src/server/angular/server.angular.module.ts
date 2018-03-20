@@ -111,7 +111,7 @@ export function onBootstrap(
       .subscribe(() => {
         transferState.set<string | undefined>(
           ROLLBAR_TS_KEY,
-          process.env.ROLLBAR_ACCESS_TOKEN
+          process.env.ROLLBAR_CLIENT_ACCESS_TOKEN
         )
         transferState.set<EnvConfig | undefined>(ENV_CONFIG_TS_KEY, envConfig)
         transferState.set<IRequest>(REQUEST_TS_KEY, {
