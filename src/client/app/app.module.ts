@@ -79,7 +79,11 @@ export function staticAppInjectorRef(): NgModuleRef<AppModule> {
     NotFoundModule,
     TransferHttpCacheModule,
     SharedModule.forRoot(),
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics], {
+      pageTracking: {
+        clearHash: true
+      }
+    }),
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
     HttpCacheTagModule.forRoot(
       {
