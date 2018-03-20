@@ -79,7 +79,8 @@ const appOptions = {
         treeshake: true,
         bakeApiIntoBundle: vendorBundleName,
         replaceProcessEnv: false,
-        processPolyfill: true
+        processPolyfill: true,
+        ensureES5: true
       })
   ]
 }

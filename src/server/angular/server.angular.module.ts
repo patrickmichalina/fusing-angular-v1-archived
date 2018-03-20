@@ -43,19 +43,27 @@ import {
 import { Observable } from 'rxjs/Observable'
 import { verify } from 'jsonwebtoken'
 import { Observer } from 'rxjs/Observer'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { EnvironmentService } from '../../client/app/shared/services/environment.service'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../../client/operators'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
 
-export function globalInitialInjections() {
+export function globalInitialInjections(es: EnvironmentService) {
   return [
+    {
+      inHead: true,
+      element: 'base',
+      attributes: {
+        href: '/' // TODO: es.config.siteUrl, might be needed for PWA
+      }
+    },
     process.env.GOOGLE_VERIFICATION_CODE && {
       inHead: true,
       element: 'meta',
@@ -114,10 +122,10 @@ export function onBootstrap(
   }
 }
 
-export function onInit(is: InjectionService) {
+export function onInit(is: InjectionService, es: EnvironmentService) {
   return () =>
     is
-      .injectCollection(globalInitialInjections())
+      .injectCollection(globalInitialInjections(es))
       .take(1)
       .subscribe()
 }

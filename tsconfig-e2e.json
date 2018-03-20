@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "module": "commonjs",
     "declaration": false,
     "removeComments": true,
@@ -15,19 +15,10 @@
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "../../node_modules/@types",
-      "../../node_modules"
-    ],
+    "typeRoots": ["../../node_modules/@types", "../../node_modules"],
     "outDir": ".e2e",
-    "types": [
-      "node",
-      "protractor",
-      "jest"
-    ]
+    "types": ["node", "protractor", "jest"]
   },
-  "include": [
-    "./src/client/app/**/*e2e-spec.ts"
-  ],
+  "include": ["./src/client/app/**/*e2e-spec.ts"],
   "compileOnSave": false
 }

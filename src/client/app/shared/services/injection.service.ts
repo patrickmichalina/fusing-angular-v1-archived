@@ -8,7 +8,7 @@ export interface DOMInjectable {
   readonly inHead: boolean
   readonly element: string
   readonly value?: string
-  readonly attributes?: { readonly [key: string]: string | boolean }
+  readonly attributes?: { readonly [key: string]: string | boolean | undefined }
 }
 
 @Injectable()

@@ -13,7 +13,7 @@ import { AuthService } from './shared/services/auth.service'
 })
 export class AppComponent {
   constructor(
-    public analytics: Angulartics2GoogleAnalytics,
+    analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
     is: InjectionService,
     auth: AuthService,
@@ -21,24 +21,10 @@ export class AppComponent {
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
-    this.setBase(is, es.config.siteUrl)
     auth.user$.subscribe(user => {
       ps.isBrowser && user && analytics.setUsername(user.sub)
     })
     ps.isBrowser && auth.handleAuthentication()
     ps.isBrowser && auth.scheduleRenewal()
-  }
-
-  setBase(is: InjectionService, href = '/') {
-    is
-      .inject({
-        inHead: true,
-        element: 'base',
-        attributes: {
-          href
-        }
-      })
-      .take(1)
-      .subscribe()
   }
 }
