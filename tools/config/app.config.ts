@@ -12,4 +12,5 @@ export interface EnvConfig {
     readonly responseType: string
     readonly scope: string
   }
+  readonly rolesKey?: string
 }

@@ -18,6 +18,8 @@ export class NavbarComponent {
     const greeting = a && `Welcome, ${a.nickname}`
     return {
       greeting,
+      roles:
+        a && Object.keys(a.roles || {}).filter(key => (a.roles || {})[key]),
       show: greeting ? 0 : 1
     }
   })

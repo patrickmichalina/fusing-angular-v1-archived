@@ -129,6 +129,7 @@ Sparky.task('build.universal', () => {
             ? reload()
             : init({
                 port: BUILD_CONFIG.browserSyncPort,
+                ghostMode: false,
                 proxy
               })
         })

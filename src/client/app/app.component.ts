@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { SEOService } from './shared/services/seo.service'
+import {
+  ApplicationRef,
+  ChangeDetectionStrategy,
+  Component
+} from '@angular/core'
 import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
-import { SEOService } from './shared/services/seo.service'
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { PlatformService } from './shared/services/platform.service'
+import { AuthService } from './shared/services/auth.service'
 
 interface RouteMeta {
   readonly title?: string
@@ -39,11 +45,19 @@ export class AppComponent {
     is: InjectionService,
     private router: Router,
     private ar: ActivatedRoute,
-    seo: SEOService
+    seo: SEOService,
+    // private wss: WebSocketService,
+    ps: PlatformService,
+    appRef: ApplicationRef,
+    auth: AuthService
   ) {
     this.routeMeta$.filter(Boolean).subscribe((meta: RouteMeta) => {
       seo.setTitle(meta.title)
       seo.setDescription(meta.description)
     })
+  }
+
+  test() {
+    // this.wss.send({ test: 1 })
   }
 }

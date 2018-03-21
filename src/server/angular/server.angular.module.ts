@@ -1,8 +1,5 @@
-import {
-  DOMInjectable,
-  InjectionService
-} from '../../client/app/shared/services/injection.service'
 import { ServerResponseService } from './server.response.service'
+import { ServerSvgLoaderService } from './server.svg-loader.service'
 import { AppComponent } from './../../client/app/app.component'
 import { EnvConfig } from '../../../tools/config/app.config'
 import {
@@ -34,7 +31,10 @@ import { ResponseService } from '../../client/app/shared/services/response.servi
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
 import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
 import { SVGLoaderService } from '../../client/app/shared/svg/svg-loader.service'
-import { ServerSvgLoaderService } from './server.svg-loader.service'
+import {
+  DOMInjectable,
+  InjectionService
+} from '../../client/app/shared/services/injection.service'
 import {
   AUTH0_CLIENT,
   AUTH0_USER_TRANSFER,
@@ -43,7 +43,11 @@ import {
 import { Observable } from 'rxjs/Observable'
 import { verify } from 'jsonwebtoken'
 import { Observer } from 'rxjs/Observer'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpHeaders
+} from '@angular/common/http'
 import { EnvironmentService } from '../../client/app/shared/services/environment.service'
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
@@ -51,6 +55,9 @@ import * as Rollbar from 'rollbar'
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/first'
 import '../../client/operators'
+import { WebSocketService } from '../../client/app/shared/services/web-socket.service'
+import { ServerWebSocketService } from './server.websocket.service'
+import { HttpServerInterceptor } from './server.http-absolute'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -142,7 +149,7 @@ export function rollbarFactory(ts: TransferState) {
   )
 }
 
-const verifyLocally = (idToken: string, cert: string) => {
+export const verifyLocally = (idToken: string, cert: string) => {
   return Observable.create((obs: Observer<any>) => {
     verify(idToken, cert.replace(/\\n/g, '\n') || '', (err, profile) => {
       if (err) {
@@ -156,7 +163,7 @@ const verifyLocally = (idToken: string, cert: string) => {
   })
 }
 
-const verifyRemotely = (
+export const verifyRemotely = (
   accessToken: string,
   http: HttpClient,
   az: auth0.WebAuth
@@ -193,6 +200,11 @@ export function auth0ServerValidationFactory(
     { provide: ResponseService, useClass: ServerResponseService },
     { provide: SVGLoaderService, useClass: ServerSvgLoaderService },
     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpServerInterceptor,
+      multi: true
+    },
+    {
       provide: AUTH0_VALIDATION_FACTORY,
       useFactory: auth0ServerValidationFactory,
       deps: [TransferState, HttpClient, AUTH0_CLIENT]
@@ -228,6 +240,10 @@ export function auth0ServerValidationFactory(
           return new cleanCss({}).minify(css).styles || css
         }
       }
+    },
+    {
+      provide: WebSocketService,
+      useClass: ServerWebSocketService
     }
   ],
   bootstrap: [AppComponent]

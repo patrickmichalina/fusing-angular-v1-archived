@@ -1,7 +1,7 @@
+import { SVGLoaderService } from './shared/svg/svg-loader.service'
 import { ResponseService } from './shared/services/response.service'
-import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 import { AppModule } from './app.module'
-import { NgModule } from '@angular/core'
+import { ApplicationRef, NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
 import { ENV_CONFIG, ENV_CONFIG_TS_KEY, REQUEST_TS_KEY } from './app.config'
 import { WINDOW } from './shared/services/utlities/window.service'
@@ -12,7 +12,7 @@ import {
 } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LOGGER_CONFIG } from './shared/services/logging.service'
-import { SVGLoaderService } from './shared/svg/svg-loader.service'
+import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 import { HttpClient } from '@angular/common/http'
 import {
   AUTH0_CLIENT,
@@ -26,7 +26,7 @@ import { Observer } from 'rxjs/Observer'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
-
+import { WebSocketService } from './shared/services/web-socket.service'
 // import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 // import 'hammerjs'
@@ -103,7 +103,8 @@ export function auth0BrowserValidationFactory(
         type: 'client-side'
       }
     },
-    ResponseService
+    ResponseService,
+    WebSocketService
   ]
 })
 export class AppBrowserModule {
@@ -111,7 +112,9 @@ export class AppBrowserModule {
     analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
     is: InjectionService,
-    auth: AuthService
+    auth: AuthService,
+    wss: WebSocketService,
+    appRef: ApplicationRef
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
@@ -120,8 +123,14 @@ export class AppBrowserModule {
       .subscribe((user: auth0.Auth0UserProfile) =>
         analytics.setUsername(user.sub)
       )
+    // wss.messageBus$.subscribe(console.log)
     auth.handleAuthentication()
-    auth.scheduleRenewal()
+    appRef.isStable
+      .filter(a => a)
+      .first()
+      .subscribe(() => {
+        auth.scheduleRenewal()
+      })
   }
   // tslint:disable:no-console
   // constructor(updates: SwUpdate) {

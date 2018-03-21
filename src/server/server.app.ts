@@ -10,6 +10,7 @@ import { AppServerModule } from './angular/server.angular.module'
 import { argv } from 'yargs'
 import { resolve } from 'path'
 import { rollbarInit } from './add-ons/rollbar'
+import { useApi } from './rest-api/index'
 import ms = require('ms')
 
 const shrinkRay = require('shrink-ray')
@@ -52,6 +53,7 @@ app.use(
 const dir = resolve('dist')
 
 app.engine('html', ngExpressEngine({ bootstrap: AppServerModule }))
+app.set('ignore-routes', ['/api/'])
 app.set('view engine', 'html')
 app.set('views', dir)
 app.use(cookieParser())
@@ -103,13 +105,21 @@ app.use(
   express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false })
 )
 
+useApi(app)
+
+app.set('ignore-routes', ['/api/', '/css/', '/js/', '/assets/'])
 app.get(
   '**',
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    return res.render('index', {
-      req,
-      res
-    })
+    const bypassed = (req.app.get('ignore-routes') as ReadonlyArray<
+      string
+    >).some(a => req.url.includes(a))
+    return bypassed
+      ? next()
+      : res.render('index', {
+          req,
+          res
+        })
   }
 )
 

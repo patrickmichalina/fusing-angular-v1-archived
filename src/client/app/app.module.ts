@@ -1,9 +1,5 @@
+import { TransferHttpCacheModule } from '@nguniversal/common'
 import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-  HttpResponse
-} from '@angular/common/http'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
@@ -11,7 +7,11 @@ import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { Angulartics2Module } from 'angulartics2'
-import { TransferHttpCacheModule } from '@nguniversal/common'
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpResponse
+} from '@angular/common/http'
 import {
   CACHE_TAG_CONFIG,
   CACHE_TAG_FACTORY,
@@ -34,8 +34,10 @@ import {
 import { EnvironmentService } from './shared/services/environment.service'
 import {
   AUTH0_CLIENT,
+  AUTH_ROLES_KEY,
   AuthService,
-  authZeroFactory
+  authZeroFactory,
+  rolesKeyFactory
 } from './shared/services/auth.service'
 import * as Rollbar from 'rollbar'
 
@@ -61,6 +63,10 @@ export function rollbarFactory(ts: TransferState) {
     })
   )
 }
+
+export const appAuthIdTokenKey = 'id-token'
+export const appAuthAccessTokenKey = 'access-token'
+export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
 
 @NgModule({
   imports: [
@@ -93,15 +99,20 @@ export function rollbarFactory(ts: TransferState) {
   providers: [
     AuthService,
     {
+      provide: AUTH_ROLES_KEY,
+      useFactory: rolesKeyFactory,
+      deps: [EnvironmentService]
+    },
+    {
       provide: AUTH0_CLIENT,
       useFactory: authZeroFactory,
       deps: [EnvironmentService]
     },
-    { provide: AUTH_ID_TOKEN_STORAGE_KEY, useValue: 'id-token' },
-    { provide: AUTH_ACCESS_TOKEN_STORAGE_KEY, useValue: 'access-token' },
+    { provide: AUTH_ID_TOKEN_STORAGE_KEY, useValue: appAuthIdTokenKey },
+    { provide: AUTH_ACCESS_TOKEN_STORAGE_KEY, useValue: appAuthAccessTokenKey },
     {
       provide: AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
-      useValue: 'access-token-expiry'
+      useValue: appAuthAccessExpiryTokenKey
     },
     {
       provide: HTTP_INTERCEPTORS,

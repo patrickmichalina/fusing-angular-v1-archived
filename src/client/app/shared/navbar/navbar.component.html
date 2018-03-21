@@ -3,10 +3,18 @@
     <li><a routerLink title="I am lazy also!">Home</a></li>
     <li><a routerLink="about" title="I am a lazy module for the about page">Performance</a></li>
     <li><a routerLink="demos" title="I am a lazy module for the demos page">Isomorphic Demos</a></li>
+    <li><a href="/api-docs" title="I am a lazy module for the demos page" pmExternalLink>API</a></li>
     <li><a href="https://github.com/patrickmichalina/fusing-angular" pmExternalLink>Github</a></li>
     <li [ngSwitch]="user.show">
       <div *ngSwitchCase="0">
-        <span>{{ user.greeting }} </span> <button (click)="auth.logout()">Logout</button>
+        <div>{{ user.greeting }} </div> 
+        <div>
+          <span>You have the following roles</span>
+          <ul>
+            <li *ngFor="let role of user.roles">{{ role }}</li>
+          </ul>
+        </div> 
+        <button (click)="auth.logout()">Logout</button>
       </div>
       <div *ngSwitchCase="1">
         <a (click)="login()">Login</a>

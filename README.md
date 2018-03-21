@@ -41,14 +41,13 @@ Provides an extremely fast seed project for the development of Angular Universal
 
 Built by [AngularUniversal.com](https://www.angularuniversal.com). For additional help please checkout our [services](https://www.angularuniversal.com/services)
 
-# Specialty Branches
+# Recipes
 
 In order to better support different configurations, we have created several branches with different combinations of features. Be sure to clone the correct branch.
 
-* [minimal-no-heroku](https://github.com/patrickmichalina/fusing-angular/tree/minimal-no-heroku) Minimal, fusebox build tooling only
-* [heroku-only](https://github.com/patrickmichalina/fusing-angular/tree/heroku-only) Heroku
-* [heroku-s3](https://github.com/patrickmichalina/fusing-angular/tree/heroku-s3) Heroku, S3/CF backed static assets
-* [master](https://github.com/patrickmichalina/fusing-angular/tree/master) Heroku, S3/CF backed static assets, Auth0
+* [Bootstrap Theme](#) coming soon
+* [Material Theme](#) coming soon
+* [Bulma Theme](#) coming soon
 
 # Table of Contents
 
@@ -63,7 +62,9 @@ In order to better support different configurations, we have created several bra
 
 # Quick Start
 
-**Note that we strongly recommend node >= v7.0.0 and npm >= 4.0.0.**
+**Note that we strongly recommend node >= v9.0.0 and npm >= 5.0.0.**
+
+[Configure Auth0](docs/auth0.md)
 
 To start the seed use:
 
@@ -71,7 +72,6 @@ To start the seed use:
 $ git clone --depth 1 https://github.com/patrickmichalina/fusing-angular
 $ cd fusing-angular
 
-# Add Firebase Admin values to your project
 # in a ".env" file for local deveopment
 # in environment variables for other environments
 See [Environment Variables](#environment-variables)

@@ -15,7 +15,12 @@
     "typescript",
     "ssr"
   ],
-  "addons": ["newrelic:wayne", "rollbar:free", "auth0:free"],
+  "addons": [
+    "newrelic:wayne",
+    "rollbar:free",
+    "auth0:free",
+    "heroku-postgresql:hobby-dev"
+  ],
   "env": {
     "HEROKU_APP_NAME": {
       "description": "Your application's name.",

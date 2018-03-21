@@ -1,25 +1,38 @@
-import { EnvironmentService } from './environment.service'
-import { Subject } from 'rxjs/Subject'
-import { PlatformService } from './platform.service'
 import { Injectable } from '@angular/core'
-import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/observable/dom/WebSocketSubject'
+import { WebSocketSubject } from 'rxjs/observable/dom/WebSocketSubject'
+import { AuthService } from './auth.service'
 
 @Injectable()
 export class WebSocketService {
-  private readonly source = this.ps.isBrowser && typeof window !== 'undefined' && (window as any).WebSocket &&
-    this.es.config.endpoints && this.es.config.endpoints.websocketServer
-    ? new WebSocketSubject(
-      {
-        url: this.es.config.endpoints.websocketServer
-      } as WebSocketSubjectConfig
-    )
-    : new Subject()
+  private readonly source = new WebSocketSubject<any>({
+    url: 'ws://localhost:5001'
+  })
 
   public readonly messageBus$ = this.source.asObservable()
 
-  constructor(private ps: PlatformService, private es: EnvironmentService) { }
+  constructor(auth: AuthService) {
+    // auth.user$.subscribe(user => {
+    //   this.disconnect()
+    // })
+  }
 
-  send(obj: Object) {
-    this.source.next(JSON.stringify(obj))
+  valueChanges(channel: string) {
+    // this.send({
+    // channel
+    // })
+  }
+
+  // private send(obj: Object) {
+  //   this.source.next(JSON.stringify(obj))
+  // }
+
+  disconnect() {
+    this.source.unsubscribe()
+  }
+
+  reconnect() {
+    // this.source = new WebSocketSubject<any>({
+    //   url: 'ws://localhost:5001'
+    // })
   }
 }

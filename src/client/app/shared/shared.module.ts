@@ -19,6 +19,7 @@ import { WindowService } from './services/utlities/window.service'
 import { MinifierService } from './services/utlities/minifier.service'
 import { ExternalLinkDirective } from './directives/external-link.directive'
 import { SvgDirective } from './svg/svg.directive'
+import { NoteService } from './services/data/note.service'
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -56,7 +57,8 @@ import { SvgDirective } from './svg/svg.directive'
     InjectionService,
     MinifierService,
     SEOService,
-    WindowService
+    WindowService,
+    NoteService
   ]
 })
 export class SharedModule {

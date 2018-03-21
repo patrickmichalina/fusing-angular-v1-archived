@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { EnvironmentService } from './environment.service'
 import { makeStateKey } from '@angular/platform-browser'
 import { Subscription } from 'rxjs/Subscription'
+import { Router } from '@angular/router'
 import * as auth0 from 'auth0-js'
 
 export type IAuth0ValidationFactory = (
@@ -19,6 +20,7 @@ export type IAuth0ValidationFactory = (
 ) => Observable<auth0.Auth0UserProfile | undefined>
 
 export const AUTH0_CLIENT = new InjectionToken('cfg.auth0.client')
+export const AUTH_ROLES_KEY = new InjectionToken<string>('cfg.auth0.role.key')
 export const AUTH0_VALIDATION_FACTORY = new InjectionToken<
   IAuth0ValidationFactory
 >('cfg.auth0.validation')
@@ -28,18 +30,28 @@ export function authZeroFactory(es: EnvironmentService) {
   return new auth0.WebAuth(es.config.auth0 as any)
 }
 
+export function rolesKeyFactory(es: EnvironmentService) {
+  return es.config.rolesKey
+}
+
+export interface ExtendedUser extends auth0.Auth0UserProfile {
+  readonly roles?: { readonly [key: string]: boolean }
+}
+
 @Injectable()
 export class AuthService {
   constructor(
     private cs: CookieService,
     @Inject(AUTH0_CLIENT) private az: auth0.WebAuth,
+    @Inject(AUTH_ROLES_KEY) private rolesKey: string,
     @Inject(AUTH_ID_TOKEN_STORAGE_KEY) private idTokenStorageKey: string,
     @Inject(AUTH_ACCESS_TOKEN_STORAGE_KEY)
     private accessTokenStorageKey: string,
     @Inject(AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY)
     private accessTokenExpiryStorageKey: string,
     @Inject(AUTH0_VALIDATION_FACTORY)
-    private validationFactory: IAuth0ValidationFactory
+    private validationFactory: IAuth0ValidationFactory,
+    private router: Router
   ) {
     cs.valueChanges
       .map(a => a[this.accessTokenStorageKey])
@@ -80,9 +92,9 @@ export class AuthService {
     this.az.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
-        // this.router.navigate(['/home'])
+        this.router.navigate(['/'])
       } else if (err) {
-        // this.router.navigate(['/home'])
+        this.router.navigate(['/'])
       }
     })
   }
@@ -122,11 +134,18 @@ export class AuthService {
 
   private getUserProfile(
     accessToken?: string
-  ): Observable<auth0.Auth0UserProfile | undefined> {
+  ): Observable<ExtendedUser | undefined> {
     return this.validationFactory(
       accessToken,
       this.cs.get(this.idTokenStorageKey)
-    )
+    ).map(user => {
+      return (
+        user && {
+          ...user,
+          roles: user && (user as any)[this.rolesKey]
+        }
+      )
+    })
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {

@@ -16,5 +16,6 @@ export const OVERRIDES = {
     redirectUri: process.env.AUTH0_CALLBACK_URL,
     responseType: 'token id_token',
     scope: 'openid profile'
-  }
+  },
+  rolesKey: process.env.AUTH0_ROLES_KEY
 }
