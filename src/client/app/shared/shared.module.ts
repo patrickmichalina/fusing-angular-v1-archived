@@ -14,13 +14,13 @@ import { SEOService } from './services/seo.service'
 import { KeysPipe } from './pipes/keys.pipe'
 import { KeyValuePipe } from './pipes/key-value.pipe'
 import { SanitizeHtmlPipe } from './pipes/sanitize-html.pipe'
-import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-cookie-interceptor.service'
 import { WindowService } from './services/utlities/window.service'
 import { MinifierService } from './services/utlities/minifier.service'
 import { ExternalLinkDirective } from './directives/external-link.directive'
 import { SvgDirective } from './svg/svg.directive'
 import { NoteService } from './services/data/note.service'
 import { UrlService } from './services/url.service'
+import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-authorization-interceptor.service'
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -45,7 +45,7 @@ import { UrlService } from './services/url.service'
     SvgDirective
   ],
   providers: [
-    { provide: COOKIE_HOST_WHITELIST, useValue: [] },
+    { provide: COOKIE_HOST_WHITELIST, useValue: ['http://localhost:5000'] },
     PlatformService,
     CookieService,
     EnvironmentService,

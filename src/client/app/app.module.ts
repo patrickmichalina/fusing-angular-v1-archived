@@ -17,7 +17,6 @@ import {
   HttpClientModule,
   HttpResponse
 } from '@angular/common/http'
-import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import { ErrorHandler, InjectionToken, NgModule } from '@angular/core'
 import {
   GlobalErrorHandler,
@@ -118,11 +117,6 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
     {
       provide: AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
       useValue: appAuthAccessExpiryTokenKey
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpCookieInterceptor,
-      multi: true
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },
     {

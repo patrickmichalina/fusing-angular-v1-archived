@@ -10,7 +10,7 @@ import {
 import { AuthService } from '../auth.service'
 import { UrlService } from '../url.service'
 import { PlatformService } from '../platform.service'
-import * as express from 'express'
+import { Request } from 'express'
 
 export interface AuthBearerHosts {
   readonly [key: string]: boolean
@@ -19,10 +19,15 @@ export const AUTH_BEARER_HOSTS = new InjectionToken<AuthBearerHosts>(
   'auth.bearer.hosts'
 )
 
+export const COOKIE_HOST_WHITELIST = new InjectionToken<ReadonlyArray<string>>(
+  'cfg.cookie.wl'
+)
+
 @Injectable()
 export class HttpAuthInterceptor implements HttpInterceptor {
   constructor(
     @Inject(AUTH_BEARER_HOSTS) private bearerHosts: AuthBearerHosts,
+    @Inject(COOKIE_HOST_WHITELIST) private cookieHosts: ReadonlyArray<string>,
     private ps: PlatformService,
     private injector: Injector,
     private us: UrlService
@@ -39,12 +44,22 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   }
 
   get serverCookies() {
-    const serverRequest = this.injector.get(REQUEST) as express.Request
+    const serverRequest = this.injector.get(REQUEST) as Request
 
     return Object.keys(serverRequest.cookies || {}).reduce(
       (accumulator, cookieName) =>
         `${accumulator}${cookieName}=${serverRequest.cookies[cookieName]};`,
       ''
+    )
+  }
+
+  safeToSendCookies(reqUrl: string) {
+    return (
+      reqUrl.includes('./') ||
+      this.cookieHosts
+        .map(a => this.us.getComponents(a).host)
+        .filter(Boolean)
+        .some((approved: string) => approved.includes(reqUrl))
     )
   }
 
@@ -72,6 +87,8 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return this.useBearerCredentials(req)
       ? next.handle(this.bearerTokenBasedRequest(req))
-      : next.handle(this.cookieBasedRequest(req))
+      : this.safeToSendCookies(req.url)
+        ? next.handle(this.cookieBasedRequest(req))
+        : next.handle(req)
   }
 }
