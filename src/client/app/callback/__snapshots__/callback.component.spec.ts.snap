@@ -3,7 +3,7 @@
 exports[`CallbackComponent should compile 1`] = `
 <test-component>
   <pm-callback>
-    callback
+    Logging you in please wait...
   </pm-callback>
 </test-component>
 `;

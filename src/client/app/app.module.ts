@@ -1,5 +1,10 @@
+import {
+  CACHE_TAG_CONFIG,
+  CACHE_TAG_FACTORY,
+  CacheTagConfig,
+  HttpCacheTagModule
+} from './shared/http-cache-tag/http-cache-tag.module'
 import { TransferHttpCacheModule } from '@nguniversal/common'
-import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
@@ -12,12 +17,7 @@ import {
   HttpClientModule,
   HttpResponse
 } from '@angular/common/http'
-import {
-  CACHE_TAG_CONFIG,
-  CACHE_TAG_FACTORY,
-  CacheTagConfig,
-  HttpCacheTagModule
-} from './shared/http-cache-tag/http-cache-tag.module'
+import { HttpCookieInterceptor } from './shared/services/http-interceptors/http-cookie-interceptor.service'
 import { ErrorHandler, InjectionToken, NgModule } from '@angular/core'
 import {
   GlobalErrorHandler,
@@ -40,6 +40,10 @@ import {
   rolesKeyFactory
 } from './shared/services/auth.service'
 import * as Rollbar from 'rollbar'
+import {
+  AUTH_BEARER_HOSTS,
+  HttpAuthInterceptor
+} from './shared/services/http-interceptors/http-authorization-interceptor.service'
 
 export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<IScheduler>(
   'cfg.rxjs.sch'
@@ -98,6 +102,7 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
   ],
   providers: [
     AuthService,
+    { provide: AUTH_BEARER_HOSTS, useValue: [] },
     {
       provide: AUTH_ROLES_KEY,
       useFactory: rolesKeyFactory,
@@ -119,6 +124,7 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
       useClass: HttpCookieInterceptor,
       multi: true
     },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },
     {
       provide: ROLLBAR_CONFIG,
       useFactory: rollbarFactory,

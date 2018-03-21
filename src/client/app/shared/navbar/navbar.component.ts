@@ -29,4 +29,8 @@ export class NavbarComponent {
   login() {
     this.auth.login()
   }
+
+  trackByRole(index: number, role: string) {
+    return role
+  }
 }

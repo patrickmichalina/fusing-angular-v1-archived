@@ -105,6 +105,11 @@ export class AuthService {
     })
   }
 
+  public getValidToken(): string | undefined {
+    const token = this.cs.get(this.accessTokenStorageKey)
+    return this.isTokenValid() && token
+  }
+
   public unscheduleRenewal() {
     this.refreshSubscription.unsubscribe()
   }

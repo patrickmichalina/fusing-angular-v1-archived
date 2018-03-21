@@ -20,6 +20,7 @@ import { MinifierService } from './services/utlities/minifier.service'
 import { ExternalLinkDirective } from './directives/external-link.directive'
 import { SvgDirective } from './svg/svg.directive'
 import { NoteService } from './services/data/note.service'
+import { UrlService } from './services/url.service'
 
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -44,10 +45,7 @@ import { NoteService } from './services/data/note.service'
     SvgDirective
   ],
   providers: [
-    {
-      provide: COOKIE_HOST_WHITELIST,
-      useValue: []
-    },
+    { provide: COOKIE_HOST_WHITELIST, useValue: [] },
     PlatformService,
     CookieService,
     EnvironmentService,
@@ -58,7 +56,8 @@ import { NoteService } from './services/data/note.service'
     MinifierService,
     SEOService,
     WindowService,
-    NoteService
+    NoteService,
+    UrlService
   ]
 })
 export class SharedModule {

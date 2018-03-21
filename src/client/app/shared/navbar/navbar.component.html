@@ -11,7 +11,7 @@
         <div>
           <span>You have the following roles</span>
           <ul>
-            <li *ngFor="let role of user.roles">{{ role }}</li>
+            <li *ngFor="let role of user.roles; trackBy: trackByRole">{{ role }}</li>
           </ul>
         </div> 
         <button (click)="auth.logout()">Logout</button>

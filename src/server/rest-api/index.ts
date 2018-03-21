@@ -8,11 +8,9 @@ import {
 } from 'routing-controllers'
 import { controllers } from './controllers'
 import { middlewares } from './middlewares'
+import { Container } from 'typedi'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-import { Container } from 'typedi'
-import * as auth0 from 'auth0-js'
-import * as config from '../../config.json'
 import { verifyLocally } from '../angular/server.angular.module'
 import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
@@ -20,6 +18,8 @@ import {
   appAuthAccessTokenKey,
   appAuthIdTokenKey
 } from '../../client/app/app.module'
+import * as auth0 from 'auth0-js'
+import * as config from '../../config.json'
 
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
@@ -109,7 +109,10 @@ export const useApi = (app: express.Application) => {
   }
 
   configApi(app, {
-    authorizationChecker: (action: Action, roles: ReadonlyArray<string>) => {
+    authorizationChecker: async (
+      action: Action,
+      roles: ReadonlyArray<string>
+    ) => {
       const tokenTuple = getTokenFromAction(action)
       return auth0ServerValidationFactory(
         az,
@@ -117,12 +120,15 @@ export const useApi = (app: express.Application) => {
         tokenTuple.clientIdToken
       )
         .map(user => {
-          const userRoles: ReadonlyArray<string> = []
+          const uroles =
+            (user && (user as any)['https://fusing-angular.com/roles']) || {}
+          const userRoles: ReadonlyArray<string> = Object.keys(uroles).filter(
+            key => uroles[key]
+          )
           const userHasPermission =
             user && userRoles.some(role => roles.some(r => r === role))
           return userHasPermission
         })
-        .take(1)
         .toPromise()
     },
     currentUserChecker: (action: Action) => {

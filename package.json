@@ -183,6 +183,7 @@
     "typedi": "^0.7.1",
     "typeorm": "^0.1.16",
     "typeorm-typedi-extensions": "^0.1.1",
+    "uri-js": "^3.0.2",
     "url-parse": "1.2.0",
     "utf-8-validate": "4.0.0",
     "uuid": "^3.2.1",

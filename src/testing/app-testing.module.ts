@@ -1,5 +1,5 @@
+import { MockEnvironmentService } from './mock-environment.service'
 import { APP_BASE_HREF } from '@angular/common'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import {
   Injector,
@@ -15,7 +15,7 @@ import { EnvironmentService } from '../client/app/shared/services/environment.se
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MockCookieService } from './mock-cookie.service'
-import { MockEnvironmentService } from './mock-environment.service'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from '../client/app/shared/shared.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Angulartics2Module } from 'angulartics2'
@@ -27,6 +27,11 @@ import {
   AuthService
 } from '../client/app/shared/services/auth.service'
 import { Observable } from 'rxjs/Observable'
+import {
+  LOGGER_CONFIG,
+  LoggingService
+} from '../client/app/shared/services/logging.service'
+import { AUTH_BEARER_HOSTS } from '../client/app/shared/services/http-interceptors/http-authorization-interceptor.service'
 import './client/operators'
 
 @NgModule({
@@ -59,15 +64,25 @@ import './client/operators'
     },
     { provide: CookieService, useClass: MockCookieService },
     { provide: EnvironmentService, useClass: MockEnvironmentService },
+    { provide: AUTH_BEARER_HOSTS, useValue: [] },
     {
       provide: AuthService,
       useValue: {
         user$: Observable.of({}),
         handleAuthentication: () => undefined,
-        scheduleRenewal: () => undefined
+        scheduleRenewal: () => undefined,
+        getValidToken: () => undefined
       }
     },
-    { provide: AUTH0_CLIENT, useValue: {} }
+    { provide: AUTH0_CLIENT, useValue: {} },
+    {
+      provide: LOGGER_CONFIG,
+      useValue: {
+        name: 'Universal Webapp',
+        type: 'testing-app'
+      }
+    },
+    LoggingService
   ]
 })
 export class AppTestingModule {

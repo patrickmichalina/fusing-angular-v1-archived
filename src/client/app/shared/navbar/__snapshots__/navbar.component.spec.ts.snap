@@ -40,6 +40,15 @@ exports[`NavbarComponent should compile 1`] = `
       </li>
       <li>
         <a
+          href="/api-docs"
+          pmexternallink=""
+          title="I am a lazy module for the demos page"
+        >
+          API
+        </a>
+      </li>
+      <li>
+        <a
           href="https://github.com/patrickmichalina/fusing-angular"
           pmexternallink=""
         >
@@ -51,9 +60,17 @@ exports[`NavbarComponent should compile 1`] = `
       >
         
         <div>
-          <span>
+          <div>
             Welcome, undefined 
-          </span>
+          </div>
+          <div>
+            <span>
+              You have the following roles
+            </span>
+            <ul>
+              
+            </ul>
+          </div>
           <button>
             Logout
           </button>
