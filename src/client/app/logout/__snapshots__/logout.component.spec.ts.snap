@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogoutComponent should compile 1`] = `
+<test-component>
+  <pm-logout>
+    Logging out...
+  </pm-logout>
+</test-component>
+`;

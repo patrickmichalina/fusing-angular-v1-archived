@@ -17,11 +17,16 @@ export function callbackModule() {
   return import('./callback/callback.module').then(m => m.CallbackModule)
 }
 
+export function logoutModule() {
+  return import('./logout/logout.module').then(m => m.LogoutModule)
+}
+
 export const routes: Routes = [
   { path: '', loadChildren: homeModule },
   { path: 'about', loadChildren: aboutModule },
   { path: 'demos', loadChildren: demosModule },
-  { path: 'callback', loadChildren: callbackModule }
+  { path: 'callback', loadChildren: callbackModule },
+  { path: 'logout', loadChildren: logoutModule }
 ]
 
 @NgModule({
