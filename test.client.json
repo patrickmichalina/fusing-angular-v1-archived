@@ -1,0 +1,18 @@
+{
+  "preset": "jest-preset-angular",
+  "moduleNameMapper": {
+    "./client/operators": "<rootDir>/src/client/operators.ts"
+  },
+  "setupTestFrameworkScriptFile": "./tools/test/jest.setup.ts",
+  "testResultsProcessor": "./node_modules/jest-junit-reporter",
+  "collectCoverageFrom": [
+    "src/client/app/**/*(*.service|*.component|*.pipe|*.directive|*.module).{ts,html}"
+  ],
+  "globals": {
+    "__TRANSFORM_HTML__": true,
+    "__process_env__": {},
+    "ts-jest": {
+      "tsConfigFile": "tsconfig.json"
+    }
+  }
+}

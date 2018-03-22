@@ -1,0 +1,20 @@
+{
+  "moduleNameMapper": {
+    "./client/operators": "<rootDir>/src/client/operators.ts"
+  },
+  "testMatch": ["<rootDir>/src/server/**/*.spec.ts"],
+  "moduleFileExtensions": ["ts", "js", "html", "json"],
+  "setupTestFrameworkScriptFile": "./tools/test/jest.setup.ts",
+  "transform": {
+    "^.+\\.(ts|js|html)$":
+      "<rootDir>/node_modules/jest-preset-angular/preprocessor.js"
+  },
+  "testResultsProcessor": "./node_modules/jest-junit-reporter",
+  "globals": {
+    "__TRANSFORM_HTML__": true,
+    "__process_env__": {},
+    "ts-jest": {
+      "tsConfigFile": "tsconfig.json"
+    }
+  }
+}
