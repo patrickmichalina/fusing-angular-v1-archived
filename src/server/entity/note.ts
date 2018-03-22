@@ -8,15 +8,16 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
  *    properties:
  *      id:
  *        type: number
+ *      text:
+ *        type: string
  */
 export interface INote {
   readonly id: number
-  readonly firstName: string
+  readonly text: string
 }
 
 @Entity()
 export class Note extends BaseEntity implements INote {
   @PrimaryGeneratedColumn() readonly id: number
-
-  @Column() readonly firstName: string
+  @Column() readonly text: string
 }

@@ -22,6 +22,10 @@ import { NoteService } from './services/data/note.service'
 import { UrlService } from './services/url.service'
 import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-authorization-interceptor.service'
 
+export function cookieWhitelistFactory(es: EnvironmentService) {
+  return [es.config.siteUrl]
+}
+
 @NgModule({
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -45,7 +49,11 @@ import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-authori
     SvgDirective
   ],
   providers: [
-    { provide: COOKIE_HOST_WHITELIST, useValue: ['http://localhost:5000'] },
+    {
+      provide: COOKIE_HOST_WHITELIST,
+      useFactory: cookieWhitelistFactory,
+      deps: [EnvironmentService]
+    },
     PlatformService,
     CookieService,
     EnvironmentService,

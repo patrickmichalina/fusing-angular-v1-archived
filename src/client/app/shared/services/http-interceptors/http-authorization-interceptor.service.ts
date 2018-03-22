@@ -56,8 +56,8 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   safeToSendCookies(reqUrl: string) {
     return (
       reqUrl.includes('./') ||
-      this.cookieHosts
-        .map(a => this.us.getComponents(a).host)
+      (this.cookieHosts || [])
+        .map(a => (this.us.getComponents(a) || {}).host)
         .filter(Boolean)
         .some((approved: string) => approved.includes(reqUrl))
     )

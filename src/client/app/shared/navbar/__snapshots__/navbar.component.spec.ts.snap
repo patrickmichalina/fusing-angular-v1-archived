@@ -35,16 +35,16 @@ exports[`NavbarComponent should compile 1`] = `
           routerlink="demos"
           title="I am a lazy module for the demos page"
         >
-          Isomorphic Demos
+          Isomorphic
         </a>
       </li>
       <li>
         <a
           href="/api-docs"
           pmexternallink=""
-          title="I am a lazy module for the demos page"
+          title="View the rest API docs"
         >
-          API
+          API Docs
         </a>
       </li>
       <li>
@@ -52,7 +52,7 @@ exports[`NavbarComponent should compile 1`] = `
           href="https://github.com/patrickmichalina/fusing-angular"
           pmexternallink=""
         >
-          Github
+          View on Github
         </a>
       </li>
       <li

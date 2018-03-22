@@ -1,4 +1,4 @@
-import { NotesController } from './notes.controller'
+import { NotesController } from './notes/notes.controller'
 import { NgModule } from '@angular/core'
 
 export const controllers: ReadonlyArray<any> = [NotesController]

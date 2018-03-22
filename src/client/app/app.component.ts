@@ -56,8 +56,4 @@ export class AppComponent {
       seo.setDescription(meta.description)
     })
   }
-
-  test() {
-    // this.wss.send({ test: 1 })
-  }
 }

@@ -14,9 +14,6 @@ exports[`App component should build without a problem 1`] = `
     <main>
       <router-outlet />
     </main>
-    <button>
-      test
-    </button>
   </pm-app>
 </div>
 `;

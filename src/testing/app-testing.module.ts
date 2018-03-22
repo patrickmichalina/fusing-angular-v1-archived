@@ -33,6 +33,8 @@ import {
 } from '../client/app/shared/services/logging.service'
 import { AUTH_BEARER_HOSTS } from '../client/app/shared/services/http-interceptors/http-authorization-interceptor.service'
 import './client/operators'
+import { UrlService } from '../client/app/shared/services/url.service'
+import { MockUrlService } from './mock-url.service'
 
 @NgModule({
   imports: [
@@ -71,7 +73,8 @@ import './client/operators'
         user$: Observable.of({}),
         handleAuthentication: () => undefined,
         scheduleRenewal: () => undefined,
-        getValidToken: () => undefined
+        getValidToken: () => undefined,
+        logout: () => undefined
       }
     },
     { provide: AUTH0_CLIENT, useValue: {} },
@@ -82,7 +85,8 @@ import './client/operators'
         type: 'testing-app'
       }
     },
-    LoggingService
+    LoggingService,
+    { provide: UrlService, useClass: MockUrlService }
   ]
 })
 export class AppTestingModule {
