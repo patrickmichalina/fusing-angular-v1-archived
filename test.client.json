@@ -8,6 +8,10 @@
   "collectCoverageFrom": [
     "src/client/app/**/*(*.service|*.component|*.pipe|*.directive|*.module).{ts,html}"
   ],
+  "testMatch": [
+    "<rootDir>/src/client/**/__tests__/**/*.+(ts|js)?(x)",
+    "<rootDir>/src/client/**/+(*.)+(spec|test).+(ts|js)?(x)"
+  ],
   "globals": {
     "__TRANSFORM_HTML__": true,
     "__process_env__": {},
