@@ -19,7 +19,9 @@
     "newrelic:wayne",
     "rollbar:free",
     "auth0:free",
-    "heroku-postgresql:hobby-dev"
+    "heroku-postgresql:hobby-dev",
+    "algoliasearch:free",
+    "sendgrid:starter"
   ],
   "env": {
     "HEROKU_APP_NAME": {
