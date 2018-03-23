@@ -41,12 +41,14 @@ Provides an extremely fast seed project for the development of Angular Universal
 
 # Heroku Deployment Features
 
-Click button deployment to Heroku gets you setup in just under 5 minutes! It includes the following add-ons:
+Click button deployment to Heroku gets you setup in just under 5 minutes! It includes the following add-ons which are all free until you need to scale:
 
-* [Auth0](https://elements.heroku.com/addons/auth0) A developer first universal identity management and single sign on platform
-* [Rollbar](https://elements.heroku.com/addons/rollbar) Real-time error monitoring, alerting, and analytics for developers
+* [Auth0](https://elements.heroku.com/addons/auth0) A developer first universal identity management and single sign on platform.
+* [Rollbar](https://elements.heroku.com/addons/rollbar) Real-time error monitoring, alerting, and analytics for developers.
 * [New Relic APM](https://elements.heroku.com/addons/newrelic) Monitor, troubleshoot, and tune production web applications.
-* [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql) Reliable and powerful database as a service based on PostgreSQL
+* [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql) Reliable and powerful database as a service based on PostgreSQL.
+* [SendGrid](https://elements.heroku.com/addons/sendgrid) Email Delivery. Simplified.
+* [Algolia Realtime Search](https://elements.heroku.com/addons/algoliasearch) A powerful API delivering relevant results from the first keystroke.
 
 All these services start off free and you can scale them up as your app grows.
 
