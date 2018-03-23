@@ -126,9 +126,11 @@ export class AuthService {
 
     const expires = this.cs.get(this.accessTokenExpiryStorageKey)
 
-    const source = of(expires).flatMap(expiresAt => {
-      return timer(Math.max(1, expiresAt - Date.now()))
-    })
+    const source = of(expires).pipe(
+      flatMap(expiresAt => {
+        return timer(Math.max(1, expiresAt - Date.now()))
+      })
+    )
 
     // tslint:disable-next-line:no-object-mutation
     this.refreshSubscription = source.subscribe(() => {
