@@ -1,9 +1,7 @@
 import { Authorized, Get, JsonController, Param } from 'routing-controllers'
-import { Injectable } from '@angular/core'
 import { of } from 'rxjs/observable/of'
 
 @JsonController()
-@Injectable()
 export class NotesController {
   /**
    * @swagger
@@ -58,6 +56,6 @@ export class NotesController {
    */
   @Get('/notes/:id')
   getNote(@Param('id') id: number) {
-    return of({ test: 'this is a note!' }).toPromise()
+    return of([{ test: 'this is a note!' }]).toPromise()
   }
 }

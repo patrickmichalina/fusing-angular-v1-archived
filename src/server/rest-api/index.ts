@@ -23,6 +23,8 @@ const swaggerUi = require('swagger-ui-express')
 
 useContainer(Container)
 
+Container.set('SENDGRID_API_KEY', process.env.SENDGRID_API_KEY)
+
 export const useApi = (app: express.Application) => {
   const swaggerSpec = swaggerJSDoc({
     swaggerDefinition: {
