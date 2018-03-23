@@ -1,4 +1,4 @@
-# Introduction
+# Fusing Angular
 
 [![CircleCI](https://circleci.com/gh/patrickmichalina/fusing-angular.svg?style=shield)](https://circleci.com/gh/patrickmichalina/fusing-angular)
 [![codecov](https://codecov.io/gh/patrickmichalina/fusing-angular/branch/master/graph/badge.svg)](https://codecov.io/gh/patrickmichalina/fusing-angular)
@@ -8,9 +8,9 @@
 [![Angular Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://angular.io/styleguide)
 [![Fusebox-bundler](https://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-brightgreen.svg)](https://gitter.im/fusing-angular/Lobby)
 
-The goal of this project is to provide a developer friendly Angular Universal starter application. It differs from the Angular-CLI by focusing soley on Universal applications and uses faster testing frameworks and javascript bundler. With this project you can deploy a boilerplate application with a single click via Heroku.
+The goal of this project is to provide a developer friendly Angular Universal starting point. It differs from the Angular-CLI by focusing soley on Universal applications and uses a faster testing framework and bundler. You can deploy a boilerplate application with a single click via Heroku.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular)
 
 # Features
 
@@ -39,11 +39,20 @@ Provides an extremely fast seed project for the development of Angular Universal
 * Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
 * Support for Angular Service Worker
 
-Built by [AngularUniversal.com](https://www.angularuniversal.com). For additional help please checkout our [services](https://www.angularuniversal.com/services)
+# Deploy To Heroky Features
+
+Click button deployment to Heroku gets you setup in just under 5 minutes! It includes the following add-ons:
+
+* Auth0 for user authentication and authorization
+* Rollbar for error logging
+* NewRelic for performance tracking
+* Heroku Postgres as your database
+
+All these services start off free and you can scale them up as your app grows.
 
 # Recipes
 
-In order to better support different configurations, we have created several branches with different combinations of features. Be sure to clone the correct branch.
+Below are some guides to incoporate common elements into the boilerplate
 
 * [Bootstrap Theme](#) coming soon
 * [Material Theme](#) coming soon

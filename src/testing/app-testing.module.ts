@@ -35,6 +35,7 @@ import { AUTH_BEARER_HOSTS } from '../client/app/shared/services/http-intercepto
 import './client/operators'
 import { UrlService } from '../client/app/shared/services/url.service'
 import { MockUrlService } from './mock-url.service'
+import { MarkdownToHtmlModule } from 'markdown-to-html-pipe'
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { MockUrlService } from './mock-url.service'
     ReactiveFormsModule,
     SharedModule,
     BrowserAnimationsModule,
+    MarkdownToHtmlModule,
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
   exports: [
@@ -54,7 +56,8 @@ import { MockUrlService } from './mock-url.service'
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MarkdownToHtmlModule
   ],
   providers: [
     PlatformService,

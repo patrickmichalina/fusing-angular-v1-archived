@@ -23,8 +23,8 @@ export const BUILD_CONFIG: BuildConfiguration = {
       appDescription: 'starter repo for fast Angular Universal app development',
       appName: 'Fusing Angular',
       short_name: 'Fusing-Ng',
-      background: '#7c4dff',
-      theme_color: '#7c4dff',
+      background: '#ffffff',
+      theme_color: '#ffffff',
       start_url: '.',
       lang: 'en'
     }
