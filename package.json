@@ -203,26 +203,6 @@
     "verifyConditions": "condition-circle",
     "getLastRelease": "last-release-git"
   },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "moduleNameMapper": {
-      "./client/operators": "<rootDir>/src/client/operators.ts"
-    },
-    "setupTestFrameworkScriptFile": "./tools/test/jest.setup.ts",
-    "testResultsProcessor": "./node_modules/jest-junit-reporter",
-    "collectCoverageFrom": [
-      "src/client/app/**/*(*.service|*.component|*.pipe|*.directive|*.module).{ts,html}",
-      "!src/client/app/shared/shared.module.ts",
-      "src/server/**/**.{ts}"
-    ],
-    "globals": {
-      "__TRANSFORM_HTML__": true,
-      "__process_env__": {},
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
-    }
-  },
   "bundlesize": [
     {
       "path": "./dist/js/*-vendors.js",
