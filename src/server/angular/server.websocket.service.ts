@@ -10,11 +10,10 @@ import { CookieService } from '../../client/app/shared/services/cookie.service'
 import { AUTH_ID_TOKEN_STORAGE_KEY } from '../../client/app/shared/auth/tokens'
 import { parse } from 'cookie'
 import * as WebSocket from 'ws'
+import { shareReplay, take } from 'rxjs/operators'
 
 @Injectable()
 export class ServerWebSocketService {
-  // private readonly messageSource = new Subject()
-  // private readonly bus = this.messageSource.asObservable()
   private readonly connectionSource = Observable.create(
     (obs: Observer<{ readonly ws: WebSocket; readonly req: any }>) => {
       this.ngZone.runOutsideAngular(() => {
@@ -24,7 +23,10 @@ export class ServerWebSocketService {
         })
       })
     }
-  ).shareReplay(1) as Observable<{ readonly ws: WebSocket; readonly req: any }>
+  ).pipe(shareReplay(1)) as Observable<{
+    readonly ws: WebSocket
+    readonly req: any
+  }>
 
   constructor(
     private ngZone: NgZone,
@@ -37,7 +39,7 @@ export class ServerWebSocketService {
         const clientAuthorizationToken = parse(connection.req.headers
           .cookie as any)[tokenKey]
         authValidator(undefined, clientAuthorizationToken)
-          .take(1)
+          .pipe(take(1))
           .subscribe(user => {
             // TOOD: send this even off to be processed
           })

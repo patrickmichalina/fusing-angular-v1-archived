@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core'
 import { SVGLoaderService } from './svg-loader.service'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
+import { take } from 'rxjs/operators'
 
 // tslint:disable:no-object-mutation
 const insertSvg = (el: HTMLElement, svg: string) => {
@@ -30,7 +31,7 @@ export class SvgDirective implements OnInit {
     } else {
       this.svgLoader
         .load(this.pmSvg)
-        .take(1)
+        .pipe(take(1))
         .subscribe(svg => insertSvg(this.el.nativeElement, svg))
     }
   }

@@ -16,6 +16,7 @@ import {
 import { auth0ServerValidationNoAngularFactory, azNoAngular } from './helpers'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
+import { map } from 'rxjs/operators'
 
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
@@ -82,16 +83,19 @@ export const useApi = (app: express.Application) => {
         tokenTuple.clientAccessToken,
         tokenTuple.clientIdToken
       )
-        .map(user => {
-          const uroles =
-            (user && (user as any)[process.env.AUTH0_ROLES_KEY as string]) || {}
-          const userRoles: ReadonlyArray<string> = Object.keys(uroles).filter(
-            key => uroles[key]
-          )
-          const userHasPermission =
-            user && userRoles.some(role => roles.some(r => r === role))
-          return userHasPermission
-        })
+        .pipe(
+          map(user => {
+            const uroles =
+              (user && (user as any)[process.env.AUTH0_ROLES_KEY as string]) ||
+              {}
+            const userRoles: ReadonlyArray<string> = Object.keys(uroles).filter(
+              key => uroles[key]
+            )
+            const userHasPermission =
+              user && userRoles.some(role => roles.some(r => r === role))
+            return userHasPermission
+          })
+        )
         .toPromise()
     },
     currentUserChecker: (action: Action) => {

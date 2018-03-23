@@ -21,12 +21,15 @@ import {
   AuthService
 } from './shared/services/auth.service'
 import * as auth0 from 'auth0-js'
-import { Observable } from 'rxjs/Observable'
+// tslint:disable-next-line:import-blacklist
+import { Observable } from 'rxjs'
 import { Observer } from 'rxjs/Observer'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
 import { WebSocketService } from './shared/services/web-socket.service'
+import { filter, first, tap } from 'rxjs/operators'
+import { of } from 'rxjs/observable/of'
 // import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 // import 'hammerjs'
@@ -45,7 +48,7 @@ export function auth0BrowserValidationFactory(
 ): any {
   return (accessToken?: string, idToken?: string) => {
     return !accessToken
-      ? Observable.of(undefined)
+      ? of(undefined)
       : Observable.create((obs: Observer<any>) => {
           const fromServerRender = ts.get(AUTH0_USER_TRANSFER, undefined)
           if (fromServerRender) {
@@ -62,7 +65,7 @@ export function auth0BrowserValidationFactory(
               }
             })
           }
-        }).do(() => ts.remove(AUTH0_USER_TRANSFER))
+        }).pipe(tap(() => ts.remove(AUTH0_USER_TRANSFER)))
   }
 }
 
@@ -119,18 +122,15 @@ export class AppBrowserModule {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
     auth.user$
-      .filter(Boolean)
+      .pipe(filter(Boolean))
       .subscribe((user: auth0.Auth0UserProfile) =>
         analytics.setUsername(user.sub)
       )
     // wss.messageBus$.subscribe(console.log)
     auth.handleAuthentication()
-    appRef.isStable
-      .filter(a => a)
-      .first()
-      .subscribe(() => {
-        auth.scheduleRenewal()
-      })
+    appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+      auth.scheduleRenewal()
+    })
   }
   // tslint:disable:no-console
   // constructor(updates: SwUpdate) {

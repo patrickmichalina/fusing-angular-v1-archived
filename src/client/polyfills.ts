@@ -25,6 +25,3 @@ import 'core-js/es6/set'
 
 // IE10 and IE11 requires the following to support `@angular/animation`.
 // import 'web-animations-js'
-
-// rxjs
-import './operators'

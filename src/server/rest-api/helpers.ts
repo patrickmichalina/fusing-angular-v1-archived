@@ -3,6 +3,7 @@ import { Observer } from 'rxjs/Observer'
 import { verify } from 'jsonwebtoken'
 import * as auth0 from 'auth0-js'
 import * as config from '../../config.json'
+import { of } from 'rxjs/observable/of'
 
 export const azNoAngular = new auth0.WebAuth({
   ...(config as any).auth0
@@ -27,12 +28,10 @@ export const auth0ServerValidationNoAngularFactory = (
   accessToken?: string,
   idToken?: string
 ): Observable<auth0.Auth0UserProfile | undefined> => {
-  if (!accessToken || !idToken) return Observable.of(undefined)
+  if (!accessToken || !idToken) return of(undefined)
   const cert = process.env.AUTH0_CERT
   return !cert || !idToken
-    ? accessToken
-      ? verifyRemotely(azNoAngular, accessToken)
-      : Observable.of(undefined)
+    ? accessToken ? verifyRemotely(azNoAngular, accessToken) : of(undefined)
     : verifyLocally(idToken, cert.replace(/\\n/g, '\n') || '')
 }
 

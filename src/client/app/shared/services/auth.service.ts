@@ -1,5 +1,5 @@
+import { EnvironmentService } from './environment.service'
 import { Inject, Injectable, InjectionToken } from '@angular/core'
-import { CookieService } from './cookie.service'
 import {
   AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
   AUTH_ACCESS_TOKEN_STORAGE_KEY,
@@ -8,11 +8,14 @@ import {
 import { Observable } from 'rxjs/Observable'
 import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
-import { EnvironmentService } from './environment.service'
+import { CookieService } from './cookie.service'
 import { makeStateKey } from '@angular/platform-browser'
 import { Subscription } from 'rxjs/Subscription'
 import { Router } from '@angular/router'
 import * as auth0 from 'auth0-js'
+import { distinctUntilChanged, flatMap, map, shareReplay } from 'rxjs/operators'
+import { of } from 'rxjs/observable/of'
+import { timer } from 'rxjs/observable/timer'
 
 export type IAuth0ValidationFactory = (
   accessToken?: string,
@@ -54,7 +57,7 @@ export class AuthService {
     private router: Router
   ) {
     cs.valueChanges
-      .map(a => a[this.accessTokenStorageKey])
+      .pipe(map(a => a[this.accessTokenStorageKey]))
       .subscribe(user => this.accessTokenSource.next(user))
   }
 
@@ -65,17 +68,20 @@ export class AuthService {
     this.cs.get(this.accessTokenStorageKey)
   )
 
-  private readonly accessToken$ = this.accessTokenSource
-    .asObservable()
-    .distinctUntilChanged()
+  private readonly accessToken$ = this.accessTokenSource.pipe(
+    distinctUntilChanged()
+  )
 
-  public readonly user$ = this.accessToken$
-    .flatMap(accessToken => this.getUserProfile(accessToken))
-    .distinctUntilChanged((x, y) => (x && sha1(x)) === (y && sha1(y)))
-    .shareReplay(1)
+  public readonly user$ = this.accessToken$.pipe(
+    flatMap(accessToken => this.getUserProfile(accessToken)),
+    distinctUntilChanged((x, y) => (x && sha1(x)) === (y && sha1(y))),
+    shareReplay(1)
+  )
 
-  public readonly isLoggedIn$ = this.user$.map(user => (user ? true : false))
-  public readonly isLoggedOut$ = this.isLoggedIn$.map(a => !a)
+  public readonly isLoggedIn$ = this.user$.pipe(
+    map(user => (user ? true : false))
+  )
+  public readonly isLoggedOut$ = this.isLoggedIn$.pipe(map(a => !a))
 
   public login(): void {
     this.az.authorize()
@@ -120,8 +126,8 @@ export class AuthService {
 
     const expires = this.cs.get(this.accessTokenExpiryStorageKey)
 
-    const source = Observable.of(expires).flatMap(expiresAt => {
-      return Observable.timer(Math.max(1, expiresAt - Date.now()))
+    const source = of(expires).flatMap(expiresAt => {
+      return timer(Math.max(1, expiresAt - Date.now()))
     })
 
     // tslint:disable-next-line:no-object-mutation
@@ -143,14 +149,16 @@ export class AuthService {
     return this.validationFactory(
       accessToken,
       this.cs.get(this.idTokenStorageKey)
-    ).map(user => {
-      return (
-        user && {
-          ...user,
-          roles: user && (user as any)[this.rolesKey]
-        }
-      )
-    })
+    ).pipe(
+      map(user => {
+        return (
+          user && {
+            ...user,
+            roles: user && (user as any)[this.rolesKey]
+          }
+        )
+      })
+    )
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {

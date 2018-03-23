@@ -1,6 +1,6 @@
 import { Authorized, Get, JsonController, Param } from 'routing-controllers'
-import { Observable } from 'rxjs/Observable'
 import { Injectable } from '@angular/core'
+import { of } from 'rxjs/observable/of'
 
 @JsonController()
 @Injectable()
@@ -31,7 +31,7 @@ export class NotesController {
   @Authorized('admin')
   @Get('/notes')
   get() {
-    return Observable.of([{ test: 'this is a note!' }]).toPromise()
+    return of([{ test: 'this is a note!' }]).toPromise()
   }
 
   /**
@@ -58,6 +58,6 @@ export class NotesController {
    */
   @Get('/notes/:id')
   getNote(@Param('id') id: number) {
-    return Observable.of({ test: 'this is a note!' }).toPromise()
+    return of({ test: 'this is a note!' }).toPromise()
   }
 }

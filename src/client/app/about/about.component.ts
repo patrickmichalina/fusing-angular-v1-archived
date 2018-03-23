@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { NoteService } from '../shared/services/data/note.service'
 import { INote } from '../../../server/entity/note'
-import { Observable } from 'rxjs/Observable'
+import { of } from 'rxjs/observable/of'
+import { catchError } from 'rxjs/operators'
 
 @Component({
   selector: 'pm-about',
@@ -13,8 +14,8 @@ export class AboutComponent {
   constructor(private ns: NoteService) {}
   readonly notes = this.ns
     .get()
-    .catch(err =>
-      Observable.of([{ text: 'failed to load notes', id: 0 } as INote])
+    .pipe(
+      catchError(err => of([{ text: 'failed to load notes', id: 0 } as INote]))
     )
 
   trackByNote(index: number, note: INote) {

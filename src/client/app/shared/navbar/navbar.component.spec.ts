@@ -5,8 +5,7 @@ import { NavbarService } from './navbar.service'
 import { Component } from '@angular/core'
 import { AuthService } from '../services/auth.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { Observable } from 'rxjs/Observable'
-import '../../../operators'
+import { of } from 'rxjs/observable/of'
 
 describe(NavbarComponent.name, () => {
   let fixture: ComponentFixture<NavbarComponent>
@@ -22,7 +21,7 @@ describe(NavbarComponent.name, () => {
           {
             provide: AuthService,
             useValue: {
-              user$: Observable.of({})
+              user$: of({})
             }
           }
         ]

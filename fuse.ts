@@ -20,6 +20,7 @@ import {
 } from 'fuse-box'
 import './tools/tasks'
 import { NgAotPlugin } from './tools/plugins/ng-aot'
+import { NgOptimizerPlugin } from './tools/plugins/ng-optimizer'
 
 const death = require('death')
 const isReachable = require('is-reachable')
@@ -62,6 +63,7 @@ const appOptions = {
   target: 'browser@es5',
   plugins: [
     NgAotPlugin(),
+    isProdBuild && NgOptimizerPlugin(),
     ...baseOptions.plugins,
     WebIndexPlugin({
       base: ENV_CONFIG_INSTANCE.host,

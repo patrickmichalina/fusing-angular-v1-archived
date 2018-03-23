@@ -5,6 +5,7 @@ import { makeStateKey, TransferState } from '@angular/platform-browser'
 import { SVG_TRANSFER_KEY } from '../../client/app/shared/svg/svg.directive'
 import { readFile } from 'fs'
 import { Observer } from 'rxjs/Observer'
+import { tap } from 'rxjs/operators'
 
 @Injectable()
 export class ServerSvgLoaderService implements ISVGLoaderService {
@@ -21,7 +22,7 @@ export class ServerSvgLoaderService implements ISVGLoaderService {
           observer.complete()
         }
       })
-    }).do((svg: string) => this.cacheForBrowserReflow(name, svg))
+    }).pipe(tap((svg: string) => this.cacheForBrowserReflow(name, svg)))
   }
 
   cacheForBrowserReflow(name: string, svg: string) {

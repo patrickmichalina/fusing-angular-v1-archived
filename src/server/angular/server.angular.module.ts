@@ -1,5 +1,8 @@
-import { ServerResponseService } from './server.response.service'
-import { ServerSvgLoaderService } from './server.svg-loader.service'
+import { SVGLoaderService } from '../../client/app/shared/svg/svg-loader.service'
+import {
+  DOMInjectable,
+  InjectionService
+} from '../../client/app/shared/services/injection.service'
 import { AppComponent } from './../../client/app/app.component'
 import { EnvConfig } from '../../../tools/config/app.config'
 import {
@@ -30,11 +33,8 @@ import {
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
 import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
-import { SVGLoaderService } from '../../client/app/shared/svg/svg-loader.service'
-import {
-  DOMInjectable,
-  InjectionService
-} from '../../client/app/shared/services/injection.service'
+import { ServerResponseService } from './server.response.service'
+import { ServerSvgLoaderService } from './server.svg-loader.service'
 import {
   AUTH0_CLIENT,
   AUTH0_USER_TRANSFER,
@@ -52,12 +52,11 @@ import { EnvironmentService } from '../../client/app/shared/services/environment
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
-import 'rxjs/add/operator/filter'
-import 'rxjs/add/operator/first'
-import '../../client/operators'
 import { WebSocketService } from '../../client/app/shared/services/web-socket.service'
 import { ServerWebSocketService } from './server.websocket.service'
 import { HttpServerInterceptor } from './server.http-absolute'
+import { filter, first, take, tap } from 'rxjs/operators'
+import { of } from 'rxjs/observable/of'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -111,21 +110,17 @@ export function onBootstrap(
   req: express.Request
 ) {
   return () => {
-    appRef.isStable
-      .filter(Boolean)
-      .first()
-      .take(1)
-      .subscribe(() => {
-        transferState.set<string | undefined>(
-          ROLLBAR_TS_KEY,
-          process.env.ROLLBAR_CLIENT_ACCESS_TOKEN
-        )
-        transferState.set<EnvConfig | undefined>(ENV_CONFIG_TS_KEY, envConfig)
-        transferState.set<IRequest>(REQUEST_TS_KEY, {
-          hostname: req.hostname,
-          entryReferer: req.get('referer')
-        })
+    appRef.isStable.pipe(filter(Boolean), first(), take(1)).subscribe(() => {
+      transferState.set<string | undefined>(
+        ROLLBAR_TS_KEY,
+        process.env.ROLLBAR_CLIENT_ACCESS_TOKEN
+      )
+      transferState.set<EnvConfig | undefined>(ENV_CONFIG_TS_KEY, envConfig)
+      transferState.set<IRequest>(REQUEST_TS_KEY, {
+        hostname: req.hostname,
+        entryReferer: req.get('referer')
       })
+    })
   }
 }
 
@@ -133,7 +128,7 @@ export function onInit(is: InjectionService, es: EnvironmentService) {
   return () =>
     is
       .injectCollection(globalInitialInjections(es))
-      .take(1)
+      .pipe(take(1))
       .subscribe()
 }
 
@@ -184,11 +179,9 @@ export function auth0ServerValidationFactory(
   return (accessToken?: string, idToken?: string) => {
     const cert = process.env.AUTH0_CERT
     return (!cert || !idToken
-      ? accessToken
-        ? verifyRemotely(accessToken, http, az)
-        : Observable.of(undefined)
+      ? accessToken ? verifyRemotely(accessToken, http, az) : of(undefined)
       : verifyLocally(idToken, cert.replace(/\\n/g, '\n') || '')
-    ).do((user: any) => ts.set(AUTH0_USER_TRANSFER, user))
+    ).pipe(tap((user: any) => ts.set(AUTH0_USER_TRANSFER, user)))
   }
 }
 

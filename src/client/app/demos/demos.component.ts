@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs/Observable'
+import { of } from 'rxjs/observable/of'
+import { catchError, map } from 'rxjs/operators'
 
 interface User {
   readonly id: string
@@ -20,8 +21,10 @@ interface ApiResponse {
 export class DemosComponent {
   readonly users$ = this.http
     .get<ApiResponse>('https://reqres.in/api/users')
-    .map(a => a.data)
-    .catch(a => Observable.of([{ first_name: 'Error loading user from API' }]))
+    .pipe(
+      map(a => a.data),
+      catchError(a => of([{ first_name: 'Error loading user from API' }]))
+    )
 
   constructor(private http: HttpClient) {}
 

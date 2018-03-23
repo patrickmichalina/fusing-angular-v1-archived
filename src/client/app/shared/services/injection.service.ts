@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable'
 import { Inject, Injectable, RendererFactory2 } from '@angular/core'
 import { sha1 } from 'object-hash'
 import { DOCUMENT } from '@angular/common'
+import { forkJoin } from 'rxjs/observable/forkJoin'
 
 export interface DOMInjectable {
   readonly inHead: boolean
@@ -85,8 +86,6 @@ export class InjectionService {
   }
 
   injectCollection(injectables: ReadonlyArray<DOMInjectable>) {
-    return Observable.forkJoin(
-      injectables.map(injectable => this.inject(injectable))
-    )
+    return forkJoin(injectables.map(injectable => this.inject(injectable)))
   }
 }

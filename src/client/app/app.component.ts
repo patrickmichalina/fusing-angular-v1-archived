@@ -10,6 +10,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { PlatformService } from './shared/services/platform.service'
 import { AuthService } from './shared/services/auth.service'
+import { filter, map, mergeMap, shareReplay } from 'rxjs/operators'
 
 interface RouteMeta {
   readonly title?: string
@@ -23,20 +24,20 @@ interface RouteMeta {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  private readonly routeData$ = this.router.events
-    .filter(event => event instanceof NavigationEnd)
-    .map(() => this.ar)
-    .map(route => {
+  private readonly routeData$ = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    map(() => this.ar),
+    map(route => {
       // tslint:disable-next-line:no-parameter-reassignment
       while (route.firstChild) route = route.firstChild
       return route
-    })
-    .filter(route => route.outlet === 'primary')
-    .mergeMap(route => route.data)
-    .shareReplay(1)
+    }),
+    mergeMap(route => route.data),
+    shareReplay(1)
+  )
 
-  private readonly routeMeta$ = this.routeData$.map(
-    a => a.meta as RouteMeta | undefined
+  private readonly routeMeta$ = this.routeData$.pipe(
+    map(a => a.meta as RouteMeta | undefined)
   )
 
   constructor(
@@ -51,7 +52,7 @@ export class AppComponent {
     appRef: ApplicationRef,
     auth: AuthService
   ) {
-    this.routeMeta$.filter(Boolean).subscribe((meta: RouteMeta) => {
+    this.routeMeta$.pipe(filter(Boolean)).subscribe((meta: RouteMeta) => {
       seo.setTitle(meta.title)
       seo.setDescription(meta.description)
     })

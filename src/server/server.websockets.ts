@@ -33,7 +33,6 @@ export const initWebSocketServer = (server: Server) => {
 
   // recievedMessages
   //   .flatMap(eventRouter, (req, res) => ({ req, res }))
-  //   .do(console.log)
   //   .map(e => {
   //     return {
   //       ws: Array.from(webSocketServer.clients).find((a: any) => a.id === e.req.clientId),

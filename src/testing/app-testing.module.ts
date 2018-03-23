@@ -26,16 +26,15 @@ import {
   AUTH0_CLIENT,
   AuthService
 } from '../client/app/shared/services/auth.service'
-import { Observable } from 'rxjs/Observable'
 import {
   LOGGER_CONFIG,
   LoggingService
 } from '../client/app/shared/services/logging.service'
 import { AUTH_BEARER_HOSTS } from '../client/app/shared/services/http-interceptors/http-authorization-interceptor.service'
-import './client/operators'
 import { UrlService } from '../client/app/shared/services/url.service'
 import { MockUrlService } from './mock-url.service'
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe'
+import { of } from 'rxjs/observable/of'
 
 @NgModule({
   imports: [
@@ -73,7 +72,7 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe'
     {
       provide: AuthService,
       useValue: {
-        user$: Observable.of({}),
+        user$: of({}),
         handleAuthentication: () => undefined,
         scheduleRenewal: () => undefined,
         getValidToken: () => undefined,
