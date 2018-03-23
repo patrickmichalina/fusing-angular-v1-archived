@@ -16,8 +16,8 @@ import { Observable } from 'rxjs/Observable'
 export class HomeComponent {
   constructor(private http: HttpClient) {}
   readonly page$ = this.http
-    .get('./assets/md/readme.md', {
+    .get('./assets/md/README.md', {
       responseType: 'text'
     })
-    .catch(err => Observable.of(err))
+    .catch(err => Observable.of('Error loading README.md'))
 }
