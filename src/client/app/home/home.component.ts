@@ -4,6 +4,7 @@ import {
   ViewEncapsulation
 } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs/Observable'
 
 @Component({
   selector: 'pm-home',
@@ -14,7 +15,9 @@ import { HttpClient } from '@angular/common/http'
 })
 export class HomeComponent {
   constructor(private http: HttpClient) {}
-  readonly page$ = this.http.get('./assets/md/readme.md', {
-    responseType: 'text'
-  })
+  readonly page$ = this.http
+    .get('./assets/md/readme.md', {
+      responseType: 'text'
+    })
+    .catch(err => Observable.of(err))
 }

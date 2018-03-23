@@ -1,1 +1,1 @@
-<div [innerHTML]="page$ | async | MarkdownToHtml"></div>
+<div [innerHTML]="page$ | async | MarkdownToHtml | pmSanitizeHtml"></div>
