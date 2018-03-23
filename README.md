@@ -37,22 +37,22 @@ Provides an extremely fast seed project for the development of Angular Universal
 * Vendor-agnostic analytics using [angulartics2](https://github.com/angulartics/angulartics2)
 * Generic token based Authentication service with [JWT](https://jwt.io) cookie support.
 * Analyze bundle sizes by using [source-map-explorer](https://github.com/danvk/source-map-explorer)
-* Support for Angular Service Worker
+* PWA Support via Angular Service Worker
 
-# Deploy To Heroky Features
+# Heroku Deployment Features
 
 Click button deployment to Heroku gets you setup in just under 5 minutes! It includes the following add-ons:
 
-* Auth0 for user authentication and authorization
-* Rollbar for error logging
-* NewRelic for performance tracking
-* Heroku Postgres as your database
+* [Auth0](https://elements.heroku.com/addons/auth0) A developer first universal identity management and single sign on platform
+* [Rollbar](https://elements.heroku.com/addons/rollbar) Real-time error monitoring, alerting, and analytics for developers
+* [New Relic APM](https://elements.heroku.com/addons/newrelic) Monitor, troubleshoot, and tune production web applications.
+* [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql) Reliable and powerful database as a service based on PostgreSQL
 
 All these services start off free and you can scale them up as your app grows.
 
 # Recipes
 
-Below are some guides to incoporate common elements into the boilerplate
+Below are some guides to help you bring in common features into your starter.
 
 * [Bootstrap Theme](#) coming soon
 * [Material Theme](#) coming soon

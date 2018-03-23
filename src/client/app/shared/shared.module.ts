@@ -21,6 +21,7 @@ import { SvgDirective } from './svg/svg.directive'
 import { NoteService } from './services/data/note.service'
 import { UrlService } from './services/url.service'
 import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-authorization-interceptor.service'
+import { RouteDataService } from './services/route-data.service'
 
 export function cookieWhitelistFactory(es: EnvironmentService) {
   return [es.config.siteUrl]
@@ -65,7 +66,8 @@ export function cookieWhitelistFactory(es: EnvironmentService) {
     SEOService,
     WindowService,
     NoteService,
-    UrlService
+    UrlService,
+    RouteDataService
   ]
 })
 export class SharedModule {
