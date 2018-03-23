@@ -21,8 +21,7 @@ import {
   AuthService
 } from './shared/services/auth.service'
 import * as auth0 from 'auth0-js'
-// tslint:disable-next-line:import-blacklist
-import { Observable } from 'rxjs'
+import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { EnvironmentService } from './shared/services/environment.service'
@@ -121,12 +120,12 @@ export class AppBrowserModule {
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
+    // wss.messageBus$.subscribe(console.log)
     auth.user$
       .pipe(filter(Boolean))
       .subscribe((user: auth0.Auth0UserProfile) =>
         analytics.setUsername(user.sub)
       )
-    // wss.messageBus$.subscribe(console.log)
     auth.handleAuthentication()
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
       auth.scheduleRenewal()

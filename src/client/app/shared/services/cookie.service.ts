@@ -3,10 +3,9 @@ import { PlatformService } from './platform.service'
 import { Inject, Injectable } from '@angular/core'
 import { Subject } from 'rxjs/Subject'
 import { CookieAttributes, getJSON, remove, set } from 'js-cookie'
-import { IStorageProvider } from '../auth/tokens'
 
 @Injectable()
-export class CookieService implements IStorageProvider {
+export class CookieService {
   private readonly cookieSource = new Subject<{ readonly [key: string]: any }>()
   public readonly valueChanges = this.cookieSource.asObservable()
 

@@ -4,10 +4,10 @@ import { Observable } from 'rxjs/Observable'
 import { webSocketServer } from '../server'
 import {
   AUTH0_VALIDATION_FACTORY,
+  AUTH_ID_TOKEN_STORAGE_KEY,
   IAuth0ValidationFactory
 } from '../../client/app/shared/services/auth.service'
 import { CookieService } from '../../client/app/shared/services/cookie.service'
-import { AUTH_ID_TOKEN_STORAGE_KEY } from '../../client/app/shared/auth/tokens'
 import { parse } from 'cookie'
 import * as WebSocket from 'ws'
 import { shareReplay, take } from 'rxjs/operators'

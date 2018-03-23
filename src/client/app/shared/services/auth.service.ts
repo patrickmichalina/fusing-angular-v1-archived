@@ -1,10 +1,5 @@
 import { EnvironmentService } from './environment.service'
 import { Inject, Injectable, InjectionToken } from '@angular/core'
-import {
-  AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
-  AUTH_ACCESS_TOKEN_STORAGE_KEY,
-  AUTH_ID_TOKEN_STORAGE_KEY
-} from '../auth/tokens'
 import { Observable } from 'rxjs/Observable'
 import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
@@ -27,6 +22,41 @@ export const AUTH_ROLES_KEY = new InjectionToken<string>('cfg.auth0.role.key')
 export const AUTH0_VALIDATION_FACTORY = new InjectionToken<
   IAuth0ValidationFactory
 >('cfg.auth0.validation')
+export const AUTH_ID_TOKEN_STORAGE_KEY = new InjectionToken<string>(
+  'cfg.auth.sto.id.tkn.key'
+)
+export const AUTH_ACCESS_TOKEN_STORAGE_KEY = new InjectionToken<string>(
+  'cfg.auth.sto.access.tkn.key'
+)
+export const AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY = new InjectionToken<string>(
+  'cfg.auth.sto.access.tkn.exp.key'
+)
+export const AUTH_REFRESH_TOKEN_STORAGE_KEY = new InjectionToken<string>(
+  'cfg.auth.sto.fresh.key'
+)
+// export const AUTH_SET_SESSION_FACTORY = new InjectionToken<ISetSessionFactory>(
+//   'cfg.auth.ses.set'
+// )
+// export const AUTH_REMOVE_SESSION_FACTORY = new InjectionToken<
+//   IRemoveSessionFactory
+// >('cfg.auth.ses.remove')
+// export const AUTH_TOKEN_FETCH_FACTORY = new InjectionToken<IFetchTokenFactory>(
+//   'cfg.auth.tkn.fetch'
+// )
+// export const AUTH_TOKEN_VALIDATOR_FACTORY = new InjectionToken<
+//   ITokenDecoderFactory
+// >('cfg.auth.tkn.validator')
+// export const AUTH_TOKEN_DECODER_FACTORY = new InjectionToken<
+//   ITokenDecoderFactory
+// >('cfg.auth.tkn.decoder')
+// export const AUTH_USER_HYDRATION_FACTORY = new InjectionToken<
+//   IUserHydrationFactory<IUserIdentity>
+// >('cfg.auth.usr.hydrator')
+// export const AUTH_USER_TOKEN_SCHEMA = new InjectionToken<
+//   IUserHydrationFactory<IUserIdentity>
+// >('cfg.auth.usr.hydrator')
+export const AUTH_CALLBACK_FACTORY = new InjectionToken<any>('cfg.auth.cb')
+
 export const AUTH0_USER_TRANSFER = makeStateKey('cfg.auth0.user.ts')
 
 export function authZeroFactory(es: EnvironmentService) {

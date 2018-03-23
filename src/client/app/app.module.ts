@@ -1,10 +1,14 @@
 import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpResponse
+} from '@angular/common/http'
+import {
   CACHE_TAG_CONFIG,
   CACHE_TAG_FACTORY,
   CacheTagConfig,
   HttpCacheTagModule
 } from './shared/http-cache-tag/http-cache-tag.module'
-import { TransferHttpCacheModule } from '@nguniversal/common'
 import { AppComponent } from './app.component'
 import { SharedModule } from './shared/shared.module'
 import { AppRoutingModule } from './app-routing.module'
@@ -12,11 +16,7 @@ import { NotFoundModule } from './not-found/not-found.module'
 import { BrowserModule, TransferState } from '@angular/platform-browser'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { Angulartics2Module } from 'angulartics2'
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-  HttpResponse
-} from '@angular/common/http'
+import { TransferHttpCacheModule } from '@nguniversal/common'
 import { ErrorHandler, InjectionToken, NgModule } from '@angular/core'
 import {
   GlobalErrorHandler,
@@ -25,14 +25,12 @@ import {
 } from './shared/services/error-handlers/global-error-handler.service'
 import { ResponseService } from './shared/services/response.service'
 import { IScheduler } from 'rxjs/Scheduler'
-import {
-  AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
-  AUTH_ACCESS_TOKEN_STORAGE_KEY,
-  AUTH_ID_TOKEN_STORAGE_KEY
-} from './shared/auth/tokens'
 import { EnvironmentService } from './shared/services/environment.service'
 import {
   AUTH0_CLIENT,
+  AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
+  AUTH_ACCESS_TOKEN_STORAGE_KEY,
+  AUTH_ID_TOKEN_STORAGE_KEY,
   AUTH_ROLES_KEY,
   AuthService,
   authZeroFactory,
