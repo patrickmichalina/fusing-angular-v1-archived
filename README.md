@@ -167,8 +167,9 @@ AUTH0_CERT # this is a huge performance gain but not required
 ROLLBAR_CLIENT_ACCESS_TOKEN # to track errors from the browser, be sure to grab this from rollbar
 SENDGRID_API_KEY # for the SendGrid email service
 
-# for Heroku Builds
-NPM_CONFIG_PRODUCTION : false # to download all depenedencies on Heroku, including devDependencies
+# for Heroku Builds, to download all depenedencies on Heroku, including devDependencies
+# this is required
+NPM_CONFIG_PRODUCTION : false
 ```
 
 ## File Structure
@@ -184,8 +185,9 @@ fusing-angular/
  ├──node_modules/                   * project depdendencies
  |
  ├──src/
- |   ├──client/                     * client Angular code. (most your work should be done here)
- |   └──server/                     * server code
+ |   ├──client/                     * client Angular code. (most your work will likely be done here)
+ |   ├──server/                     * server code
+ |   └──testing/                    * testing mocks and helpers to make it easier to get tests up and running
  |
  ├──tools/
  |   ├──config/
@@ -201,11 +203,16 @@ fusing-angular/
  |   |   └──prod.ts                * production app configuration
  |   |
  |   ├──scripts/                   * misc. build helper scripts
+ |   ├──sources/                   *
  |   ├──tasks/                     * Sparky tasks
  |   ├──test/                      * testing system related configuration
+ |   ├──tslint-rules/              * custom ts-lint rules
  |   └──web/                       * static assets used for common web functions
  |
  ├──.gitignore                     * GIT settings
+ ├──.prettierignore                *
+ ├──.prettierrc                    *
+ ├──app.json                       * Heroku button deployment settings
  ├──circl.yml                      * CirclCI configuration file
  ├──CODE_OF_CONDUCT.md             * standard code of conduct information
  ├──codecov.yml                    * codecov.io configuration file
@@ -214,16 +221,15 @@ fusing-angular/
  ├──LICENSE                        * software license
  ├──package-lock.json              * what npm uses to manage it's dependencies
  ├──package.json                   * what npm uses to manage it's dependencies
- ├──Procfile                       * Heroku deployment setting
+ ├──Procfile                       * Heroku worker settings
  ├──README.md                      * project information
- ├──test-report.xml                * JUNIT test results
+ ├──test-report.xml                * JUNIT test results, not stored in git
+ ├──test.api.json                  * Jest test settings for API code
+ ├──test.client.json               * Jest test settings for client (angular) code
  ├──tsconfig-aot.json              * typescript config for AOT build using @angular-cli (ngc)
+ ├──tsconfig-e2e.json              * typescript config for e2e tests
  └──tsconfig.json                  * typescript config
 ```
-
-# Change Log
-
-You can follow the [Angular change log here](https://github.com/angular/angular/blob/master/CHANGELOG.md).
 
 # License
 
