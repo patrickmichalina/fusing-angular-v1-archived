@@ -12,7 +12,6 @@ import {
 } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { LOGGER_CONFIG } from './shared/services/logging.service'
-import { REQUEST } from '@nguniversal/express-engine/src/tokens'
 import { HttpClient } from '@angular/common/http'
 import {
   AUTH0_CLIENT,
@@ -29,6 +28,7 @@ import { InjectionService } from './shared/services/injection.service'
 import { WebSocketService } from './shared/services/web-socket.service'
 import { filter, first, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
+import { REQUEST } from '@nguniversal/express-engine/tokens'
 // import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 // import 'hammerjs'
