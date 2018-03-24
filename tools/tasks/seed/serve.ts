@@ -8,7 +8,6 @@ Sparky.task(
     'mk-dist',
     'config',
     'markdown',
-    'tmp-ng6-upgrade',
     'index.copy',
     'fonts',
     'web',
