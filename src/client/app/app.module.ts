@@ -24,7 +24,6 @@ import {
   ROLLBAR_TS_KEY
 } from './shared/services/error-handlers/global-error-handler.service'
 import { ResponseService } from './shared/services/response.service'
-import { IScheduler } from 'rxjs/Scheduler'
 import { EnvironmentService } from './shared/services/environment.service'
 import {
   AUTH0_CLIENT,
@@ -42,9 +41,7 @@ import {
   HttpAuthInterceptor
 } from './shared/services/http-interceptors/http-authorization-interceptor.service'
 
-export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<IScheduler>(
-  'cfg.rxjs.sch'
-)
+export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<any>('cfg.rxjs.sch')
 
 export function cacheTagFactory(rs: ResponseService): any {
   return (httpResponse: HttpResponse<any>, config: CacheTagConfig) => {
