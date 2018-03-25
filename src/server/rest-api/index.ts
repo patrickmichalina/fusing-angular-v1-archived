@@ -27,7 +27,12 @@ Container.set('SENDGRID_API_KEY', process.env.SENDGRID_API_KEY)
 
 export const useApi = (app: express.Application) => {
   const swaggerSpec = swaggerJSDoc({
+    oauth: {
+      clientId: 'aasdsd',
+      oauth2RedirectUrl: 'asdasdasd'
+    },
     swaggerDefinition: {
+      oauth2RedirectUrl: 'asdasd',
       info: {
         title: 'fusing-angular',
         description: '',
@@ -43,6 +48,19 @@ export const useApi = (app: express.Application) => {
             'https://github.com/patrickmichalina/fusing-angular/blob/master/LICENSE'
         },
         version: '1.0.0'
+      },
+      securityDefinitions: {
+        auth: {
+          type: 'oauth2',
+          authorizationUrl: `https://${process.env.AUTH0_DOMAIN}/authorize`,
+          tokenUrl: `https://${process.env.AUTH0_DOMAIN}/token`,
+          flow: 'implicit',
+          responseType: 'token id_token',
+          scopes: {
+            openid: 'profile',
+            profile: 'profile'
+          }
+        }
       }
     },
     apis: [
@@ -58,7 +76,18 @@ export const useApi = (app: express.Application) => {
     res.send(swaggerSpec)
   })
 
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, undefined, {
+      oauth2RedirectUrl: `${
+        process.env.SITE_URL
+      }/api-docs/oauth2-redirect.html`,
+      oauth: {
+        clientId: process.env.AUTH0_CLIENT_ID
+      }
+    })
+  )
 
   const getTokenFromAction = (action: Action) => {
     const clientAccessToken =
@@ -116,7 +145,7 @@ export const useApi = (app: express.Application) => {
     defaultErrorHandler: false,
     defaults: {
       nullResultCode: 404,
-      undefinedResultCode: 204
+      undefinedResultCode: 404
     }
   } as any)
 }

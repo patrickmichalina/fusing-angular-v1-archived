@@ -28,7 +28,7 @@ export const auth0ServerValidationNoAngularFactory = (
   accessToken?: string,
   idToken?: string
 ): Observable<auth0.Auth0UserProfile | undefined> => {
-  if (!accessToken || !idToken) return of(undefined)
+  if (!accessToken && !idToken) return of(undefined)
   const cert = process.env.AUTH0_CERT
   return !cert || !idToken
     ? accessToken ? verifyRemotely(azNoAngular, accessToken) : of(undefined)
