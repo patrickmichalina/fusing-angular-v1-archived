@@ -189,7 +189,7 @@
     "typedi": "^0.7.1",
     "typeorm": "^0.1.16",
     "typeorm-routing-controllers-extensions": "^0.1.0",
-    "typeorm-typedi-extensions": "^0.1.1",
+    "typeorm-typedi-extensions": "^0.2.0",
     "uri-js": "^3.0.2",
     "url-parse": "1.2.0",
     "utf-8-validate": "4.0.0",
