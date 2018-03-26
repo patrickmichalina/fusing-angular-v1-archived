@@ -8,7 +8,7 @@ import {
 } from 'routing-controllers'
 import { controllers } from './controllers'
 import { middlewares } from './middlewares'
-import { Container } from 'typedi'
+import { Container, Token } from 'typedi'
 import {
   appAuthAccessTokenKey,
   appAuthIdTokenKey
@@ -17,22 +17,33 @@ import { auth0ServerValidationNoAngularFactory, azNoAngular } from './helpers'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { map } from 'rxjs/operators'
+import { AuthOptions } from 'auth0-js'
 
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 
 useContainer(Container)
 
-Container.set('SENDGRID_API_KEY', process.env.SENDGRID_API_KEY)
+export type Auth0Config = AuthOptions
+export type SendGridAPIKey = string
+export type Auth0Cert = string
+export const AUTH0_MANAGEMENT_CLIENT_CONFIG = new Token<Auth0Config>()
+export const SENDGRID_API_KEY = new Token<SendGridAPIKey>()
+export const AUTH0_CERT = new Token<Auth0Cert>()
+
+Container.set(
+  AUTH0_CERT,
+  process.env.AUTH0_CERT && process.env.AUTH0_CERT.replace(/\\n/g, '\n')
+)
+Container.set(SENDGRID_API_KEY, process.env.SENDGRID_API_KEY)
+Container.set(AUTH0_MANAGEMENT_CLIENT_CONFIG, {
+  domain: process.env.AUTH0_DOMAIN || '',
+  clientID: process.env.AUTH0_CLIENT_ID || ''
+} as AuthOptions)
 
 export const useApi = (app: express.Application) => {
   const swaggerSpec = swaggerJSDoc({
-    oauth: {
-      clientId: 'aasdsd',
-      oauth2RedirectUrl: 'asdasdasd'
-    },
     swaggerDefinition: {
-      oauth2RedirectUrl: 'asdasd',
       info: {
         title: 'fusing-angular',
         description: '',

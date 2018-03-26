@@ -1,6 +1,7 @@
 import {
   Authorized,
   BadRequestError,
+  CurrentUser,
   Delete,
   Get,
   JsonController,
@@ -49,11 +50,11 @@ export class NotesController {
    *       description: columns to include
    */
   @Get()
-  get(@QueryParams() params: any) {
+  get(@QueryParams() params: any, @CurrentUser() user?: any) {
     return this.repo
       .find({
-        take: params.take,
-        skip: params.page,
+        // take: params.take,
+        // skip: params.page,
         // join: TODO params.expand
         select: params.select && params.select.split(',')
       })

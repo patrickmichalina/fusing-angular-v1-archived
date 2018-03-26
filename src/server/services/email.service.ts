@@ -3,10 +3,11 @@ import { fromPromise } from 'rxjs/observable/fromPromise'
 // tslint:disable-next-line:no-implicit-dependencies
 import { MailData } from '@sendgrid/helpers/classes/mail'
 import * as sendGrid from '@sendgrid/mail'
+import { SENDGRID_API_KEY } from '../rest-api'
 
 @Service()
 export class EmailService {
-  constructor(@Inject('SENDGRID_API_KEY') apiKey: string) {
+  constructor(@Inject(SENDGRID_API_KEY) apiKey: string) {
     sendGrid.setApiKey(apiKey)
   }
   send(mailData: MailData) {

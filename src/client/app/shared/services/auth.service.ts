@@ -7,10 +7,10 @@ import { CookieService } from './cookie.service'
 import { makeStateKey } from '@angular/platform-browser'
 import { Subscription } from 'rxjs/Subscription'
 import { Router } from '@angular/router'
-import * as auth0 from 'auth0-js'
 import { distinctUntilChanged, flatMap, map, shareReplay } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
+import * as auth0 from 'auth0-js'
 
 export type IAuth0ValidationFactory = (
   accessToken?: string,
@@ -34,27 +34,6 @@ export const AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY = new InjectionToken<string>(
 export const AUTH_REFRESH_TOKEN_STORAGE_KEY = new InjectionToken<string>(
   'cfg.auth.sto.fresh.key'
 )
-// export const AUTH_SET_SESSION_FACTORY = new InjectionToken<ISetSessionFactory>(
-//   'cfg.auth.ses.set'
-// )
-// export const AUTH_REMOVE_SESSION_FACTORY = new InjectionToken<
-//   IRemoveSessionFactory
-// >('cfg.auth.ses.remove')
-// export const AUTH_TOKEN_FETCH_FACTORY = new InjectionToken<IFetchTokenFactory>(
-//   'cfg.auth.tkn.fetch'
-// )
-// export const AUTH_TOKEN_VALIDATOR_FACTORY = new InjectionToken<
-//   ITokenDecoderFactory
-// >('cfg.auth.tkn.validator')
-// export const AUTH_TOKEN_DECODER_FACTORY = new InjectionToken<
-//   ITokenDecoderFactory
-// >('cfg.auth.tkn.decoder')
-// export const AUTH_USER_HYDRATION_FACTORY = new InjectionToken<
-//   IUserHydrationFactory<IUserIdentity>
-// >('cfg.auth.usr.hydrator')
-// export const AUTH_USER_TOKEN_SCHEMA = new InjectionToken<
-//   IUserHydrationFactory<IUserIdentity>
-// >('cfg.auth.usr.hydrator')
 export const AUTH_CALLBACK_FACTORY = new InjectionToken<any>('cfg.auth.cb')
 
 export const AUTH0_USER_TRANSFER = makeStateKey('cfg.auth0.user.ts')
@@ -137,7 +116,7 @@ export class AuthService {
 
   public renewToken() {
     this.az.checkSession({}, (err, result) => {
-      if (!err) this.setSession(result)
+      !err && this.setSession(result)
     })
   }
 
