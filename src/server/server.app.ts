@@ -104,6 +104,7 @@ app.use(
   '/manifest.json',
   express.static(`${dir}/assets`, { ...staticOptions, fallthrough: false })
 )
+app.get('/ad-server.js', (req, res) => res.send({}))
 
 useApi(app)
 

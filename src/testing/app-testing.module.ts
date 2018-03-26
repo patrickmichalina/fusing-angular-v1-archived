@@ -1,5 +1,5 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MockEnvironmentService } from './mock-environment.service'
-import { APP_BASE_HREF } from '@angular/common'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import {
   Injector,
@@ -17,7 +17,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { MockCookieService } from './mock-cookie.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from '../client/app/shared/shared.module'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { APP_BASE_HREF } from '@angular/common'
 import { Angulartics2Module } from 'angulartics2'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { SVGLoaderService } from '../client/app/shared/svg/svg-loader.service'
@@ -35,6 +35,10 @@ import { UrlService } from '../client/app/shared/services/url.service'
 import { MockUrlService } from './mock-url.service'
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe'
 import { of } from 'rxjs/observable/of'
+import {
+  WINDOW,
+  WindowService
+} from '../client/app/shared/services/utlities/window.service'
 
 @NgModule({
   imports: [
@@ -88,6 +92,8 @@ import { of } from 'rxjs/observable/of'
       }
     },
     LoggingService,
+    WindowService,
+    { provide: WINDOW, useValue: window },
     { provide: UrlService, useClass: MockUrlService }
   ]
 })
