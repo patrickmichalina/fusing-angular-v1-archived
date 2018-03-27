@@ -61,6 +61,7 @@ import { Router } from '@angular/router'
 import { STATIC_ROUTE_RESPONSE_MAP } from './server.static-response'
 import { CookieService } from '../../client/app/shared/services/cookie.service'
 import { CookieService as ServerCookieService } from './cookie.service'
+import { ResponseService } from '../../client/app/shared/services/response.service'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -192,8 +193,8 @@ export function auth0ServerValidationFactory(
 @NgModule({
   imports: [ServerModule, ServerTransferStateModule, AppModule],
   providers: [
-    ServerResponseService,
     { provide: WINDOW, useValue: {} },
+    { provide: ResponseService, useClass: ServerResponseService },
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
     { provide: CookieService, useClass: ServerCookieService },
     { provide: SVGLoaderService, useClass: ServerSvgLoaderService },
@@ -247,7 +248,7 @@ export function auth0ServerValidationFactory(
   bootstrap: [AppComponent]
 })
 export class AppServerModule {
-  constructor(srs: ServerResponseService, rd: RouteDataService, rt: Router) {
+  constructor(srs: ResponseService, rd: RouteDataService, rt: Router) {
     rd.data.pipe(take(1)).subscribe(def => {
       const map = (STATIC_ROUTE_RESPONSE_MAP || {})[def.componentName]
       map && Object.keys(map).forEach(k => srs.setHeader(k, map[k]))
