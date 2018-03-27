@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountComponent should compile 1`] = `
+<test-component>
+  <pm-account>
+    
+    <div>
+      <img
+        src="null"
+      />
+      <p>
+        Name: 
+        <strong>
+          
+        </strong>
+      </p>
+      <p>
+        Nickname: 
+        <strong>
+          
+        </strong>
+      </p>
+      <p>
+        Email: 
+        <strong>
+          
+        </strong>
+      </p>
+      <p>
+        Email Verified: 
+        <strong>
+          
+        </strong>
+      </p>
+      <p>
+        Updated At: 
+        <strong>
+          
+        </strong>
+      </p>
+    </div>
+  </pm-account>
+</test-component>
+`;

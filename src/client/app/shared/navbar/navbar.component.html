@@ -7,13 +7,8 @@
     <li><a href="https://github.com/patrickmichalina/fusing-angular" pmExternalLink>View on Github</a></li>
     <li [ngSwitch]="user.show">
       <div *ngSwitchCase="0">
-        <div>{{ user.greeting }} </div> 
-        <div>
-          <span>You have the following roles</span>
-          <ul>
-            <li *ngFor="let role of user.roles; trackBy: trackByRole">{{ role }}</li>
-          </ul>
-        </div> 
+        <a routerLink='account'>Account</a>
+        <br>
         <button (click)="auth.logout()">Logout</button>
       </div>
       <div *ngSwitchCase="1">

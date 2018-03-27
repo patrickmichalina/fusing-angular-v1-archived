@@ -22,6 +22,7 @@ import { NoteService } from './services/data/note.service'
 import { UrlService } from './services/url.service'
 import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-authorization-interceptor.service'
 import { RouteDataService } from './services/route-data.service'
+import { LoggedInGuard } from './services/guards/logged-in.guard.service'
 
 export function cookieWhitelistFactory(es: EnvironmentService) {
   return [es.config.siteUrl]
@@ -67,7 +68,8 @@ export function cookieWhitelistFactory(es: EnvironmentService) {
     WindowService,
     NoteService,
     UrlService,
-    RouteDataService
+    RouteDataService,
+    LoggedInGuard
   ]
 })
 export class SharedModule {
