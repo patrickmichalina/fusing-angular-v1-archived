@@ -15,7 +15,7 @@ export const OVERRIDES = {
     domain: process.env.AUTH0_DOMAIN,
     redirectUri: process.env.AUTH0_CALLBACK_URL,
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: 'openid profile email'
   },
   rolesKey: process.env.AUTH0_ROLES_KEY
 }

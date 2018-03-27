@@ -60,17 +60,14 @@ exports[`NavbarComponent should compile 1`] = `
       >
         
         <div>
-          <div>
-            Welcome, undefined 
-          </div>
-          <div>
-            <span>
-              You have the following roles
-            </span>
-            <ul>
-              
-            </ul>
-          </div>
+          <a
+            href="/account"
+            ng-reflect-router-link="account"
+            routerlink="account"
+          >
+            Account
+          </a>
+          <br />
           <button>
             Logout
           </button>
