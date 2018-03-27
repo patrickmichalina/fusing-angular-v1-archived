@@ -4,13 +4,13 @@ import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { Inject, Injectable } from '@angular/core'
 import { CookieAttributes } from 'js-cookie'
 import { ICookieService } from '../../client/app/shared/services/cookie.service'
-import { Request } from 'express'
+import * as express from 'express'
 
 @Injectable()
 export class CookieService implements ICookieService {
   public readonly valueChanges = empty()
 
-  constructor(@Inject(REQUEST) private req: Request) {}
+  constructor(@Inject(REQUEST) private req: express.Request) {}
 
   public get(name: string): any {
     try {

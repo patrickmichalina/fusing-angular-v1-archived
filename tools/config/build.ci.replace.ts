@@ -1,4 +1,5 @@
 import { config } from 'dotenv'
+import { execSync } from 'child_process'
 
 config()
 
@@ -7,9 +8,14 @@ const siteUrlFromHeroku =
   process.env.HEROKU_APP_NAME &&
   `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`
 
+const revision = execSync('git rev-parse HEAD')
+  .toString()
+  .trim()
+
 // use this to replace values in your env/configs using environment variables from your CI/Deployment environment
 export const OVERRIDES = {
   siteUrl: process.env.SITE_URL || siteUrlFromHeroku || '/',
+  revision,
   auth0: {
     clientID: process.env.AUTH0_CLIENT_ID,
     domain: process.env.AUTH0_DOMAIN,
