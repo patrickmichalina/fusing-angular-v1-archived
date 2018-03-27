@@ -1,8 +1,3 @@
-// Fusebox
-if (process.env.NODE_ENV !== 'development') {
-  require = {} as any
-}
-
 // Required for Angular
 import 'core-js/es7/reflect'
 import 'zone.js/dist/zone'
