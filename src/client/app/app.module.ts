@@ -39,14 +39,24 @@ export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<any>('cfg.rxjs.sch')
 //   }
 // }
 
-export function rollbarFactory(ts: TransferState) {
+export function rollbarFactory(ts: TransferState, es: EnvironmentService) {
   const accessToken = ts.get(ROLLBAR_TS_KEY, undefined)
   return (
     accessToken &&
     new Rollbar({
       accessToken,
       captureUncaught: true,
-      captureUnhandledRejections: true
+      captureUnhandledRejections: true,
+      payload: {
+        environment: es.config.env,
+        code_version: es.config.revision,
+        source_map_enabled: true
+        // person: { // TODO
+        //   // id: user && user.user_id,
+        //   // username: user && user.username,
+        //   // email: user && user.email
+        // }
+      }
     })
   )
 }
@@ -86,6 +96,11 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
   providers: [
     AuthService,
     { provide: AUTH_BEARER_HOSTS, useValue: [] },
+    { provide: AUTH_ID_TOKEN_STORAGE_KEY, useValue: appAuthIdTokenKey },
+    { provide: AUTH_ACCESS_TOKEN_STORAGE_KEY, useValue: appAuthAccessTokenKey },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: RXJS_DEFAULT_SCHEDULER, useValue: undefined },
     {
       provide: AUTH_ROLES_KEY,
       useFactory: rolesKeyFactory,
@@ -96,20 +111,15 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
       useFactory: authZeroFactory,
       deps: [EnvironmentService]
     },
-    { provide: AUTH_ID_TOKEN_STORAGE_KEY, useValue: appAuthIdTokenKey },
-    { provide: AUTH_ACCESS_TOKEN_STORAGE_KEY, useValue: appAuthAccessTokenKey },
     {
       provide: AUTH_ACCESS_TOKEN_EXPIRY_STORAGE_KEY,
       useValue: appAuthAccessExpiryTokenKey
     },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },
     {
       provide: ROLLBAR_CONFIG,
       useFactory: rollbarFactory,
-      deps: [TransferState]
-    },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: RXJS_DEFAULT_SCHEDULER, useValue: undefined }
+      deps: [TransferState, EnvironmentService]
+    }
   ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
