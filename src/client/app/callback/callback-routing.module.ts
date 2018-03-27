@@ -7,7 +7,12 @@ import { RouterModule } from '@angular/router'
     RouterModule.forChild([
       {
         path: '',
-        component: CallbackComponent
+        component: CallbackComponent,
+        data: {
+          meta: {
+            title: 'Callback'
+          }
+        }
       }
     ])
   ],

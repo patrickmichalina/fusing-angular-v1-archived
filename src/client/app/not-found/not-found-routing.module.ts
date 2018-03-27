@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router'
         data: {
           meta: {
             title: 'Not Found',
-            description: 'Sorrt that page was not found'
+            description: 'Requested page was not found'
           }
         }
       }
