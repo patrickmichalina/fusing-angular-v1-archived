@@ -108,9 +108,9 @@ workflows:
       - unit_tests:
           requires:
             - build
-      - e2e_tests:
-          requires:
-            - build
+      # - e2e_tests:
+      #     requires:
+      #       - build
       - lint:
           requires:
             - build
