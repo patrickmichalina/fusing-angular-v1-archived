@@ -23,19 +23,27 @@ import { UrlService } from './services/url.service'
 import { COOKIE_HOST_WHITELIST } from './services/http-interceptors/http-authorization-interceptor.service'
 import { RouteDataService } from './services/route-data.service'
 import { LoggedInGuard } from './services/guards/logged-in.guard.service'
+import { MaterialModule } from './material.module'
 
 export function cookieWhitelistFactory(es: EnvironmentService) {
   return [es.config.siteUrl]
 }
 
 @NgModule({
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
+  ],
   exports: [
     CommonModule,
     RouterModule,
     NavbarComponent,
     FormsModule,
     ReactiveFormsModule,
+    MaterialModule,
     KeysPipe,
     KeyValuePipe,
     SanitizeHtmlPipe,

@@ -68,7 +68,9 @@ exports[`NavbarComponent should compile 1`] = `
             Account
           </a>
           <br />
-          <button>
+          <button
+            mat-raised-button=""
+          >
             Logout
           </button>
         </div>

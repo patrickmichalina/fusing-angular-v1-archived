@@ -9,7 +9,7 @@
       <div *ngSwitchCase="0">
         <a routerLink='account'>Account</a>
         <br>
-        <button (click)="auth.logout()">Logout</button>
+        <button (click)="auth.logout()" mat-raised-button>Logout</button>
       </div>
       <div *ngSwitchCase="1">
         <button (click)="login()">Login</button>
