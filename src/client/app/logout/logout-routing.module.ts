@@ -7,7 +7,12 @@ import { RouterModule } from '@angular/router'
     RouterModule.forChild([
       {
         path: '',
-        component: LogoutComponent
+        component: LogoutComponent,
+        data: {
+          meta: {
+            title: 'Logout'
+          }
+        }
       }
     ])
   ],
