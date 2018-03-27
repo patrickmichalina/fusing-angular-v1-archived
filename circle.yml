@@ -137,36 +137,3 @@ workflows:
     #       filters:
     #         branches:
     #           only: master
-
-# machine:
-#   node:
-#     version: 9.9.0
-#   npm:
-#     version:  5.8.0
-
-# general:
-#   artifacts:
-#     - ./coverage
-#     - ./dist
-
-# test:
-#   override:
-#     - npm run lint
-#     - npm run gen.config
-#     - npm run test.ci.before
-#     - npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage:
-#         environment:
-#           TEST_REPORT_PATH: $CIRCLE_TEST_REPORTS
-#           TEST_REPORT_FILENAME: test-results.xml
-#     - npm run test.ci.after
-#     - npm run start.prod.ci.aot && npm run bundlesize 
-
-#   post:
-#     - bash <(curl -s https://codecov.io/bash)
-#     - npm run semantic-release || true
-
-# deployment:
-#   production:
-#     branch: master
-#     heroku:
-#       appname: fusing-angular
