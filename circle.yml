@@ -62,7 +62,10 @@ jobs:
           command: npm run test.ci.before
       - run:
           name: Test
-          command: npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage
+          command: npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage:
+            environment:
+              TEST_REPORT_PATH: $CIRCLE_TEST_REPORTS
+              TEST_REPORT_FILENAME: test-results.xml
       - run:
           name: test.ci.after
           command: npm run test.ci.after
