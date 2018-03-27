@@ -7,6 +7,6 @@ describe('About Page', () => {
 
     const text = await page.evaluate(() => document.title)
 
-    expect(text).toContain('About - Fusebox Angular Universal Starter')
+    expect(text).toContain('About')
   })
 })

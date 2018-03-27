@@ -8,6 +8,6 @@ describe('Home Page', () => {
 
     const text = await page.evaluate(() => document.title)
 
-    expect(text).toContain('Home - Fusebox Angular Universal Starter')
+    expect(text).toContain('Home')
   })
 })
