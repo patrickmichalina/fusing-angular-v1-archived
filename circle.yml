@@ -55,11 +55,17 @@ jobs:
           name: Install npm
           command: npm install
       - run:
-          name: Generate App Config
+          name: test.ci.before
           command: npm run gen.config
+      - run:
+          name: Generate App Config
+          command: npm run test.ci.before
       - run:
           name: Test
           command: npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage
+      - run:
+          name: test.ci.after
+          command: npm run test.ci.after
       - store_artifacts:
           path: test-results.xml
           prefix: tests
@@ -67,7 +73,7 @@ jobs:
           path: ./coverage
       - run:
           name: Post coverage results
-          command: 'node_modules/.bin/codecov'
+          command: bash <(curl -s https://codecov.io/bash)
   # e2e_tests:
   #   <<: *defaults
   #   docker:
