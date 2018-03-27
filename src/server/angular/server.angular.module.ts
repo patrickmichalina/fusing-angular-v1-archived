@@ -59,6 +59,8 @@ import { of } from 'rxjs/observable/of'
 import { RouteDataService } from '../../client/app/shared/services/route-data.service'
 import { Router } from '@angular/router'
 import { STATIC_ROUTE_RESPONSE_MAP } from './server.static-response'
+import { CookieService } from '../../client/app/shared/services/cookie.service'
+import { CookieService as ServerCookieService } from './cookie.service'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -193,6 +195,7 @@ export function auth0ServerValidationFactory(
     ServerResponseService,
     { provide: WINDOW, useValue: {} },
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
+    { provide: CookieService, useClass: ServerCookieService },
     { provide: SVGLoaderService, useClass: ServerSvgLoaderService },
     {
       provide: HTTP_INTERCEPTORS,
