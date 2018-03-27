@@ -28,6 +28,7 @@ import { WebSocketService } from './shared/services/web-socket.service'
 import { filter, first, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
+import { ResponseService } from './shared/services/response.service'
 // import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 // import { Observable } from 'rxjs/Observable'
 // import 'hammerjs'
@@ -76,6 +77,7 @@ export function auth0BrowserValidationFactory(
     AppModule
   ],
   providers: [
+    ResponseService,
     {
       provide: SVGLoaderService,
       useClass: SVGLoaderService,
