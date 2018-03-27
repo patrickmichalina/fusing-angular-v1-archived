@@ -1,32 +1,166 @@
-machine:
-  node:
-    version: 9.9.0
-  npm:
-    version:  5.8.0
+defaults: &defaults
+  resource_class: xlarge
+  docker:
+    - image: circleci/node:9.9.0
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm
+          command: npm install
+      - run:
+          name: Lint
+          command: npm run lint
+  bundlesize:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm
+          command: npm install
+      - run:
+          name: Bundlesize
+          command: npm run start.prod.ci.aot && npm run bundlesize
+  unit_tests:
+    <<: *defaults
+    environment:
+      TEST_REPORT_FILENAME: "test-results.xml"
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm
+          command: npm install
+      - run:
+          name: Generate App Config
+          command: npm run gen.config
+      - run:
+          name: Test
+          command: './node_modules/.bin/jest --updateSnapshot --maxWorkers=8 --coverage'
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_artifacts:
+          path: ./coverage
+      - run:
+          name: Post coverage results
+          command: 'node_modules/.bin/codecov'
+  # e2e_tests:
+  #   <<: *defaults
+  #   docker:
+  #     - image: circleci/node:9.9-browsers
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: dependency-cache-{{ checksum "package.json" }}
+  #     - run:
+  #         name: Install npm
+  #         command: npm install
+  #     - run:
+  #         name: Test
+  #         command: 'npm run gen.config && npm run test.e2e.ci.aot'
+  # semver:
+  #   <<: *defaults
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         key: dependency-cache-{{ checksum "package.json" }}
+  #     - run:
+  #         name: Install npm
+  #         command: npm install
+  #     - run:
+  #         name: Semantic Release
+  #         command: npm run semantic-release || true
+workflows:
+  version: 2
+  build_test_release:
+    jobs:
+      - build
+      - unit_tests:
+          requires:
+            - build
+      # - e2e_tests:
+      #     requires:
+      #       - build
+      - lint:
+          requires:
+            - build
+      - bundlesize:
+          requires:
+            - build
+      - semver:
+          requires:
+            - build
+            - unit_tests
+            # - e2e_tests
+            - lint
+            - bundlesize
+          filters:
+            branches:
+              only: master
+    #   - deploy:
+    #       requires:
+    #         - build
+    #         - unit_tests
+    #         - e2e_tests
+    #         - lint
+    #         - bundlesize
+    #       filters:
+    #         branches:
+    #           only: master
 
-general:
-  artifacts:
-    - ./coverage
-    - ./dist
+# machine:
+#   node:
+#     version: 9.9.0
+#   npm:
+#     version:  5.8.0
 
-test:
-  override:
-    - npm run lint
-    - npm run gen.config
-    - npm run test.ci.before
-    - npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage:
-        environment:
-          TEST_REPORT_PATH: $CIRCLE_TEST_REPORTS
-          TEST_REPORT_FILENAME: test-results.xml
-    - npm run test.ci.after
-    - npm run start.prod.ci.aot && npm run bundlesize 
+# general:
+#   artifacts:
+#     - ./coverage
+#     - ./dist
 
-  post:
-    - bash <(curl -s https://codecov.io/bash)
-    - npm run semantic-release || true
+# test:
+#   override:
+#     - npm run lint
+#     - npm run gen.config
+#     - npm run test.ci.before
+#     - npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage:
+#         environment:
+#           TEST_REPORT_PATH: $CIRCLE_TEST_REPORTS
+#           TEST_REPORT_FILENAME: test-results.xml
+#     - npm run test.ci.after
+#     - npm run start.prod.ci.aot && npm run bundlesize 
 
-deployment:
-  production:
-    branch: master
-    heroku:
-      appname: fusing-angular
+#   post:
+#     - bash <(curl -s https://codecov.io/bash)
+#     - npm run semantic-release || true
+
+# deployment:
+#   production:
+#     branch: master
+#     heroku:
+#       appname: fusing-angular
