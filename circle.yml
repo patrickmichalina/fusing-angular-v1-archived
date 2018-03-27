@@ -74,32 +74,32 @@ jobs:
       - run:
           name: Post coverage results
           command: bash <(curl -s https://codecov.io/bash)
-  # e2e_tests:
-  #   <<: *defaults
-  #   docker:
-  #     - image: circleci/node:9.9-browsers
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         key: dependency-cache-{{ checksum "package.json" }}
-  #     - run:
-  #         name: Install npm
-  #         command: npm install
-  #     - run:
-  #         name: Test
-  #         command: npm run gen.config && npm run test.e2e.ci.aot
-  # semver:
-  #   <<: *defaults
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         key: dependency-cache-{{ checksum "package.json" }}
-  #     - run:
-  #         name: Install npm
-  #         command: npm install
-  #     - run:
-  #         name: Semantic Release
-  #         command: npm run semantic-release || true
+  e2e_tests:
+    <<: *defaults
+    docker:
+      - image: circleci/node:9.9-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm
+          command: npm install
+      - run:
+          name: Test
+          command:  npm run test.e2e.ci.aot
+  semver:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install npm
+          command: npm install
+      - run:
+          name: Semantic Release
+          command: npm run semantic-release || true
 workflows:
   version: 2
   build_test_release:
@@ -108,9 +108,9 @@ workflows:
       - unit_tests:
           requires:
             - build
-      # - e2e_tests:
-      #     requires:
-      #       - build
+      - e2e_tests:
+          requires:
+            - build
       - lint:
           requires:
             - build
@@ -121,7 +121,7 @@ workflows:
           requires:
             - build
             - unit_tests
-            # - e2e_tests
+            - e2e_tests
             - lint
             - bundlesize
           filters:
