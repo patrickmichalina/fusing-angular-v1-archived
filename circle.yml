@@ -1,5 +1,5 @@
 defaults: &defaults
-  resource_class: xlarge
+  # resource_class: xlarge
   docker:
     - image: circleci/node:9.9.0
 version: 2
@@ -59,7 +59,7 @@ jobs:
           command: npm run gen.config
       - run:
           name: Test
-          command: './node_modules/.bin/jest --updateSnapshot --maxWorkers=8 --coverage'
+          command: npm run test.client --ci --updateSnapshot --maxWorkers=1 --coverage
       - store_artifacts:
           path: test-results.xml
           prefix: tests
