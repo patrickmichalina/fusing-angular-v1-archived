@@ -1,12 +1,14 @@
-import { IResponseService, ResponseService } from './response.service'
 import { async, TestBed } from '@angular/core/testing'
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
-import { AppTestingModule } from '../../../../testing/app-testing.module'
-import { ServerResponseService } from '../../../../server/angular/server.response.service'
+import { AppTestingModule } from '../../testing/app-testing.module'
+import {
+  IResponseService,
+  ServerResponseService
+} from './server.response.service'
 
 // tslint:disable:readonly-keyword
 // tslint:disable:no-object-mutation
-describe(ResponseService.name, () => {
+describe(ServerResponseService.name, () => {
   let service: IResponseService
   let response: MockResponse
 
@@ -16,7 +18,7 @@ describe(ResponseService.name, () => {
         imports: [AppTestingModule.forRoot()],
         providers: [
           {
-            provide: ResponseService,
+            provide: ServerResponseService,
             useClass: ServerResponseService
           },
           { provide: RESPONSE, useValue: new MockResponse() }
@@ -26,7 +28,7 @@ describe(ResponseService.name, () => {
   )
 
   beforeEach(() => {
-    service = TestBed.get(ResponseService)
+    service = TestBed.get(ServerResponseService)
     response = TestBed.get(RESPONSE)
   })
 

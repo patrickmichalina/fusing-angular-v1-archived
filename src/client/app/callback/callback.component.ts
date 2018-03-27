@@ -6,10 +6,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./callback.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CallbackComponent {
-  constructor() {
-    // if (ps.isBrowser) {
-    //   auth.login().subscribe()
-    // }
-  }
-}
+export class CallbackComponent {}

@@ -3,8 +3,19 @@
 
 import { RESPONSE } from '@nguniversal/express-engine/tokens'
 import { Inject, Injectable } from '@angular/core'
-import { IResponseService } from '../../client/app/shared/services/response.service'
 import * as express from 'express'
+
+export interface IResponseService {
+  getHeader(key: string): string
+  setHeader(key: string, value: string): void
+  setHeaders(dictionary: { readonly [key: string]: string }): void
+  removeHeader(key: string): void
+  appendHeader(key: string, value: string, delimiter?: string): void
+  setStatus(code: number, message?: string): void
+  setNotFound(message?: string, code?: number): void
+  setUnauthorized(message?: string, code?: number): void
+  setError(message?: string, code?: number): void
+}
 
 @Injectable()
 export class ServerResponseService implements IResponseService {
@@ -16,6 +27,10 @@ export class ServerResponseService implements IResponseService {
 
   setHeader(key: string, value: string): void {
     this.response.header(key, value)
+  }
+
+  removeHeader(key: string): void {
+    this.response.removeHeader(key)
   }
 
   appendHeader(key: string, value: string, delimiter = ','): void {

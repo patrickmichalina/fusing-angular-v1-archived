@@ -6,11 +6,13 @@
   "setupTestFrameworkScriptFile": "./tools/test/jest.setup.ts",
   "testResultsProcessor": "./node_modules/jest-junit-reporter",
   "collectCoverageFrom": [
-    "src/client/app/**/*(*.service|*.component|*.pipe|*.directive|*.module).{ts,html}"
+    "<rootDir>/src/client/app/**/*(*.service|*.component|*.pipe|*.directive|*.module).{ts,html}",
+    "<rootDir>/src/server/angular/app/**/*(*.service|*.component|*.pipe|*.directive|*.module).{ts,html}"
   ],
   "testMatch": [
     "<rootDir>/src/client/**/__tests__/**/*.+(ts|js)?(x)",
-    "<rootDir>/src/client/**/+(*.)+(spec|test).+(ts|js)?(x)"
+    "<rootDir>/src/client/**/+(*.)+(spec|test).+(ts|js)?(x)",
+    "<rootDir>/src/server/angular/**/+(*.)+(spec|test).+(ts|js)?(x)"
   ],
   "globals": {
     "__TRANSFORM_HTML__": true,

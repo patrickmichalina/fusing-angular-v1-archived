@@ -1,5 +1,4 @@
 import { SVGLoaderService } from './shared/svg/svg-loader.service'
-import { ResponseService } from './shared/services/response.service'
 import { AppModule } from './app.module'
 import { ApplicationRef, NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
@@ -105,7 +104,6 @@ export function auth0BrowserValidationFactory(
         type: 'client-side'
       }
     },
-    ResponseService,
     WebSocketService
   ]
 })

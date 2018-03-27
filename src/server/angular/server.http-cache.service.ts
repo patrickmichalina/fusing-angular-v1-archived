@@ -2,7 +2,6 @@
 // tslint:disable:no-object-mutation
 
 import { Injectable } from '@angular/core'
-import { ResponseService } from '../../client/app/shared/services/response.service'
 // import * as express from 'express'
 // const ms = require('ms')
 
@@ -17,10 +16,8 @@ export type HttpCacheDirective =
 
 @Injectable()
 export class ServerHttpCacheService {
-  constructor(public rs: ResponseService) {}
-
   setCacheControl() {
-    this.rs.setHeader('Cache-Control', 'public, max-age=123')
+    // this.rs.setHeader('Cache-Control', 'public, max-age=123')
   }
   // quick recipes
 }

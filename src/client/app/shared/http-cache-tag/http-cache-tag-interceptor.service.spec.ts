@@ -20,7 +20,6 @@ import {
   HttpInterceptor,
   HttpResponse
 } from '@angular/common/http'
-import { ResponseService } from '../services/response.service'
 import { ServerResponseService } from '../../../../server/angular/server.response.service'
 
 export class ExpressResponse {
@@ -76,13 +75,10 @@ describe(HttpCacheTagInterceptor.name, () => {
               cacheableResponseCodes: [200, 201]
             }
           },
-          {
-            provide: ResponseService,
-            useClass: ServerResponseService
-          },
+          ServerResponseService,
           {
             provide: CACHE_TAG_FACTORY,
-            useFactory: (rs: ResponseService) => {
+            useFactory: (rs: ServerResponseService) => {
               return (httpResponse: HttpResponse<any>, d: CacheTagConfig) => {
                 const cacheHeader = httpResponse.headers.get(
                   testDeps().config.headerKey
@@ -92,7 +88,7 @@ describe(HttpCacheTagInterceptor.name, () => {
                 }
               }
             },
-            deps: [ResponseService]
+            deps: [ServerResponseService]
           }
         ]
       })

@@ -30,7 +30,6 @@ import {
   IRequest,
   REQUEST_TS_KEY
 } from '../../client/app/app.config'
-import { ResponseService } from '../../client/app/shared/services/response.service'
 import { LOGGER_CONFIG } from '../../client/app/shared/services/logging.service'
 import { MinifierService } from '../../client/app/shared/services/utlities/minifier.service'
 import { ServerResponseService } from './server.response.service'
@@ -57,6 +56,9 @@ import { ServerWebSocketService } from './server.websocket.service'
 import { HttpServerInterceptor } from './server.http-absolute'
 import { filter, first, take, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
+import { RouteDataService } from '../../client/app/shared/services/route-data.service'
+import { Router } from '@angular/router'
+import { STATIC_ROUTE_RESPONSE_MAP } from './server.static-response'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -188,9 +190,9 @@ export function auth0ServerValidationFactory(
 @NgModule({
   imports: [ServerModule, ServerTransferStateModule, AppModule],
   providers: [
+    ServerResponseService,
     { provide: WINDOW, useValue: {} },
     { provide: ENV_CONFIG, useFactory: fuseBoxConfigFactory },
-    { provide: ResponseService, useClass: ServerResponseService },
     { provide: SVGLoaderService, useClass: ServerSvgLoaderService },
     {
       provide: HTTP_INTERCEPTORS,
@@ -241,4 +243,11 @@ export function auth0ServerValidationFactory(
   ],
   bootstrap: [AppComponent]
 })
-export class AppServerModule {}
+export class AppServerModule {
+  constructor(srs: ServerResponseService, rd: RouteDataService, rt: Router) {
+    rd.data.pipe(take(1)).subscribe(def => {
+      const map = (STATIC_ROUTE_RESPONSE_MAP || {})[def.componentName]
+      map && Object.keys(map).forEach(k => srs.setHeader(k, map[k]))
+    })
+  }
+}
