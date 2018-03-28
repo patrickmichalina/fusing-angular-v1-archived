@@ -1,7 +1,7 @@
 import { ReadmeComponent } from './readme.component'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { Component } from '@angular/core'
-import { ReadmeModule } from './Readme.module'
+import { ReadmeModule } from './readme.module'
 import { AppTestingModule } from '../../../testing/app-testing.module'
 
 @Component({
