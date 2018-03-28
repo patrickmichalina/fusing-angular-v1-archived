@@ -1,8 +1,8 @@
-<div *ngIf="user$ | async as user">
+<mat-card *ngIf="user$ | async as user">
   <img [src]="user.picture">
   <p>Name: <strong>{{ user.name }}</strong></p>
   <p>Nickname: <strong>{{ user.nickname }}</strong></p>
   <p>Email: <strong>{{ user.email }}</strong></p>
   <p>Email Verified: <strong>{{ user.email_verified }}</strong></p>
   <p>Updated At: <strong>{{ user.updated_at | date }}</strong></p>
-</div>
+</mat-card>

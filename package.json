@@ -129,7 +129,7 @@
     "source-map-explorer": "1.5.0",
     "string-hash": "1.1.3",
     "superagent": "3.8.2",
-    "svg2png": "4.1.1",
+    "svg2png": "^4.1.1",
     "ts-jest": "22.4.2",
     "tslint": "5.9.1",
     "tslint-immutable": "4.5.2",

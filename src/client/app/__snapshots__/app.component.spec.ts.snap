@@ -6,14 +6,7 @@ exports[`App component should build without a problem 1`] = `
   ng-version="6.0.0-rc.0"
 >
   <pm-app>
-    <pm-navbar>
-      <nav>
-        
-      </nav>
-    </pm-navbar>
-    <main>
-      <router-outlet />
-    </main>
+    
   </pm-app>
 </div>
 `;

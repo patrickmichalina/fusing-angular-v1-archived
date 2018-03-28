@@ -3,42 +3,46 @@
 exports[`DemosComponent should compile 1`] = `
 <test-component>
   <pm-demos>
-    <h1>
-      Demos
-    </h1>
-    <p>
-      Certain things can be difficult when trying to achieve pure isomorphism. This page showcases these solved issues.
-    </p>
-    <h3>
-      Caching Server XHR Requests
-    </h3>
-    <p>
-      Don't make a second API request when the data was retrieved from the server already. This produce "flicker-free" responses. Reload this page and pay attention to how the list below does not flicker.
-    </p>
-    
-    <h3>
-      SVGs
-    </h3>
-    <p>
-      Server rendered SVGs are very effecient. They are also flicker free! But having a large set of SVGs stored in an angular service penalizes users by making them download a large app bundle. In order to fix this, we provide a server and client variant of the SVG service. Initial rendered SVGs come from the server and client routed SVGs are an async fetch.
-    </p>
-    <a
-      aria-label="github"
-      href="https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular"
-      ng-reflect-pm-svg="heroku"
-      pmexternallink=""
-      pmsvg="heroku"
-      rel="noopener"
-      target="_blank"
-    />
-    <i
-      ng-reflect-pm-svg="angular"
-      pmsvg="angular"
-    />
-    <i
-      ng-reflect-pm-svg="auth0"
-      pmsvg="auth0"
-    />
+    <mat-card
+      class="mat-card"
+    >
+      <h1>
+        Demos
+      </h1>
+      <p>
+        Certain things can be difficult when trying to achieve pure isomorphism. This page showcases these solved issues.
+      </p>
+      <h2>
+        Caching Server XHR Requests
+      </h2>
+      <p>
+        Don't make a second API request when the data was retrieved from the server already. This produce "flicker-free" responses. Reload this page and pay attention to how the list below does not flicker.
+      </p>
+      
+      <h2>
+        SVGs
+      </h2>
+      <p>
+        Server rendered SVGs are very effecient. They are also flicker free! But having a large set of SVGs stored in an angular service penalizes users by making them download a large app bundle. In order to fix this, we provide a server and client variant of the SVG service. Initial rendered SVGs come from the server and client routed SVGs are an async fetch.
+      </p>
+      <a
+        aria-label="github"
+        href="https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular"
+        ng-reflect-pm-svg="heroku"
+        pmexternallink=""
+        pmsvg="heroku"
+        rel="noopener"
+        target="_blank"
+      />
+      <i
+        ng-reflect-pm-svg="logo"
+        pmsvg="logo"
+      />
+      <i
+        ng-reflect-pm-svg="auth0"
+        pmsvg="auth0"
+      />
+    </mat-card>
   </pm-demos>
 </test-component>
 `;

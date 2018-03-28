@@ -1,7 +1,16 @@
 @import 'normalize';
 @import 'material';
+@import 'mixins';
 pre {
   overflow-x: scroll;
+}
+
+html,
+body {
+  margin: 0;
+  flex-direction: column;
+  height: 100%;
+  @include fill-vertical;
 }
 
 body {

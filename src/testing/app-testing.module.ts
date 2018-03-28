@@ -39,6 +39,7 @@ import {
   WINDOW,
   WindowService
 } from '../client/app/shared/services/utlities/window.service'
+import { MaterialModule } from '../client/app/shared/material.module'
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import {
     SharedModule,
     BrowserAnimationsModule,
     MarkdownToHtmlModule,
+    MaterialModule,
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
   exports: [
@@ -60,6 +62,7 @@ import {
     ReactiveFormsModule,
     SharedModule,
     BrowserAnimationsModule,
+    MaterialModule,
     MarkdownToHtmlModule
   ],
   providers: [

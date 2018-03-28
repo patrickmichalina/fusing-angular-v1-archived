@@ -17,7 +17,7 @@ export const BUILD_CONFIG: BuildConfiguration = {
   host: 'http://localhost',
   port: 5001,
   favicon: {
-    src: './tools/sources/favicon.png',
+    src: './src/client/assets/svg/logo.svg',
     config: {
       path: '/assets/favicons',
       appDescription: 'starter repo for fast Angular Universal app development',

@@ -25,13 +25,18 @@ export function accountModule() {
   return import('./account/account.module').then(m => m.AccountModule)
 }
 
+export function readmeModule() {
+  return import('./readme/readme.module').then(m => m.ReadmeModule)
+}
+
 export const routes: Routes = [
   { path: '', loadChildren: homeModule },
   { path: 'about', loadChildren: aboutModule },
   { path: 'demos', loadChildren: demosModule },
   { path: 'callback', loadChildren: callbackModule },
   { path: 'logout', loadChildren: logoutModule },
-  { path: 'account', loadChildren: accountModule }
+  { path: 'account', loadChildren: accountModule },
+  { path: 'readme', loadChildren: readmeModule }
 ]
 
 @NgModule({

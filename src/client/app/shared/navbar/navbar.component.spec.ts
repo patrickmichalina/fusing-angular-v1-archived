@@ -6,6 +6,7 @@ import { Component } from '@angular/core'
 import { AuthService } from '../services/auth.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { of } from 'rxjs/observable/of'
+import { MaterialModule } from '../material.module'
 
 describe(NavbarComponent.name, () => {
   let fixture: ComponentFixture<NavbarComponent>
@@ -13,7 +14,7 @@ describe(NavbarComponent.name, () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, RouterTestingModule],
+        imports: [HttpClientTestingModule, RouterTestingModule, MaterialModule],
         declarations: [NavbarComponent, TestComponent],
         providers: [
           NavbarService,

@@ -1,16 +1,22 @@
-<h1>Demos</h1>
-<p>Certain things can be difficult when trying to achieve pure isomorphism. This page showcases these solved issues.</p>
+<mat-card>
+  <h1>Demos</h1>
+  <p>Certain things can be difficult when trying to achieve pure isomorphism. This page showcases these solved issues.</p>
 
-<h3>Caching Server XHR Requests</h3>
-<p>Don't make a second API request when the data was retrieved from the server already. This produce "flicker-free" responses. Reload this page and pay attention to how the list below does not flicker.</p>
-<div *ngIf="users$ | async as users">
-  <ul>
-    <li *ngFor="let user of users; trackBy: trackByUser">{{ user.first_name }}</li>
-  </ul>
-</div>
+  <h2>Caching Server XHR Requests</h2>
+  <p>Don't make a second API request when the data was retrieved from the server already. This produce "flicker-free" responses.
+    Reload this page and pay attention to how the list below does not flicker.</p>
+  <div *ngIf="users$ | async as users">
+    <ul>
+      <li *ngFor="let user of users; trackBy: trackByUser">{{ user.first_name }}</li>
+    </ul>
+  </div>
 
-<h3>SVGs</h3>
-<p>Server rendered SVGs are very effecient. They are also flicker free! But having a large set of SVGs stored in an angular service penalizes users by making them download a large app bundle. In order to fix this, we provide a server and client variant of the SVG service. Initial rendered SVGs come from the server and client routed SVGs are an async fetch.</p>
-<a href="https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular" pmExternalLink pmSvg="heroku" aria-label="github"></a>
-<i pmSvg="angular"></i>
-<i pmSvg="auth0"></i>
+  <h2>SVGs</h2>
+  <p>Server rendered SVGs are very effecient. They are also flicker free! But having a large set of SVGs stored in an angular
+    service penalizes users by making them download a large app bundle. In order to fix this, we provide a server and client
+    variant of the SVG service. Initial rendered SVGs come from the server and client routed SVGs are an async fetch.</p>
+  <a href="https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular" pmExternalLink pmSvg="heroku"
+    aria-label="github"></a>
+  <i pmSvg="logo"></i>
+  <i pmSvg="auth0"></i>
+</mat-card>

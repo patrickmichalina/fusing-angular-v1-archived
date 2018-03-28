@@ -1,4 +1,12 @@
 :host {
   display: block;
+  z-index: 10;
+  .fx-1 {
+    flex: 1;
+  }
+  @media screen and (max-width: 700px) {
+    div {
+      display: none;
+    }
+  }
 }
-
