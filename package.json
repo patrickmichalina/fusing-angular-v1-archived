@@ -225,7 +225,7 @@
     },
     {
       "path": "./dist/js/*-app.js",
-      "maxSize": "20 kB"
+      "maxSize": "30 kB"
     },
     {
       "path": "./dist/js/modules/**.js",
