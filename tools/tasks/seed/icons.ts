@@ -11,7 +11,9 @@ Sparky.task(taskName(__filename), () =>
       filter: ['**/production/**/*.svg'],
       overwrite: true,
       rename: function(filePath: string) {
-        return filePath.replace('svg/production', '')
+        return (filePath.split('/').pop() || '')
+          .replace('ic_', '')
+          .replace('px.svg', '.svg')
       }
     }
   )
