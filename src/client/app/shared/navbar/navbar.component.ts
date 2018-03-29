@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output
+} from '@angular/core'
 import { AuthService } from '../services/auth.service'
 import { map } from 'rxjs/operators'
 
@@ -15,14 +20,18 @@ export interface User {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
+  @Output() readonly menuIconClick = new EventEmitter()
+
   readonly userView$ = this.auth.user$.pipe(
-    map(a => {
-      const greeting = a && `Welcome, ${a.nickname}`
+    map(user => {
+      const greeting = user && `Welcome, ${user.nickname}`
       return {
+        ...user,
         greeting,
         roles:
-          a && Object.keys(a.roles || {}).filter(key => (a.roles || {})[key]),
-        show: greeting ? 0 : 1
+          user &&
+          Object.keys(user.roles || {}).filter(key => (user.roles || {})[key]),
+        show: greeting ? 1 : 0
       }
     })
   )
@@ -31,6 +40,10 @@ export class NavbarComponent {
 
   login() {
     this.auth.login()
+  }
+
+  logout() {
+    this.auth.logout()
   }
 
   trackByRole(index: number, role: string) {

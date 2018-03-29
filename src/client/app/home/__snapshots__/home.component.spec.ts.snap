@@ -1,10 +1,118 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`HomeComponent should compile 1`] = `
-<pm-home
-  http={[Function HttpClient]}
-  page$={[Function Observable]}
->
-  <div />
+<pm-home>
+  <mat-card
+    class="mat-card"
+  >
+    <div
+      id="hero"
+    >
+      <h1
+        class="display-3"
+      >
+        Hello, Angular Developer!
+      </h1>
+      <p
+        class="lead"
+      >
+        Welcome to a blazing fast Angular Universal development starter
+      </p>
+      <a
+        angulartics2on="click"
+        angularticsaction="ViewRepo"
+        class="mat-raised-button"
+        color="primary"
+        href="https://github.com/patrickmichalina/fusing-angular"
+        mat-raised-button=""
+        role="button"
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+           Github
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </a>
+      <span>
+         
+      </span>
+      <a
+        angulartics2on="click"
+        class="mat-raised-button"
+        color="accent"
+        href="https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular"
+        mat-raised-button=""
+        role="button"
+      >
+        <span
+          class="mat-button-wrapper"
+        >
+          Deploy to Heroku
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </a>
+    </div>
+    <mat-tab-group
+      class="mat-tab-group mat-primary"
+    >
+      <mat-tab-header
+        class="mat-tab-header"
+      >
+        <div
+          aria-hidden="true"
+          class="mat-tab-header-pagination mat-tab-header-pagination-before mat-elevation-z4 mat-ripple"
+          mat-ripple=""
+        >
+          <div
+            class="mat-tab-header-pagination-chevron"
+          />
+        </div>
+        <div
+          class="mat-tab-label-container"
+        >
+          <div
+            class="mat-tab-list"
+            role="tablist"
+          >
+            <div
+              class="mat-tab-labels"
+            >
+              
+            </div>
+            <mat-ink-bar
+              class="mat-ink-bar"
+            />
+          </div>
+        </div>
+        <div
+          aria-hidden="true"
+          class="mat-tab-header-pagination mat-tab-header-pagination-after mat-elevation-z4 mat-ripple"
+          mat-ripple=""
+        >
+          <div
+            class="mat-tab-header-pagination-chevron"
+          />
+        </div>
+      </mat-tab-header>
+      <div
+        class="mat-tab-body-wrapper"
+      >
+        
+      </div>
+    </mat-tab-group>
+  </mat-card>
 </pm-home>
 `;

@@ -96,11 +96,12 @@ export class AuthService {
     this.az.authorize()
   }
 
-  public logout(): void {
+  public logout(redirect = '/'): void {
     this.cs.remove(this.accessTokenStorageKey)
     this.cs.remove(this.idTokenStorageKey)
     this.cs.remove(this.accessTokenExpiryStorageKey)
     this.unscheduleRenewal()
+    redirect && this.router.navigate([redirect])
   }
 
   public handleAuthentication(): void {

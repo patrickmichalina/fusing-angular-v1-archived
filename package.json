@@ -114,6 +114,7 @@
     "jest-preset-angular": "5.2.1",
     "jsdom": "11.6.2",
     "last-release-git": "0.0.3",
+    "material-design-icons": "^3.0.1",
     "mkdirp": "0.5.1",
     "ng2-fused": "0.5.1",
     "nightmare": "3.0.0",
@@ -122,12 +123,13 @@
     "opn": "5.3.0",
     "prettier": "^1.11.1",
     "pretty-quick": "^1.4.1",
+    "recursive-copy": "^2.0.9",
     "rimraf": "^2.6.2",
     "semantic-release": "15.1.4",
     "source-map-explorer": "1.5.0",
     "string-hash": "1.1.3",
     "superagent": "3.8.2",
-    "svg2png": "4.1.1",
+    "svg2png": "^4.1.1",
     "ts-jest": "22.4.2",
     "tslint": "5.9.1",
     "tslint-immutable": "4.5.2",
@@ -137,12 +139,14 @@
   "dependencies": {
     "@angular-devkit/build-optimizer": "^0.4.6",
     "@angular/animations": "6.0.0-rc.0",
+    "@angular/cdk": "5.1.1",
     "@angular/common": "6.0.0-rc.0",
     "@angular/compiler": "6.0.0-rc.0",
     "@angular/compiler-cli": "6.0.0-rc.0",
     "@angular/core": "6.0.0-rc.0",
     "@angular/forms": "6.0.0-rc.0",
     "@angular/http": "6.0.0-rc.0",
+    "@angular/material": "5.1.1",
     "@angular/platform-browser": "6.0.0-rc.0",
     "@angular/platform-browser-dynamic": "6.0.0-rc.0",
     "@angular/platform-server": "6.0.0-rc.0",
@@ -217,15 +221,15 @@
   "bundlesize": [
     {
       "path": "./dist/js/*-vendors.js",
-      "maxSize": "280 kB"
+      "maxSize": "350 kB"
     },
     {
       "path": "./dist/js/*-app.js",
-      "maxSize": "15 kB"
+      "maxSize": "30 kB"
     },
     {
       "path": "./dist/js/modules/**.js",
-      "maxSize": "15 kB"
+      "maxSize": "30 kB"
     }
   ]
 }

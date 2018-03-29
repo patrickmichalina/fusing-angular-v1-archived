@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReadmeComponent should compile 1`] = `
+<pm-readme
+  http={[Function HttpClient]}
+  page$={[Function Observable]}
+>
+  <mat-card
+    class="mat-card"
+  />
+</pm-readme>
+`;

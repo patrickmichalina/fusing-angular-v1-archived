@@ -3,13 +3,21 @@
 exports[`AboutComponent should compile 1`] = `
 <test-component>
   <pm-about>
-    <h2>
-      Lighthouse Benchmark
-    </h2>
-    <img
-      src="https://user-images.githubusercontent.com/6701211/37505828-c884af28-28b4-11e8-8506-9ba9ed71dfa3.png"
-    />
-    
+    <mat-card
+      class="mat-card"
+    >
+      <h2>
+        Lighthouse Benchmark
+      </h2>
+      <img
+        src="https://user-images.githubusercontent.com/6701211/37505828-c884af28-28b4-11e8-8506-9ba9ed71dfa3.png"
+      />
+      
+      <i
+        ng-reflect-pm-svg="airplanemode_inactive_48"
+        pmsvg="airplanemode_inactive_48"
+      />
+    </mat-card>
   </pm-about>
 </test-component>
 `;

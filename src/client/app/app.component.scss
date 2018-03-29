@@ -1,4 +1,26 @@
+@import '../styles/mixins';
 :host {
-  display: block;
-  padding: 0.5em;
+  @include fill-vertical;
+  .sidenav-container {
+    @include fill-vertical;
+  }
+  #route-wrapper {
+    @include fill-vertical;
+    overflow-y: scroll;
+    padding: 1em;
+  }
+  .sidenav {
+    width: 200px;
+  }
+  ::ng-deep mat-sidenav-content {
+    @include fill-vertical;
+  }
+  ::ng-deep mat-sidenav-container {
+    mat-sidenav {
+      visibility: hidden;
+    }
+  }
+  mat-nav-list {
+    padding-top: 0;
+  }
 }

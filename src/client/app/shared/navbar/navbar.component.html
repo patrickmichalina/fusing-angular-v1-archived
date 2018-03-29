@@ -1,19 +1,33 @@
-<nav>
-  <ul *ngIf="userView$ | async as user" >
-    <li><a routerLink title="I am lazy also!">Home</a></li>
-    <li><a routerLink="about" title="I am a lazy module for the about page">Performance</a></li>
-    <li><a routerLink="demos" title="I am a lazy module for the demos page">Isomorphic</a></li>
-    <li><a href="/api-docs" title="View the rest API docs" pmExternalLink>API Docs</a></li>
-    <li><a href="https://github.com/patrickmichalina/fusing-angular" pmExternalLink>View on Github</a></li>
-    <li [ngSwitch]="user.show">
-      <div *ngSwitchCase="0">
-        <a routerLink='account'>Account</a>
-        <br>
-        <button (click)="auth.logout()">Logout</button>
-      </div>
-      <div *ngSwitchCase="1">
-        <button (click)="login()">Login</button>
-      </div>
-    </li>
-  </ul>
-</nav>
+<mat-toolbar color="primary" *ngIf="userView$ | async as user">
+  <button mat-icon-button (click)="menuIconClick.next()" angulartics2On="click" angularticsAction="ToggleSideMenu" title="toggle menu">
+    <mat-icon pmSvg="menu_24"></mat-icon>
+  </button>
+  <a routerLink mat-button title="Fusing Angular">
+    <mat-icon pmSvg="logo"></mat-icon>
+    <span>Fusing Angular</span>
+  </a>
+  <span class="fx-1"></span>
+  <div>
+    <a routerLink="readme" mat-button title="I am a lazy module for the readme page">Readme</a>
+    <a routerLink="about" mat-button title="I am a lazy module for the about page">Performance</a>
+    <a routerLink="demos" mat-button title="I am a lazy module for the demos page">Isomorphic</a>
+    <a href="api-docs" mat-button title="View the rest API docs" pmExternalLink>API</a>
+  </div>
+  <button id="user-menu-btn" mat-icon-button [matMenuTriggerFor]="menu" title="toggle user quick access menu">
+    <mat-icon pmSvg="account_circle_24"></mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" [ngSwitch]="user.show">
+    <div *ngSwitchCase="0">
+      <button mat-menu-item (click)="login()" title="login">Login</button>
+    </div>
+    <div *ngSwitchCase="1">
+      <pm-account-summary [actName]="user.name" [actEmail]="user.email" [actImageUrl]="user.picture"></pm-account-summary>
+      <button mat-menu-item routerLink="/account" title="manage account">
+        <span>Account</span>
+      </button>
+      <button mat-menu-item (click)="logout()" title="logout">
+        <span>Logout</span>
+      </button>
+    </div>
+  </mat-menu>
+</mat-toolbar>

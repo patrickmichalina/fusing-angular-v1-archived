@@ -5,76 +5,216 @@ exports[`NavbarComponent should compile 1`] = `
   id="root0"
   ng-version="6.0.0-rc.0"
 >
-  <nav>
-    
-    <ul>
-      <li>
-        <a
-          href="/"
-          ng-reflect-router-link=""
-          routerlink=""
-          title="I am lazy also!"
+  
+  <mat-toolbar
+    class="mat-toolbar mat-primary mat-toolbar-single-row"
+    color="primary"
+    ng-reflect-color="primary"
+  >
+    <button
+      angulartics2on="click"
+      angularticsaction="ToggleSideMenu"
+      class="mat-icon-button"
+      mat-icon-button=""
+      title="toggle menu"
+    >
+      <span
+        class="mat-button-wrapper"
+      >
+        <mat-icon
+          aria-hidden="true"
+          class="mat-icon material-icons"
+          pmsvg="menu_24"
+          role="img"
+        />
+      </span>
+      <div
+        class="mat-button-ripple mat-ripple mat-button-ripple-round"
+        matripple=""
+        ng-reflect-centered="true"
+        ng-reflect-disabled="false"
+        ng-reflect-trigger="[object HTMLButtonElement]"
+      />
+      <div
+        class="mat-button-focus-overlay"
+      />
+    </button>
+    <a
+      aria-disabled="false"
+      class="mat-button"
+      href="/"
+      mat-button=""
+      ng-reflect-router-link=""
+      routerlink=""
+      tabindex="0"
+      title="Fusing Angular"
+    >
+      <span
+        class="mat-button-wrapper"
+      >
+        <mat-icon
+          aria-hidden="true"
+          class="mat-icon material-icons"
+          pmsvg="logo"
+          role="img"
+        />
+        <span>
+          Fusing Angular
+        </span>
+      </span>
+      <div
+        class="mat-button-ripple mat-ripple"
+        matripple=""
+        ng-reflect-centered="false"
+        ng-reflect-disabled="false"
+        ng-reflect-trigger="/"
+      />
+      <div
+        class="mat-button-focus-overlay"
+      />
+    </a>
+    <span
+      class="fx-1"
+    />
+    <div>
+      <a
+        aria-disabled="false"
+        class="mat-button"
+        href="/readme"
+        mat-button=""
+        ng-reflect-router-link="readme"
+        routerlink="readme"
+        tabindex="0"
+        title="I am a lazy module for the readme page"
+      >
+        <span
+          class="mat-button-wrapper"
         >
-          Home
-        </a>
-      </li>
-      <li>
-        <a
-          href="/about"
-          ng-reflect-router-link="about"
-          routerlink="about"
-          title="I am a lazy module for the about page"
+          Readme
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="/readme"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </a>
+      <a
+        aria-disabled="false"
+        class="mat-button"
+        href="/about"
+        mat-button=""
+        ng-reflect-router-link="about"
+        routerlink="about"
+        tabindex="0"
+        title="I am a lazy module for the about page"
+      >
+        <span
+          class="mat-button-wrapper"
         >
           Performance
-        </a>
-      </li>
-      <li>
-        <a
-          href="/demos"
-          ng-reflect-router-link="demos"
-          routerlink="demos"
-          title="I am a lazy module for the demos page"
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="/about"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </a>
+      <a
+        aria-disabled="false"
+        class="mat-button"
+        href="/demos"
+        mat-button=""
+        ng-reflect-router-link="demos"
+        routerlink="demos"
+        tabindex="0"
+        title="I am a lazy module for the demos page"
+      >
+        <span
+          class="mat-button-wrapper"
         >
           Isomorphic
-        </a>
-      </li>
-      <li>
-        <a
-          href="/api-docs"
-          pmexternallink=""
-          title="View the rest API docs"
-        >
-          API Docs
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/patrickmichalina/fusing-angular"
-          pmexternallink=""
-        >
-          View on Github
-        </a>
-      </li>
-      <li
-        ng-reflect-ng-switch="0"
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="/demos"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </a>
+      <a
+        aria-disabled="false"
+        class="mat-button"
+        href="api-docs"
+        mat-button=""
+        pmexternallink=""
+        tabindex="0"
+        title="View the rest API docs"
       >
-        
-        <div>
-          <a
-            href="/account"
-            ng-reflect-router-link="account"
-            routerlink="account"
-          >
-            Account
-          </a>
-          <br />
-          <button>
-            Logout
-          </button>
-        </div>
-        
-      </li>
-    </ul>
-  </nav>
+        <span
+          class="mat-button-wrapper"
+        >
+          API
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="api-docs"
+        />
+        <div
+          class="mat-button-focus-overlay"
+        />
+      </a>
+    </div>
+    <button
+      aria-haspopup="true"
+      class="mat-icon-button"
+      id="user-menu-btn"
+      mat-icon-button=""
+      ng-reflect-menu="[object Object]"
+      title="toggle user quick access menu"
+    >
+      <span
+        class="mat-button-wrapper"
+      >
+        <mat-icon
+          aria-hidden="true"
+          class="mat-icon material-icons"
+          pmsvg="account_circle_24"
+          role="img"
+        />
+      </span>
+      <div
+        class="mat-button-ripple mat-ripple mat-button-ripple-round"
+        matripple=""
+        ng-reflect-centered="true"
+        ng-reflect-disabled="false"
+        ng-reflect-trigger="[object HTMLButtonElement]"
+      />
+      <div
+        class="mat-button-focus-overlay"
+      />
+    </button>
+    <mat-menu
+      ng-reflect-ng-switch="1"
+    >
+      
+    </mat-menu>
+  </mat-toolbar>
 </div>
 `;

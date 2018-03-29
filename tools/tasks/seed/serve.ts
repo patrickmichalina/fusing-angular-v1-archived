@@ -7,6 +7,7 @@ Sparky.task(
     'clean',
     'mk-dist',
     'config',
+    'icons',
     'markdown',
     'index.copy',
     'fonts',
