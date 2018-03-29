@@ -63,8 +63,8 @@ const appOptions = {
   hash: isProdBuild,
   target: 'browser@es5',
   plugins: [
-    isProdBuild && NgSwPlugin(),
     NgAotPlugin(),
+    isProdBuild && NgSwPlugin(),
     isProdBuild && NgOptimizerPlugin(),
     ...baseOptions.plugins,
     WebIndexPlugin({
