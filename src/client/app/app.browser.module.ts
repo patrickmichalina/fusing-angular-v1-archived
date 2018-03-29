@@ -43,7 +43,7 @@ export function requestFactory(transferState: TransferState): any {
 }
 
 export function swEnabled() {
-  return location.protocol === 'https:'
+  return window.location.protocol === 'https:'
 }
 
 export function auth0BrowserValidationFactory(
