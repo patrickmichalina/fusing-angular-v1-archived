@@ -126,14 +126,13 @@ export class AppBrowserModule {
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
-
-    auth.user$
-      .pipe(filter(Boolean))
-      .subscribe((user: auth0.Auth0UserProfile) =>
-        analytics.setUsername(user.sub)
-      )
+    auth.handleAuthentication()
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
-      auth.handleAuthentication()
+      auth.user$
+        .pipe(filter(Boolean))
+        .subscribe((user: auth0.Auth0UserProfile) =>
+          analytics.setUsername(user.sub)
+        )
       auth.scheduleRenewal()
       this.updates.isEnabled && this.initSwUpdateWatchers()
     })

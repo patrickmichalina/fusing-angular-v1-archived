@@ -47,7 +47,8 @@ export const BUILD_CONFIG: BuildConfiguration = {
     'important_devices',
     'storage',
     'home',
-    'airplanemode_inactive'
+    'airplanemode_inactive',
+    'exit_to_app'
   ]
 }
 
