@@ -42,6 +42,8 @@ export function requestFactory(transferState: TransferState): any {
   return transferState.get<any>(REQUEST_TS_KEY, {})
 }
 
+const swEnabled = location.protocol === 'https:'
+
 export function auth0BrowserValidationFactory(
   az: auth0.WebAuth,
   ts: TransferState
@@ -75,7 +77,9 @@ export function auth0BrowserValidationFactory(
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
     BrowserTransferStateModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('./ngsw-worker.js'),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: swEnabled
+    }),
     AppModule
   ],
   providers: [
@@ -120,44 +124,36 @@ export class AppBrowserModule {
     auth: AuthService,
     wss: WebSocketService,
     appRef: ApplicationRef,
-    updates: SwUpdate
+    private updates: SwUpdate
   ) {
-    // this.initSw()
-    this.initSwUpdateWatchers(updates)
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
-    // wss.messageBus$.subscribe(console.log)
+
     auth.user$
       .pipe(filter(Boolean))
       .subscribe((user: auth0.Auth0UserProfile) =>
         analytics.setUsername(user.sub)
       )
-    auth.handleAuthentication()
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+      auth.handleAuthentication()
       auth.scheduleRenewal()
+      swEnabled && this.initSwUpdateWatchers()
     })
   }
 
-  // initSw() {
-  //   this.es.config.env === 'prod' &&
-  //     'serviceWorker' in navigator &&
-  //     navigator.serviceWorker
-  //       .register('./ngsw-worker.js')
-  //       // .then(reg => console.log('Successful service worker registration'))
-  //       // .catch(err => console.error('Service worker registration failed'))
-  // }
-
   // tslint:disable:no-console
-  initSwUpdateWatchers(updates: SwUpdate) {
-    interval(10000, this.scheduler).subscribe(() => updates.checkForUpdate())
-    updates.available.subscribe(event => {
+  initSwUpdateWatchers() {
+    interval(10000, this.scheduler).subscribe(() =>
+      this.updates.checkForUpdate()
+    )
+    this.updates.available.subscribe(event => {
       console.log('current version is', event.current)
       console.log('available version is', event.available)
     })
-    updates.activated.subscribe(event => {
+    this.updates.activated.subscribe(event => {
       console.log('old version was', event.previous)
       console.log('new version is', event.current)
     })
-    // updates.checkForUpdate().then(console.log)
+    this.updates.checkForUpdate().then(console.log)
   }
 }

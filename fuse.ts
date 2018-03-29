@@ -40,6 +40,7 @@ const baseOptions = {
   homeDir: './src',
   output: `${BUILD_CONFIG.outputDir}/$name.js`,
   plugins: [
+    JSONPlugin(),
     Ng2TemplatePlugin(),
     ['*.component.html', RawPlugin()],
     [
@@ -52,7 +53,6 @@ const baseOptions = {
       } as any),
       RawPlugin()
     ],
-    JSONPlugin(),
     HTMLPlugin({ useDefault: false })
   ]
 }
