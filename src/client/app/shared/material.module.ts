@@ -5,6 +5,7 @@ import {
   MatIconModule,
   MatListModule,
   MatMenuModule,
+  MatProgressSpinnerModule,
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
@@ -19,7 +20,8 @@ import {
     MatIconModule,
     MatListModule,
     MatTabsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -29,7 +31,8 @@ import {
     MatIconModule,
     MatListModule,
     MatTabsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressSpinnerModule
   ]
   // providers: [NativeDateAdapter],
   // entryComponents: [MatExpansionPanel],

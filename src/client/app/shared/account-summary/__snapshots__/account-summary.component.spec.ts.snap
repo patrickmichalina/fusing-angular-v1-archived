@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AccountSummaryComponent should compile 1`] = `
+<div
+  id="root0"
+  ng-version="6.0.0-rc.0"
+>
+  <img
+    class="avatar"
+    src="null"
+  />
+  <div
+    class="mat-typography"
+  >
+    <h3>
+      
+    </h3>
+    <h4>
+      
+    </h4>
+  </div>
+</div>
+`;

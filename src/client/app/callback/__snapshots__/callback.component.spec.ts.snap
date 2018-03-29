@@ -3,7 +3,28 @@
 exports[`CallbackComponent should compile 1`] = `
 <test-component>
   <pm-callback>
-    Logging you in please wait...
+    Logging you in...
+  
+    <mat-spinner
+      class="mat-spinner mat-progress-spinner mat-primary mat-progress-spinner-indeterminate-animation"
+      mode="indeterminate"
+      role="progressbar"
+      style="width: 100px; height: 100px;"
+    >
+      <svg
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet"
+        style="width: 100px; height: 100px;"
+        viewBox="0 0 100 100"
+      >
+        <circle
+          cx="50%"
+          cy="50%"
+          r="45"
+          style="stroke-dasharray: 282.7433388230814px; stroke-width: 10%;"
+        />
+      </svg>
+    </mat-spinner>
   </pm-callback>
 </test-component>
 `;

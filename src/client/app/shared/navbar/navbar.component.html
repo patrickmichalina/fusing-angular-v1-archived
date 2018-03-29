@@ -21,15 +21,12 @@
       <button mat-menu-item (click)="login()" title="login">Login</button>
     </div>
     <div *ngSwitchCase="1">
-      <div id="user-box">
-        <img [src]="user.photo" class="avatar">
-        <div>
-          <h3>{{ user.displayName }}</h3>
-          <h4>{{ user.email }}</h4>
-        </div>
-      </div>
+      <pm-account-summary [actName]="user.name" [actEmail]="user.email" [actImageUrl]="user.picture"></pm-account-summary>
       <button mat-menu-item routerLink="/account" title="manage account">
         <span>Account</span>
+      </button>
+      <button mat-menu-item (click)="logout()" title="logout">
+        <span>Logout</span>
       </button>
     </div>
   </mat-menu>

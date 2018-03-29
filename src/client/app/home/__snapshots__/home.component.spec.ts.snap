@@ -40,6 +40,9 @@ exports[`HomeComponent should compile 1`] = `
           class="mat-button-focus-overlay"
         />
       </a>
+      <span>
+         
+      </span>
       <a
         angulartics2on="click"
         class="mat-raised-button"
