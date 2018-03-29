@@ -21,6 +21,7 @@ import {
 import './tools/tasks'
 import { NgAotPlugin } from './tools/plugins/ng-aot'
 import { NgOptimizerPlugin } from './tools/plugins/ng-optimizer'
+import { NgSwPlugin } from './tools/plugins/ng-sw'
 
 const death = require('death')
 const isReachable = require('is-reachable')
@@ -40,6 +41,7 @@ const baseOptions = {
   homeDir: './src',
   output: `${BUILD_CONFIG.outputDir}/$name.js`,
   plugins: [
+    JSONPlugin(),
     Ng2TemplatePlugin(),
     ['*.component.html', RawPlugin()],
     [
@@ -52,7 +54,6 @@ const baseOptions = {
       } as any),
       RawPlugin()
     ],
-    JSONPlugin(),
     HTMLPlugin({ useDefault: false })
   ]
 }
@@ -63,6 +64,7 @@ const appOptions = {
   target: 'browser@es5',
   plugins: [
     NgAotPlugin(),
+    isProdBuild && NgSwPlugin(),
     isProdBuild && NgOptimizerPlugin(),
     ...baseOptions.plugins,
     WebIndexPlugin({

@@ -13,17 +13,18 @@ export interface BuildConfiguration {
   toolsDir: string
   browserSyncPort: number
   host: string
-  port: number,
+  port: number
+  icons: string[]
   favicon: {
-    src: string,
+    src: string
     config: {
-      path: string,
-      appDescription: string,
-      appName: string,
-      short_name: string,
-      background: string,
-      theme_color: string,
-      start_url: string,
+      path: string
+      appDescription: string
+      appName: string
+      short_name: string
+      background: string
+      theme_color: string
+      start_url: string
       lang: string
     }
   }

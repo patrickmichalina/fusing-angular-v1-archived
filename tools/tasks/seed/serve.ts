@@ -10,7 +10,6 @@ Sparky.task(
     'icons',
     'markdown',
     'index.copy',
-    'fonts',
     'web',
     'assets',
     'sass',

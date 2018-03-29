@@ -1,6 +1,6 @@
 import { SVGLoaderService } from './shared/svg/svg-loader.service'
-import { AppModule } from './app.module'
-import { ApplicationRef, NgModule } from '@angular/core'
+import { AppModule, RXJS_DEFAULT_SCHEDULER } from './app.module'
+import { ApplicationRef, Inject, NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
 import { ENV_CONFIG, ENV_CONFIG_TS_KEY, REQUEST_TS_KEY } from './app.config'
 import { WINDOW } from './shared/services/utlities/window.service'
@@ -22,15 +22,16 @@ import * as auth0 from 'auth0-js'
 import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
-import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
 import { WebSocketService } from './shared/services/web-socket.service'
 import { filter, first, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { ResponseService } from './shared/services/response.service'
-// import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
-// import { Observable } from 'rxjs/Observable'
+import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
+import { EnvironmentService } from './shared/services/environment.service'
+// tslint:disable-next-line:import-blacklist
+import { interval } from 'rxjs'
 // import 'hammerjs'
 
 export function fuseBoxConfigFactory(ts: TransferState) {
@@ -72,6 +73,9 @@ export function auth0BrowserValidationFactory(
   bootstrap: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: false
+    }),
     BrowserTransferStateModule,
     BrowserAnimationsModule,
     AppModule
@@ -111,36 +115,45 @@ export function auth0BrowserValidationFactory(
 })
 export class AppBrowserModule {
   constructor(
+    @Inject(RXJS_DEFAULT_SCHEDULER) private scheduler: any,
     analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
     is: InjectionService,
     auth: AuthService,
     wss: WebSocketService,
-    appRef: ApplicationRef
+    appRef: ApplicationRef,
+    private updates: SwUpdate
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
-    // wss.messageBus$.subscribe(console.log)
+
     auth.user$
       .pipe(filter(Boolean))
       .subscribe((user: auth0.Auth0UserProfile) =>
         analytics.setUsername(user.sub)
       )
-    auth.handleAuthentication()
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+      // tslint:disable-next-line:no-console
+      console.log('IS STABLE')
+      auth.handleAuthentication()
       auth.scheduleRenewal()
+      this.updates.isEnabled && this.initSwUpdateWatchers()
     })
   }
+
   // tslint:disable:no-console
-  // constructor(updates: SwUpdate) {
-  //   Observable.interval(100000).subscribe(() => updates.checkForUpdate())
-  //   updates.available.subscribe(event => {
-  //     console.log('current version is', event.current)
-  //     console.log('available version is', event.available)
-  //   })
-  //   updates.activated.subscribe(event => {
-  //     console.log('old version was', event.previous)
-  //     console.log('new version is', event.current)
-  //   })
-  // }
+  initSwUpdateWatchers() {
+    interval(10000, this.scheduler).subscribe(() =>
+      this.updates.checkForUpdate()
+    )
+    this.updates.available.subscribe(event => {
+      console.log('current version is', event.current)
+      console.log('available version is', event.available)
+    })
+    this.updates.activated.subscribe(event => {
+      console.log('old version was', event.previous)
+      console.log('new version is', event.current)
+    })
+    this.updates.checkForUpdate().then(console.log)
+  }
 }

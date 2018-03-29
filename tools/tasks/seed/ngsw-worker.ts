@@ -1,6 +1,13 @@
-import { Sparky } from 'fuse-box'
-import { BUILD_CONFIG, taskName } from '../../config/build.config'
+import { Sparky, FuseBox, UglifyJSPlugin } from 'fuse-box'
+import { taskName, isProdBuild } from '../../config/build.config'
 
 Sparky.task(taskName(__filename), () => {
-  return Sparky.src(['ngsw-worker.js'], { base: './node_modules/@angular/service-worker' }).dest(`./${BUILD_CONFIG.outputDir}`)
+  const fuseApp = FuseBox.init({
+    homeDir: 'node_modules/@angular/service-worker',
+    output: 'dist/$name.js',
+    target: 'browser@es5',
+    plugins: [isProdBuild && (UglifyJSPlugin() as any)]
+  })
+  fuseApp.bundle('ngsw-worker.js').instructions(' > [ngsw-worker.js]')
+  return fuseApp.run()
 })

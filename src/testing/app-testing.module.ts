@@ -40,6 +40,9 @@ import {
   WindowService
 } from '../client/app/shared/services/utlities/window.service'
 import { MaterialModule } from '../client/app/shared/material.module'
+import { RXJS_DEFAULT_SCHEDULER } from '../client/app/app.module'
+// tslint:disable-next-line:import-blacklist
+import { VirtualTimeScheduler } from 'rxjs'
 
 @NgModule({
   imports: [
@@ -96,6 +99,7 @@ import { MaterialModule } from '../client/app/shared/material.module'
     },
     LoggingService,
     WindowService,
+    { provide: RXJS_DEFAULT_SCHEDULER, useValue: new VirtualTimeScheduler() },
     { provide: WINDOW, useValue: window },
     { provide: UrlService, useClass: MockUrlService }
   ]
