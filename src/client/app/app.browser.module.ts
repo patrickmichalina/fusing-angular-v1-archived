@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable'
 import { SVGLoaderService } from './shared/svg/svg-loader.service'
+import { AppModule, RXJS_DEFAULT_SCHEDULER } from './app.module'
 import { ApplicationRef, Inject, NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
 import { ENV_CONFIG, ENV_CONFIG_TS_KEY, REQUEST_TS_KEY } from './app.config'
@@ -19,7 +19,7 @@ import {
   AuthService
 } from './shared/services/auth.service'
 import * as auth0 from 'auth0-js'
-import { AppModule, RXJS_DEFAULT_SCHEDULER } from './app.module'
+import { Observable } from 'rxjs/Observable'
 import { Observer } from 'rxjs/Observer'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { InjectionService } from './shared/services/injection.service'
@@ -29,9 +29,9 @@ import { of } from 'rxjs/observable/of'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { ResponseService } from './shared/services/response.service'
 import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
+import { EnvironmentService } from './shared/services/environment.service'
 // tslint:disable-next-line:import-blacklist
 import { interval } from 'rxjs'
-import { EnvironmentService } from './shared/services/environment.service'
 // import 'hammerjs'
 
 export function fuseBoxConfigFactory(ts: TransferState) {
@@ -40,10 +40,6 @@ export function fuseBoxConfigFactory(ts: TransferState) {
 
 export function requestFactory(transferState: TransferState): any {
   return transferState.get<any>(REQUEST_TS_KEY, {})
-}
-
-export function swEnabled() {
-  return window.location.protocol === 'https:'
 }
 
 export function auth0BrowserValidationFactory(
@@ -77,11 +73,11 @@ export function auth0BrowserValidationFactory(
   bootstrap: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
+    ServiceWorkerModule.register('./ngsw-worker.js', {
+      enabled: false
+    }),
     BrowserTransferStateModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', {
-      enabled: swEnabled()
-    }),
     AppModule
   ],
   providers: [
@@ -137,9 +133,11 @@ export class AppBrowserModule {
         analytics.setUsername(user.sub)
       )
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+      // tslint:disable-next-line:no-console
+      console.log('IS STABLE')
       auth.handleAuthentication()
       auth.scheduleRenewal()
-      swEnabled() && this.initSwUpdateWatchers()
+      this.updates.isEnabled && this.initSwUpdateWatchers()
     })
   }
 

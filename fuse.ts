@@ -21,6 +21,7 @@ import {
 import './tools/tasks'
 import { NgAotPlugin } from './tools/plugins/ng-aot'
 import { NgOptimizerPlugin } from './tools/plugins/ng-optimizer'
+import { NgSwPlugin } from './tools/plugins/ng-sw'
 
 const death = require('death')
 const isReachable = require('is-reachable')
@@ -62,6 +63,7 @@ const appOptions = {
   hash: isProdBuild,
   target: 'browser@es5',
   plugins: [
+    isProdBuild && NgSwPlugin(),
     NgAotPlugin(),
     isProdBuild && NgOptimizerPlugin(),
     ...baseOptions.plugins,
