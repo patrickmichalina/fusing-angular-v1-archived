@@ -22,7 +22,6 @@ import * as auth0 from 'auth0-js'
 import { AppModule, RXJS_DEFAULT_SCHEDULER } from './app.module'
 import { Observer } from 'rxjs/Observer'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
-import { EnvironmentService } from './shared/services/environment.service'
 import { InjectionService } from './shared/services/injection.service'
 import { WebSocketService } from './shared/services/web-socket.service'
 import { filter, first, tap } from 'rxjs/operators'
@@ -32,6 +31,7 @@ import { ResponseService } from './shared/services/response.service'
 import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
 // tslint:disable-next-line:import-blacklist
 import { interval } from 'rxjs'
+import { EnvironmentService } from './shared/services/environment.service'
 // import 'hammerjs'
 
 export function fuseBoxConfigFactory(ts: TransferState) {
@@ -75,7 +75,7 @@ export function auth0BrowserValidationFactory(
     BrowserModule.withServerTransition({ appId: 'pm-app' }),
     BrowserTransferStateModule,
     BrowserAnimationsModule,
-    ServiceWorkerModule.register('ngsw-worker.js'),
+    ServiceWorkerModule.register('./ngsw-worker.js'),
     AppModule
   ],
   providers: [
@@ -122,6 +122,7 @@ export class AppBrowserModule {
     appRef: ApplicationRef,
     updates: SwUpdate
   ) {
+    // this.initSw()
     this.initSwUpdateWatchers(updates)
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
@@ -137,6 +138,15 @@ export class AppBrowserModule {
     })
   }
 
+  // initSw() {
+  //   this.es.config.env === 'prod' &&
+  //     'serviceWorker' in navigator &&
+  //     navigator.serviceWorker
+  //       .register('./ngsw-worker.js')
+  //       // .then(reg => console.log('Successful service worker registration'))
+  //       // .catch(err => console.error('Service worker registration failed'))
+  // }
+
   // tslint:disable:no-console
   initSwUpdateWatchers(updates: SwUpdate) {
     interval(10000, this.scheduler).subscribe(() => updates.checkForUpdate())
@@ -148,5 +158,6 @@ export class AppBrowserModule {
       console.log('old version was', event.previous)
       console.log('new version is', event.current)
     })
+    // updates.checkForUpdate().then(console.log)
   }
 }

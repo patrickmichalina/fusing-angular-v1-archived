@@ -1,42 +1,30 @@
 {
   "index": "/",
-  "appData": {
-    "test": true
-  },
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "resources": {
-        "files": [
-          "/ngsw-worker.js"
-        ],
-        "versionedFiles": [
-          "/js/*.js",
-          "/css/**/**"
-        ]
+        "files": ["/ngsw-worker.js"],
+        "versionedFiles": ["/js/*.js", "/css/**/**"]
       }
     },
     {
       "name": "assets",
       "installMode": "lazy",
-      "updateMode": "prefetch",
+      "updateMode": "lazy",
       "resources": {
-        "files": [
-          "/assets/**/**"
-        ]
+        "files": ["/assets/**/**"]
       }
     }
   ],
   "dataGroups": [
     {
       "name": "api",
-      "urls": [
-        "/api/**"
-      ],
+      "urls": ["/api/**"],
       "cacheConfig": {
         "maxSize": 100,
-        "maxAge": "1d",
+        "maxAge": "10m",
         "timeout": "1m",
         "strategy": "freshness"
       }
