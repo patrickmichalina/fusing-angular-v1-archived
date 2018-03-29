@@ -31,14 +31,14 @@
     "NODE_MODULES_CACHE": {
       "description":
         "Set to true if you wish for Heroku to cache the NPM modules.",
-      "required": true,
-      "value": true
+      "required": false,
+      "value": "true"
     },
     "NPM_CONFIG_PRODUCTION": {
       "description":
         "This value must be false if you are using heroku to build AND deploy. Build will fail becuase devDependencies will not be downloaded unless this is set to false.",
       "required": true,
-      "value": false
+      "value": "false"
     },
     "GOOGLE_ANALYTICS_TRACKING_ID": {
       "description": "Google Analytics tracking ID (ex: UA-18280491-A)",
@@ -57,7 +57,7 @@
       "description":
         "Setting this to true means new relic is configured via environment variables",
       "required": false,
-      "value": true
+      "value": "true"
     }
   }
 }
