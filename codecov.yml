@@ -1,4 +1,22 @@
 codecov:
   allow_coverage_offsets: false
+  notify:
+    require_ci_to_pass: true
+  
+coverage:
+  precision: 2
+  round: down
+  range: "65...100"
   ignore:
     - "tools"
+
+  status:
+    project:
+      default:
+        enabled: yes
+        threshold: 0.50%
+    patch:
+      default:
+        enabled: yes
+        target: 0%
+    changes: false
