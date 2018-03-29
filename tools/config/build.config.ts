@@ -38,7 +38,17 @@ export const BUILD_CONFIG: BuildConfiguration = {
         content: 'width=device-width, initial-scale=1, viewport-fit=cover'
       }
     }
-  ] as any[]
+  ] as any[],
+  icons: [
+    'account_circle',
+    'menu',
+    'book',
+    'functions',
+    'important_devices',
+    'storage',
+    'home',
+    'airplanemode_inactive'
+  ]
 }
 
 let envConfig

@@ -1,12 +1,12 @@
 {
-  "index": "/",
+  "index": ".",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
       "resources": {
         "files": ["/ngsw-worker.js"],
-        "versionedFiles": ["/js/*.js", "/css/**/**"]
+        "versionedFiles": ["/js/**/**", "/css/**/**"]
       }
     },
     {
@@ -33,7 +33,7 @@
       "urls": ["/api/**"],
       "cacheConfig": {
         "maxSize": 100,
-        "maxAge": "10m",
+        "maxAge": "1d",
         "timeout": "1m",
         "strategy": "freshness"
       }
