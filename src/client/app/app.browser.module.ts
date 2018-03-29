@@ -42,7 +42,9 @@ export function requestFactory(transferState: TransferState): any {
   return transferState.get<any>(REQUEST_TS_KEY, {})
 }
 
-const swEnabled = location.protocol === 'https:'
+export function swEnabled() {
+  return location.protocol === 'https:'
+}
 
 export function auth0BrowserValidationFactory(
   az: auth0.WebAuth,
@@ -78,7 +80,7 @@ export function auth0BrowserValidationFactory(
     BrowserTransferStateModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('./ngsw-worker.js', {
-      enabled: swEnabled
+      enabled: swEnabled()
     }),
     AppModule
   ],
@@ -137,7 +139,7 @@ export class AppBrowserModule {
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
       auth.handleAuthentication()
       auth.scheduleRenewal()
-      swEnabled && this.initSwUpdateWatchers()
+      swEnabled() && this.initSwUpdateWatchers()
     })
   }
 
