@@ -98,7 +98,7 @@
     "codelyzer": "4.2.1",
     "concurrently": "3.5.1",
     "condition-circle": "2.0.1",
-    "conventional-changelog": "1.1.19",
+    "conventional-changelog": "1.1.23",
     "death": "1.1.0",
     "favicons": "^5.0.0",
     "fuse-box": "3.1.3",

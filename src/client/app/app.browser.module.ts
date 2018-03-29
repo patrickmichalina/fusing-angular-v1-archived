@@ -133,8 +133,6 @@ export class AppBrowserModule {
         analytics.setUsername(user.sub)
       )
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
-      // tslint:disable-next-line:no-console
-      console.log('IS STABLE')
       auth.handleAuthentication()
       auth.scheduleRenewal()
       this.updates.isEnabled && this.initSwUpdateWatchers()
@@ -143,7 +141,7 @@ export class AppBrowserModule {
 
   // tslint:disable:no-console
   initSwUpdateWatchers() {
-    interval(10000, this.scheduler).subscribe(() =>
+    interval(1000000, this.scheduler).subscribe(() =>
       this.updates.checkForUpdate()
     )
     this.updates.available.subscribe(event => {
