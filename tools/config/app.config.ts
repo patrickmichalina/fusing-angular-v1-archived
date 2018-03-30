@@ -14,4 +14,5 @@ export interface EnvConfig {
     readonly scope: string
   }
   readonly rolesKey?: string
+  readonly pwaUpdateInterval?: number
 }

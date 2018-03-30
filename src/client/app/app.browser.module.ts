@@ -1,6 +1,6 @@
+import { Observer } from 'rxjs/Observer'
 import { SVGLoaderService } from './shared/svg/svg-loader.service'
-import { AppModule, RXJS_DEFAULT_SCHEDULER } from './app.module'
-import { ApplicationRef, Inject, NgModule } from '@angular/core'
+import { ApplicationRef, NgModule } from '@angular/core'
 import { AppComponent } from './app.component'
 import { ENV_CONFIG, ENV_CONFIG_TS_KEY, REQUEST_TS_KEY } from './app.config'
 import { WINDOW } from './shared/services/utlities/window.service'
@@ -18,9 +18,8 @@ import {
   AUTH0_VALIDATION_FACTORY,
   AuthService
 } from './shared/services/auth.service'
-import * as auth0 from 'auth0-js'
 import { Observable } from 'rxjs/Observable'
-import { Observer } from 'rxjs/Observer'
+import { AppModule } from './app.module'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { InjectionService } from './shared/services/injection.service'
 import { WebSocketService } from './shared/services/web-socket.service'
@@ -28,10 +27,13 @@ import { filter, first, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { ResponseService } from './shared/services/response.service'
-import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker'
+import { ServiceWorkerModule } from '@angular/service-worker'
 import { EnvironmentService } from './shared/services/environment.service'
-// tslint:disable-next-line:import-blacklist
-import { interval } from 'rxjs'
+import {
+  NGSW_INTERVAL,
+  NgSwUpdateService
+} from './shared/services/ngsw-update.service'
+import * as auth0 from 'auth0-js'
 // import 'hammerjs'
 
 export function fuseBoxConfigFactory(ts: TransferState) {
@@ -40,6 +42,10 @@ export function fuseBoxConfigFactory(ts: TransferState) {
 
 export function requestFactory(transferState: TransferState): any {
   return transferState.get<any>(REQUEST_TS_KEY, {})
+}
+
+export function ngswIntervalFactory(es: EnvironmentService): any {
+  return es.config.pwaUpdateInterval || 1000 * 60 * 60 * 12 // 12 hours
 }
 
 export function auth0BrowserValidationFactory(
@@ -104,25 +110,30 @@ export function auth0BrowserValidationFactory(
       deps: [TransferState]
     },
     {
+      provide: NGSW_INTERVAL,
+      useFactory: ngswIntervalFactory,
+      deps: [EnvironmentService]
+    },
+    {
       provide: LOGGER_CONFIG,
       useValue: {
         name: 'Universal WebApp',
         type: 'client-side'
       }
     },
-    WebSocketService
+    WebSocketService,
+    NgSwUpdateService
   ]
 })
 export class AppBrowserModule {
   constructor(
-    @Inject(RXJS_DEFAULT_SCHEDULER) private scheduler: any,
     analytics: Angulartics2GoogleAnalytics,
     es: EnvironmentService,
     is: InjectionService,
     auth: AuthService,
     wss: WebSocketService,
     appRef: ApplicationRef,
-    private updates: SwUpdate
+    ngsw: NgSwUpdateService
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
@@ -134,23 +145,7 @@ export class AppBrowserModule {
           analytics.setUsername(user.sub)
         )
       auth.scheduleRenewal()
-      this.updates.isEnabled && this.initSwUpdateWatchers()
+      ngsw.init()
     })
-  }
-
-  // tslint:disable:no-console
-  initSwUpdateWatchers() {
-    interval(1000000, this.scheduler).subscribe(() =>
-      this.updates.checkForUpdate()
-    )
-    this.updates.available.subscribe(event => {
-      console.log('current version is', event.current)
-      console.log('available version is', event.available)
-    })
-    this.updates.activated.subscribe(event => {
-      console.log('old version was', event.previous)
-      console.log('new version is', event.current)
-    })
-    this.updates.checkForUpdate().then(console.log)
   }
 }

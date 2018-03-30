@@ -58,6 +58,10 @@
         "Setting this to true means new relic is configured via environment variables",
       "required": false,
       "value": "true"
+    },
+    "PWA_UPDATE_INTERVAL": {
+      "description": "Refresh interval for updating the angular PWA manifest",
+      "required": false
     }
   }
 }
