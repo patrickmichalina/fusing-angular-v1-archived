@@ -62,7 +62,7 @@
     "db": "typeorm"
   },
   "devDependencies": {
-    "@compodoc/compodoc": "1.0.9",
+    "@compodoc/compodoc": "1.1.0",
     "@types/auth0-js": "^8.11.2",
     "@types/body-parser": "1.16.8",
     "@types/browser-sync": "0.0.38",
