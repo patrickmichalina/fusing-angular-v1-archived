@@ -7,6 +7,7 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
   MatSidenavModule,
+  MatSnackBarModule,
   MatTabsModule,
   MatToolbarModule
 } from '@angular/material'
@@ -21,7 +22,8 @@ import {
     MatListModule,
     MatTabsModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ],
   exports: [
     MatButtonModule,
@@ -32,7 +34,8 @@ import {
     MatListModule,
     MatTabsModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ]
   // providers: [NativeDateAdapter],
   // entryComponents: [MatExpansionPanel],

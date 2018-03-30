@@ -3,10 +3,10 @@
   "short_name": "Fusing-Ng",
   "description": "starter repo for fast Angular Universal app development",
   "dir": "auto",
-  "lang": "en",
+  "lang": "en-US",
   "display": "standalone",
   "orientation": "any",
-  "start_url": ".",
+  "start_url": "/index.html",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
