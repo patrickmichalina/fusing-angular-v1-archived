@@ -25,8 +25,8 @@ export const BUILD_CONFIG: BuildConfiguration = {
       short_name: 'Fusing-Ng',
       background: '#ffffff',
       theme_color: '#ffffff',
-      start_url: '.',
-      lang: 'en'
+      start_url: '/index.html',
+      lang: 'en-US'
     }
   },
   dependencies: [

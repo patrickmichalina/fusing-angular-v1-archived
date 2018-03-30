@@ -1,5 +1,5 @@
 {
-  "index": ".",
+  "index": "/index.html",
   "assetGroups": [
     {
       "name": "app",
