@@ -1,6 +1,6 @@
 <div>
   <pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
-  <div style="height: 52px;"></div>
+  <div class="nav-filler"></div>
   <mat-sidenav-container class="sidenav-container mat-typography" *ngIf="view$ | async as view">
     <mat-sidenav #sidenav class="sidenav">
       <mat-nav-list>
