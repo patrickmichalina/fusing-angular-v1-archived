@@ -62,7 +62,7 @@
     "db": "typeorm"
   },
   "devDependencies": {
-    "@compodoc/compodoc": "1.1.0",
+    "@compodoc/compodoc": "1.1.1",
     "@types/auth0-js": "^8.11.2",
     "@types/body-parser": "1.16.8",
     "@types/browser-sync": "0.0.38",
@@ -207,7 +207,7 @@
     "ws": "5.1.0",
     "xhr2": "0.1.4",
     "yargs": "11.0.0",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.21"
   },
   "engines": {
     "node": ">= 9.9.0",
