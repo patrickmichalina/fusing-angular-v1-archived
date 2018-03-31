@@ -132,7 +132,7 @@
     "svg2png": "^4.1.1",
     "ts-jest": "22.4.2",
     "tslint": "5.9.1",
-    "tslint-immutable": "4.5.2",
+    "tslint-immutable": "4.5.3",
     "typescript": "2.7.2",
     "uglify-js": "^3.3.16"
   },
