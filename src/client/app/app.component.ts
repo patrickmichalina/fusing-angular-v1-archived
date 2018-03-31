@@ -17,6 +17,7 @@ import { filter } from 'rxjs/operators'
 import { AuthService } from './shared/services/auth.service'
 // tslint:disable-next-line:import-blacklist
 import { combineLatest } from 'rxjs'
+import { WindowService } from './shared/services/utlities/window.service'
 
 @Component({
   selector: 'pm-app',
@@ -38,6 +39,7 @@ export class AppComponent implements AfterViewInit {
     private router: Router,
     private auth: AuthService,
     analytics: Angulartics2GoogleAnalytics,
+    private ws: WindowService,
     seo: SEOService,
     rds: RouteDataService
   ) {
@@ -53,7 +55,7 @@ export class AppComponent implements AfterViewInit {
 
   applyNavShadowListener() {
     this.doc.addEventListener('scroll', e => {
-      if (this.doc.documentElement.scrollTop <= 0) {
+      if (this.ws.window().scrollY <= 0) {
         this.navbarElement &&
           this.navbarElement.classList.remove('mat-elevation-z6')
       } else {
