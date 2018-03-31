@@ -1,4 +1,5 @@
 @import '../styles/mixins';
+@import '../styles/variables';
 :host {
   @include fill-vertical;
   .sidenav-container {
@@ -6,11 +7,11 @@
   }
   #route-wrapper {
     @include fill-vertical;
-    overflow-y: scroll;
     padding: 1em;
     @media screen and (max-width: 599px) {
       padding: 0.5em;
     }
+    // position: relative;
   }
   .sidenav {
     width: 200px;
@@ -19,11 +20,21 @@
     @include fill-vertical;
   }
   ::ng-deep mat-sidenav-container {
+    position: initial;
+    .mat-drawer-backdrop.mat-drawer-shown {
+      z-index: 111;
+      position: fixed;
+    }
     mat-sidenav {
       visibility: hidden;
+      position: fixed;
+      z-index: 900;
     }
   }
   mat-nav-list {
     padding-top: 0;
+  }
+  .nav-filler {
+    height: $navbar-height;
   }
 }

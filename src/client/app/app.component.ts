@@ -1,4 +1,8 @@
+import { DOCUMENT } from '@angular/common'
 import { SEOService } from './shared/services/seo.service'
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { RouteDataService } from './shared/services/route-data.service'
+import { NavbarComponent } from './shared/navbar/navbar.component'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -7,16 +11,13 @@ import {
   Inject,
   ViewChild
 } from '@angular/core'
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
-import { RouteDataService } from './shared/services/route-data.service'
-import { NavbarComponent } from './shared/navbar/navbar.component'
-import { DOCUMENT } from '@angular/common'
 import { MatSidenav } from '@angular/material'
 import { NavigationEnd, Router } from '@angular/router'
 import { filter } from 'rxjs/operators'
 import { AuthService } from './shared/services/auth.service'
 // tslint:disable-next-line:import-blacklist
 import { combineLatest } from 'rxjs'
+import { WindowService } from './shared/services/utlities/window.service'
 
 @Component({
   selector: 'pm-app',
@@ -38,6 +39,7 @@ export class AppComponent implements AfterViewInit {
     private router: Router,
     private auth: AuthService,
     analytics: Angulartics2GoogleAnalytics,
+    private ws: WindowService,
     seo: SEOService,
     rds: RouteDataService
   ) {
@@ -51,22 +53,16 @@ export class AppComponent implements AfterViewInit {
     return this.navbarRef && this.navbarRef.nativeElement
   }
 
-  get routeWrapperElement(): HTMLElement | null {
-    return this.doc.getElementById('route-wrapper')
-  }
-
   applyNavShadowListener() {
-    this.routeWrapperElement &&
-      this.routeWrapperElement.addEventListener('scroll', e => {
-        const scroll = (e.target as HTMLDivElement).scrollTop
-        if (scroll === 0) {
-          this.navbarElement &&
-            this.navbarElement.classList.remove('mat-elevation-z6')
-        } else {
-          this.navbarElement &&
-            this.navbarElement.classList.add('mat-elevation-z6')
-        }
-      })
+    this.doc.addEventListener('scroll', e => {
+      if (this.ws.window().scrollY <= 0) {
+        this.navbarElement &&
+          this.navbarElement.classList.remove('mat-elevation-z6')
+      } else {
+        this.navbarElement &&
+          this.navbarElement.classList.add('mat-elevation-z6')
+      }
+    })
   }
 
   ngAfterViewInit() {

@@ -35,7 +35,7 @@ export const BUILD_CONFIG: BuildConfiguration = {
       element: 'meta',
       attributes: {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1, viewport-fit=cover'
+        content: 'width=device-width, initial-scale=1'
       }
     }
   ] as any[],
