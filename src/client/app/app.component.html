@@ -1,41 +1,43 @@
-<pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
-<div style="height: 52px;"></div>
-<mat-sidenav-container class="sidenav-container mat-typography" *ngIf="view$ | async as view">
-  <mat-sidenav #sidenav class="sidenav">
-    <mat-nav-list>
-      <a routerLink mat-list-item title="Fusing Angular">
-        <mat-icon pmSvg="logo"></mat-icon>
-        <span>Fusing Angular</span>
-      </a>
-      <a routerLink="readme" mat-list-item title="I am a lazy module for the about page">
-        <mat-icon matListIcon pmSvg="book_24"></mat-icon>
-        <span>Readme</span>
-      </a>
-      <a routerLink="about" mat-list-item title="I am a lazy module for the about page">
-        <mat-icon matListIcon pmSvg="functions_24"></mat-icon>
-        <span>Performance</span>
-      </a>
-      <a routerLink="demos" mat-list-item title="I am a lazy module for the demos page">
-        <mat-icon matListIcon pmSvg="important_devices_24"></mat-icon>
-        <span>Isomorphic</span>
-      </a>
-      <a href="api-docs" mat-list-item title="View the rest API docs" pmExternalLink>
-        <mat-icon matListIcon pmSvg="storage_24"></mat-icon>
-        <span>API</span>
-      </a>
-      <div [ngSwitch]="view.loggedIn">
-        <a *ngSwitchCase="0" mat-list-item (click)="login()">
-          <mat-icon matListIcon pmSvg="home_24"></mat-icon>
-          <span>Login</span>
+<div>
+  <pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
+  <div style="height: 52px;"></div>
+  <mat-sidenav-container class="sidenav-container mat-typography" *ngIf="view$ | async as view">
+    <mat-sidenav #sidenav class="sidenav">
+      <mat-nav-list>
+        <a routerLink mat-list-item title="Fusing Angular">
+          <mat-icon pmSvg="logo"></mat-icon>
+          <span>Fusing Angular</span>
         </a>
-        <a *ngSwitchCase="1" mat-list-item (click)="logout()">
-          <mat-icon matListIcon pmSvg="exit_to_app_24"></mat-icon>
-          <span>Logout</span>
+        <a routerLink="readme" mat-list-item title="I am a lazy module for the about page">
+          <mat-icon matListIcon pmSvg="book_24"></mat-icon>
+          <span>Readme</span>
         </a>
-      </div>
-    </mat-nav-list>
-  </mat-sidenav>
-  <main id="route-wrapper">
-    <router-outlet></router-outlet>
-  </main>
-</mat-sidenav-container>
+        <a routerLink="about" mat-list-item title="I am a lazy module for the about page">
+          <mat-icon matListIcon pmSvg="functions_24"></mat-icon>
+          <span>Performance</span>
+        </a>
+        <a routerLink="demos" mat-list-item title="I am a lazy module for the demos page">
+          <mat-icon matListIcon pmSvg="important_devices_24"></mat-icon>
+          <span>Isomorphic</span>
+        </a>
+        <a href="api-docs" mat-list-item title="View the rest API docs" pmExternalLink>
+          <mat-icon matListIcon pmSvg="storage_24"></mat-icon>
+          <span>API</span>
+        </a>
+        <div [ngSwitch]="view.loggedIn">
+          <a *ngSwitchCase="0" mat-list-item (click)="login()">
+            <mat-icon matListIcon pmSvg="home_24"></mat-icon>
+            <span>Login</span>
+          </a>
+          <a *ngSwitchCase="1" mat-list-item (click)="logout()">
+            <mat-icon matListIcon pmSvg="exit_to_app_24"></mat-icon>
+            <span>Logout</span>
+          </a>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+    <main id="route-wrapper">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-container>
+</div>
