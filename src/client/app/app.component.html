@@ -1,5 +1,6 @@
+<pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
+<div style="height: 52px;"></div>
 <mat-sidenav-container class="sidenav-container mat-typography" *ngIf="view$ | async as view">
-  <pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
   <mat-sidenav #sidenav class="sidenav">
     <mat-nav-list>
       <a routerLink mat-list-item title="Fusing Angular">
