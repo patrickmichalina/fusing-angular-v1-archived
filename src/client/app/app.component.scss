@@ -11,10 +11,9 @@
     @media screen and (max-width: 599px) {
       padding: 0.5em;
     }
-    // position: relative;
   }
   .sidenav {
-    width: 200px;
+    width: 220px;
   }
   ::ng-deep mat-sidenav-content {
     @include fill-vertical;
@@ -28,13 +27,20 @@
     mat-sidenav {
       visibility: hidden;
       position: fixed;
-      z-index: 900;
+      z-index: 130;
+    }
+    .mat-drawer.mat-drawer-side {
+      z-index: 130;
     }
   }
   mat-nav-list {
     padding-top: 0;
   }
   .nav-filler {
+    height: $navbar-height;
+  }
+
+  mat-toolbar {
     height: $navbar-height;
   }
 }
