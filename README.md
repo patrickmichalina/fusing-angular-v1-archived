@@ -75,7 +75,10 @@ Below are some guides to help you bring in common features into your starter.
 
 **Note that we strongly recommend node >= v9.0.0 and npm >= 5.0.0.**
 
+If you are on a Mac, you can simply run the command `tools/setup/mac.sh`. This will install the dependencies that exist outside of npm
+
 [Configure Auth0](docs/auth0.md)
+[Install Postgres](https://www.postgresql.org/download)
 
 To start the seed use:
 
@@ -85,7 +88,6 @@ $ cd fusing-angular
 
 # in a ".env" file for local deveopment
 # in environment variables for other environments
-See [Environment Variables](#environment-variables)
 
 # install the project's dependencies
 $ npm install

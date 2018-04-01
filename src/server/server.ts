@@ -5,16 +5,17 @@ import { argv } from 'yargs'
 import { app } from './server.app'
 import { initWebSocketServer } from './server.websockets'
 import { initDb } from './server.database'
+import chalk from 'chalk'
 
 const port = process.env.PORT || argv['port'] || 5001
 const host = process.env.HOST || argv['host'] || 'http://localhost'
 const server = createServer(app)
+const log = console.log
 
 initDb()
   .then(() => {
     server.listen(port, () => {
-      // tslint:disable-next-line:no-console
-      console.log(`Angular Universal Server listening at ${host}:${port}`)
+      log(chalk.green(`Angular Universal Server listening at ${host}:${port}`))
     })
   })
   .catch(err => {
