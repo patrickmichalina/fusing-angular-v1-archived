@@ -25,6 +25,7 @@ import { RouteDataService } from './services/route-data.service'
 import { LoggedInGuard } from './services/guards/logged-in.guard.service'
 import { MaterialModule } from './material.module'
 import { AccountSummaryComponent } from './account-summary/account-summary.component'
+import { WebAppService } from './services/web-app.service'
 
 export function cookieWhitelistFactory(es: EnvironmentService) {
   return [es.config.siteUrl]
@@ -80,7 +81,8 @@ export function cookieWhitelistFactory(es: EnvironmentService) {
     NoteService,
     UrlService,
     RouteDataService,
-    LoggedInGuard
+    LoggedInGuard,
+    WebAppService
   ]
 })
 export class SharedModule {

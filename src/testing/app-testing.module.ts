@@ -43,6 +43,7 @@ import { MaterialModule } from '../client/app/shared/material.module'
 import { RXJS_DEFAULT_SCHEDULER } from '../client/app/app.module'
 // tslint:disable-next-line:import-blacklist
 import { VirtualTimeScheduler } from 'rxjs'
+import { WebAppService } from '../client/app/shared/services/web-app.service'
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { VirtualTimeScheduler } from 'rxjs'
   providers: [
     PlatformService,
     TransferState,
+    WebAppService,
     {
       provide: SVGLoaderService,
       useClass: SVGLoaderService,
