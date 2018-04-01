@@ -6,13 +6,15 @@ exports[`App component should build without a problem 1`] = `
   ng-version="6.0.0-rc.1"
 >
   <pm-app>
-    <pm-navbar>
+    <div>
+      <pm-navbar>
+        
+      </pm-navbar>
+      <div
+        class="nav-filler"
+      />
       
-    </pm-navbar>
-    <div
-      style="height: 52px;"
-    />
-    
+    </div>
   </pm-app>
 </div>
 `;
