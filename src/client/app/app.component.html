@@ -2,12 +2,17 @@
   <pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
   <div class="nav-filler"></div>
   <mat-sidenav-container class="sidenav-container mat-typography" *ngIf="view$ | async as view">
-    <mat-sidenav #sidenav class="sidenav">
+    <mat-sidenav #sidenav class="sidenav mat-elevation-z6" [mode]="view.mode" [opened]="view.opened">
       <mat-nav-list>
-        <a routerLink mat-list-item title="Fusing Angular">
-          <mat-icon pmSvg="logo"></mat-icon>
-          <span>Fusing Angular</span>
-        </a>
+        <mat-toolbar #sidenavTb color="primary">
+          <button mat-icon-button (click)="sidenav.toggle()" angulartics2On="click" angularticsAction="ToggleSideMenu" title="toggle menu">
+            <mat-icon pmSvg="menu_24"></mat-icon>
+          </button>
+          <a routerLink mat-button title="Fusing Angular">
+            <mat-icon pmSvg="logo"></mat-icon>
+            <span>Fusing Angular</span>
+          </a>
+        </mat-toolbar>
         <a routerLink="readme" mat-list-item title="I am a lazy module for the about page">
           <mat-icon matListIcon pmSvg="book_24"></mat-icon>
           <span>Readme</span>
