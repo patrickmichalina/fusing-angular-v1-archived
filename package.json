@@ -59,7 +59,8 @@
     "gen.favicon": "ts-node fuse.ts favicon",
     "gen.css": "node_modules/.bin/node-sass src -o src",
     "gen.css.watch": "node_modules/.bin/node-sass src -o src -w",
-    "db": "typeorm"
+    "db": "typeorm",
+    "setup.mac": "tools/setup/mac.sh || true"
   },
   "devDependencies": {
     "@compodoc/compodoc": "1.1.1",
@@ -67,6 +68,7 @@
     "@types/body-parser": "1.16.8",
     "@types/browser-sync": "0.0.38",
     "@types/bunyan": "1.8.4",
+    "@types/chalk": "^2.2.0",
     "@types/clean-css": "3.4.30",
     "@types/compression": "0.0.36",
     "@types/cookie": "^0.3.1",
@@ -161,6 +163,7 @@
     "body-parser": "1.18.2",
     "bufferutil": "3.0.3",
     "bunyan-middleware": "0.8.0",
+    "chalk": "^2.3.2",
     "class-validator": "^0.8.5",
     "clean-css": "4.1.11",
     "compressible": "2.0.13",

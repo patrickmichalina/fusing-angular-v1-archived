@@ -1,6 +1,8 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
 import { Note } from './entity/note'
+import chalk from 'chalk'
+const log = console.log
 
 const baseSettings = {
   entities: [Note],
@@ -28,12 +30,9 @@ export const initDb = () =>
     ...dynamic
   })
     .then(connection => {
-      connection.manager.find(Note).then(note => {
-        // console
-      })
+      log(chalk.green('Connected to database!'))
     })
     .catch(error => {
-      // tslint:disable-next-line:no-console
-      // console.error(error)
-      throw new Error(error)
+      log(chalk.red('Database Connection Error: ', error))
+      log(chalk.red("Connections to your app's API will likely fail"))
     })
