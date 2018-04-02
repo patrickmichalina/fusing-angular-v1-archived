@@ -20,7 +20,7 @@ export const FIREBASE_RTDB_TS_PREFIX = new InjectionToken<string>(
 @Injectable()
 export class UniversalRtDbService {
   constructor(
-    public afdb: AngularFireDatabase,
+    public angularFireDatabase: AngularFireDatabase,
     private ts: TransferState,
     private ps: PlatformService,
     @Inject(FIREBASE_RTDB_TS_PREFIX) private prefix: string
@@ -29,11 +29,11 @@ export class UniversalRtDbService {
   serverCachedObjectValueChanges<T>(path: string) {
     const cached = this.ts.get<T | undefined>(this.cacheKey(path), undefined)
     return (cached
-      ? this.afdb
+      ? this.angularFireDatabase
           .object<T>(path)
           .valueChanges()
           .pipe(startWith(cached), catchError(err => of(cached)))
-      : this.afdb
+      : this.angularFireDatabase
           .object<T>(path)
           .valueChanges()
           .pipe(
@@ -52,11 +52,11 @@ export class UniversalRtDbService {
       []
     )
     return (cached.length > 0
-      ? this.afdb
+      ? this.angularFireDatabase
           .list<T>(path)
           .valueChanges()
           .pipe(startWith(cached as any), catchError(err => of(cached)))
-      : this.afdb
+      : this.angularFireDatabase
           .list<T>(path)
           .valueChanges()
           .pipe(
@@ -66,11 +66,11 @@ export class UniversalRtDbService {
     ).pipe(distinctUntilChanged((x, y) => sha1(x) === sha1(y)))
   }
 
-  cacheKey(path: string) {
+  private cacheKey(path: string) {
     return makeStateKey<string>(`${this.prefix}.${path}`)
   }
 
-  cache(path: string, value: any) {
+  private cache(path: string, value: any) {
     this.ps.isServer && this.ts.set(this.cacheKey(path), value)
   }
 }
