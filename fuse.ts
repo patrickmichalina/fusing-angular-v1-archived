@@ -4,7 +4,8 @@ import {
   BUILD_CONFIG,
   ENV_CONFIG_INSTANCE,
   isProdBuild,
-  typeHelper
+  typeHelper,
+  isServiceWorkerEnabled
 } from './tools/config/build.config'
 import { WebIndexPlugin } from './tools/plugins/web-index'
 import { init, reload, active } from 'browser-sync'
@@ -64,8 +65,8 @@ const appOptions = {
   target: 'browser@es5',
   plugins: [
     NgAotPlugin(),
-    isProdBuild && NgSwPlugin(),
-    isProdBuild && NgOptimizerPlugin(),
+    isServiceWorkerEnabled && NgSwPlugin(),
+    // isProdBuild && NgOptimizerPlugin(), TODO: broken with firestore
     ...baseOptions.plugins,
     WebIndexPlugin({
       base: ENV_CONFIG_INSTANCE.host,

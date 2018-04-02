@@ -29,6 +29,7 @@ import {
   AUTH_BEARER_HOSTS,
   HttpAuthInterceptor
 } from './shared/services/http-interceptors/http-authorization-interceptor.service'
+import { FirebaseModule } from './shared/firebase.module'
 
 export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<any>('cfg.rxjs.sch')
 
@@ -72,6 +73,7 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
     NotFoundModule,
     TransferHttpCacheModule,
     SharedModule.forRoot(),
+    FirebaseModule,
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics], {
       pageTracking: {
         clearHash: true
