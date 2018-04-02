@@ -1,5 +1,5 @@
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MockEnvironmentService } from './mock-environment.service'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import {
   Injector,
@@ -19,7 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { SharedModule } from '../client/app/shared/shared.module'
 import { APP_BASE_HREF } from '@angular/common'
 import { Angulartics2Module } from 'angulartics2'
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
+import { MockEnvironmentService } from './mock-environment.service'
 import { SVGLoaderService } from '../client/app/shared/svg/svg-loader.service'
 import { TransferState } from '@angular/platform-browser'
 import {
@@ -34,7 +34,6 @@ import { AUTH_BEARER_HOSTS } from '../client/app/shared/services/http-intercepto
 import { UrlService } from '../client/app/shared/services/url.service'
 import { MockUrlService } from './mock-url.service'
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe'
-import { of } from 'rxjs/observable/of'
 import {
   WINDOW,
   WindowService
@@ -43,7 +42,10 @@ import { MaterialModule } from '../client/app/shared/material.module'
 import { RXJS_DEFAULT_SCHEDULER } from '../client/app/app.module'
 // tslint:disable-next-line:import-blacklist
 import { VirtualTimeScheduler } from 'rxjs'
+import { of } from 'rxjs/observable/of'
 import { WebAppService } from '../client/app/shared/services/web-app.service'
+import { UniversalRtDbService } from '../client/app/shared/services/firebase-rtdb.service'
+import { UniversalFirestoreService } from '../client/app/shared/services/firebase-firestore.service'
 
 @NgModule({
   imports: [
@@ -103,7 +105,19 @@ import { WebAppService } from '../client/app/shared/services/web-app.service'
     WindowService,
     { provide: RXJS_DEFAULT_SCHEDULER, useValue: new VirtualTimeScheduler() },
     { provide: WINDOW, useValue: window },
-    { provide: UrlService, useClass: MockUrlService }
+    { provide: UrlService, useClass: MockUrlService },
+    {
+      provide: UniversalRtDbService,
+      useValue: {
+        serverCachedListValueChanges: () => of([])
+      }
+    },
+    {
+      provide: UniversalFirestoreService,
+      useValue: {
+        serverCachedCollectionValueChanges: () => of([])
+      }
+    }
   ]
 })
 export class AppTestingModule {

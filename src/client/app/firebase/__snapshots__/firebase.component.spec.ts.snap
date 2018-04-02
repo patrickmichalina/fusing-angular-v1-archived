@@ -1,0 +1,345 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FirebaseComponent should compile 1`] = `
+<test-component>
+  <pm-firebase>
+    <mat-card
+      class="mat-card"
+    >
+      <h2>
+        Notes (Firebase Realtime Database
+      </h2>
+      <form
+        class="ng-untouched ng-pristine ng-invalid"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        <mat-form-field
+          class="mat-input-container mat-form-field ng-tns-c1-0 mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-hide-placeholder mat-primary ng-untouched ng-pristine ng-invalid"
+        >
+          <div
+            class="mat-input-wrapper mat-form-field-wrapper"
+          >
+            <div
+              class="mat-input-flex mat-form-field-flex"
+            >
+              
+              <div
+                class="mat-input-infix mat-form-field-infix"
+              >
+                <input
+                  aria-invalid="false"
+                  aria-required="false"
+                  class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-invalid"
+                  formcontrolname="note"
+                  id="mat-input-0"
+                  matinput=""
+                  ng-reflect-name="note"
+                  ng-reflect-placeholder="add your note"
+                  placeholder="add your note"
+                />
+                <span
+                  class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
+                >
+                  
+                  <label
+                    aria-owns="mat-input-0"
+                    class="mat-form-field-label mat-input-placeholder mat-form-field-placeholder ng-tns-c1-0 mat-empty mat-form-field-empty ng-star-inserted"
+                    for="mat-input-0"
+                    ng-reflect-ng-switch="false"
+                  >
+                    
+                    
+                    add your note
+                    
+                    
+                  </label>
+                </span>
+              </div>
+              
+            </div>
+            <div
+              class="mat-input-underline mat-form-field-underline"
+            >
+              <span
+                class="mat-input-ripple mat-form-field-ripple"
+              />
+            </div>
+            <div
+              class="mat-input-subscript-wrapper mat-form-field-subscript-wrapper"
+              ng-reflect-ng-switch="hint"
+            >
+              
+              
+              <div
+                class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c1-0 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                style="opacity: 1;"
+              >
+                
+                <div
+                  class="mat-input-hint-spacer mat-form-field-hint-spacer"
+                />
+              </div>
+            </div>
+          </div>
+        </mat-form-field>
+        <div>
+          <button
+            class="mat-raised-button mat-primary"
+            color="primary"
+            mat-raised-button=""
+            ng-reflect-color="primary"
+            type="submit"
+          >
+            <span
+              class="mat-button-wrapper"
+            >
+              Save
+            </span>
+            <div
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+              ng-reflect-centered="false"
+              ng-reflect-disabled="false"
+              ng-reflect-trigger="[object HTMLButtonElement]"
+            />
+            <div
+              class="mat-button-focus-overlay"
+            />
+          </button>
+          <button
+            class="mat-raised-button mat-accent"
+            color="accent"
+            mat-raised-button=""
+            ng-reflect-color="accent"
+            type="button"
+          >
+            <span
+              class="mat-button-wrapper"
+            >
+              Delete All
+            </span>
+            <div
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+              ng-reflect-centered="false"
+              ng-reflect-disabled="false"
+              ng-reflect-trigger="[object HTMLButtonElement]"
+            />
+            <div
+              class="mat-button-focus-overlay"
+            />
+          </button>
+        </div>
+      </form>
+      <ul>
+        
+      </ul>
+    </mat-card>
+    <mat-card
+      class="mat-card"
+    >
+      <h2>
+        Docs (Firebase Firestore)
+      </h2>
+      <form
+        class="ng-untouched ng-pristine ng-invalid"
+        ng-reflect-form="[object Object]"
+        novalidate=""
+      >
+        <mat-form-field
+          class="mat-input-container mat-form-field ng-tns-c1-1 mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-hide-placeholder mat-primary ng-untouched ng-pristine ng-invalid"
+        >
+          <div
+            class="mat-input-wrapper mat-form-field-wrapper"
+          >
+            <div
+              class="mat-input-flex mat-form-field-flex"
+            >
+              
+              <div
+                class="mat-input-infix mat-form-field-infix"
+              >
+                <input
+                  aria-invalid="false"
+                  aria-required="false"
+                  class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-invalid"
+                  formcontrolname="title"
+                  id="mat-input-1"
+                  matinput=""
+                  ng-reflect-name="title"
+                  ng-reflect-placeholder="title"
+                  placeholder="title"
+                />
+                <span
+                  class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
+                >
+                  
+                  <label
+                    aria-owns="mat-input-1"
+                    class="mat-form-field-label mat-input-placeholder mat-form-field-placeholder ng-tns-c1-1 mat-empty mat-form-field-empty ng-star-inserted"
+                    for="mat-input-1"
+                    ng-reflect-ng-switch="false"
+                  >
+                    
+                    
+                    title
+                    
+                    
+                  </label>
+                </span>
+              </div>
+              
+            </div>
+            <div
+              class="mat-input-underline mat-form-field-underline"
+            >
+              <span
+                class="mat-input-ripple mat-form-field-ripple"
+              />
+            </div>
+            <div
+              class="mat-input-subscript-wrapper mat-form-field-subscript-wrapper"
+              ng-reflect-ng-switch="hint"
+            >
+              
+              
+              <div
+                class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c1-1 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                style="opacity: 1;"
+              >
+                
+                <div
+                  class="mat-input-hint-spacer mat-form-field-hint-spacer"
+                />
+              </div>
+            </div>
+          </div>
+        </mat-form-field>
+        <mat-form-field
+          class="mat-input-container mat-form-field ng-tns-c1-2 mat-form-field-type-mat-input mat-form-field-can-float mat-form-field-should-float mat-form-field-hide-placeholder mat-primary ng-untouched ng-pristine ng-valid"
+        >
+          <div
+            class="mat-input-wrapper mat-form-field-wrapper"
+          >
+            <div
+              class="mat-input-flex mat-form-field-flex"
+            >
+              
+              <div
+                class="mat-input-infix mat-form-field-infix"
+              >
+                <input
+                  aria-invalid="false"
+                  aria-required="false"
+                  class="mat-input-element mat-form-field-autofill-control ng-untouched ng-pristine ng-valid"
+                  formcontrolname="rating"
+                  id="mat-input-2"
+                  matinput=""
+                  ng-reflect-name="rating"
+                  ng-reflect-placeholder="rating"
+                  ng-reflect-type="number"
+                  placeholder="rating"
+                  type="number"
+                />
+                <span
+                  class="mat-form-field-label-wrapper mat-input-placeholder-wrapper mat-form-field-placeholder-wrapper"
+                >
+                  
+                  <label
+                    aria-owns="mat-input-2"
+                    class="mat-form-field-label mat-input-placeholder mat-form-field-placeholder ng-tns-c1-2 ng-star-inserted"
+                    for="mat-input-2"
+                    ng-reflect-ng-switch="false"
+                  >
+                    
+                    
+                    rating
+                    
+                    
+                  </label>
+                </span>
+              </div>
+              
+            </div>
+            <div
+              class="mat-input-underline mat-form-field-underline"
+            >
+              <span
+                class="mat-input-ripple mat-form-field-ripple"
+              />
+            </div>
+            <div
+              class="mat-input-subscript-wrapper mat-form-field-subscript-wrapper"
+              ng-reflect-ng-switch="hint"
+            >
+              
+              
+              <div
+                class="mat-input-hint-wrapper mat-form-field-hint-wrapper ng-tns-c1-2 ng-trigger ng-trigger-transitionMessages ng-star-inserted"
+                style="opacity: 1;"
+              >
+                
+                <div
+                  class="mat-input-hint-spacer mat-form-field-hint-spacer"
+                />
+              </div>
+            </div>
+          </div>
+        </mat-form-field>
+        <div>
+          <button
+            class="mat-raised-button mat-primary"
+            color="primary"
+            mat-raised-button=""
+            ng-reflect-color="primary"
+            type="submit"
+          >
+            <span
+              class="mat-button-wrapper"
+            >
+              Save
+            </span>
+            <div
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+              ng-reflect-centered="false"
+              ng-reflect-disabled="false"
+              ng-reflect-trigger="[object HTMLButtonElement]"
+            />
+            <div
+              class="mat-button-focus-overlay"
+            />
+          </button>
+          <button
+            class="mat-raised-button mat-accent"
+            color="accent"
+            mat-raised-button=""
+            ng-reflect-color="accent"
+            type="button"
+          >
+            <span
+              class="mat-button-wrapper"
+            >
+              Delete All
+            </span>
+            <div
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+              ng-reflect-centered="false"
+              ng-reflect-disabled="false"
+              ng-reflect-trigger="[object HTMLButtonElement]"
+            />
+            <div
+              class="mat-button-focus-overlay"
+            />
+          </button>
+        </div>
+      </form>
+      <ul>
+        
+      </ul>
+    </mat-card>
+  </pm-firebase>
+</test-component>
+`;

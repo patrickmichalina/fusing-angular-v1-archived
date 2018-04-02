@@ -32,7 +32,11 @@ export class UniversalRtDbService {
       ? this.angularFireDatabase
           .object<T>(path)
           .valueChanges()
-          .pipe(startWith(cached), catchError(err => of(cached)))
+          .pipe(
+            startWith(cached),
+            tap(a => this.ts.remove(this.cacheKey(path.toString()))),
+            catchError(err => of(cached))
+          )
       : this.angularFireDatabase
           .object<T>(path)
           .valueChanges()
@@ -47,21 +51,25 @@ export class UniversalRtDbService {
     path: PathReference,
     queryFn?: (ref: Reference) => Query
   ) {
-    const cached = this.ts.get<ReadonlyArray<T>>(
+    const cached = this.ts.get<ReadonlyArray<T> | undefined>(
       this.cacheKey(path.toString()),
-      []
+      undefined
     )
-    return (cached.length > 0
+    return (cached
       ? this.angularFireDatabase
           .list<T>(path)
           .valueChanges()
-          .pipe(startWith(cached as any), catchError(err => of(cached)))
+          .pipe(
+            startWith(cached as any),
+            tap(a => this.ts.remove(this.cacheKey(path.toString()))),
+            catchError(err => of(cached))
+          )
       : this.angularFireDatabase
           .list<T>(path)
           .valueChanges()
           .pipe(
             tap(value => this.cache(path.toString(), value)),
-            catchError(err => of(cached))
+            catchError(err => of([]))
           )
     ).pipe(distinctUntilChanged((x, y) => sha1(x) === sha1(y)))
   }
