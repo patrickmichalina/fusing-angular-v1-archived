@@ -18,10 +18,12 @@ const minifyHTML = require('express-minify-html')
 const bunyanMiddleware = require('bunyan-middleware')
 const xhr2 = require('xhr2')
 const cors = require('cors')
+require('node-localstorage')
 
 // tslint:disable-next-line:no-object-mutation
 xhr2.prototype._restrictedHeaders.cookie = false
-
+// tslint:disable-next-line:no-object-mutation
+;(global as any).XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 require('ts-node/register')
 
 const app = express()

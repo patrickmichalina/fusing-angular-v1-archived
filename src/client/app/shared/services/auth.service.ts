@@ -10,7 +10,10 @@ import { Router } from '@angular/router'
 import { distinctUntilChanged, flatMap, map, shareReplay } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { timer } from 'rxjs/observable/timer'
+import { HttpClient } from '@angular/common/http'
+import { AngularFireAuth } from 'angularfire2/auth'
 import * as auth0 from 'auth0-js'
+import { fromPromise } from 'rxjs/observable/fromPromise'
 
 export type IAuth0ValidationFactory = (
   accessToken?: string,
@@ -63,7 +66,9 @@ export class AuthService {
     private accessTokenExpiryStorageKey: string,
     @Inject(AUTH0_VALIDATION_FACTORY)
     private validationFactory: IAuth0ValidationFactory,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
+    private afAuth: AngularFireAuth
   ) {
     cs.valueChanges
       .pipe(map(a => a[this.accessTokenStorageKey]))
@@ -126,6 +131,10 @@ export class AuthService {
     return this.isTokenValid() && token
   }
 
+  public getCustomFirebaseToken(): string | undefined {
+    return this.cs.get('fbAuth')
+  }
+
   public unscheduleRenewal() {
     this.refreshSubscription.unsubscribe()
   }
@@ -184,5 +193,82 @@ export class AuthService {
     this.cs.set(this.accessTokenExpiryStorageKey, _expires, { expires })
 
     this.scheduleRenewal()
+    this.getMintedTokenForFirebase().subscribe(us => {
+      console.log(us)
+      this.cs.set('fbAuth', us.qa)
+    })
   }
+
+  private getMintedTokenForFirebase() {
+    return !this.isTokenValid()
+      ? of(undefined)
+      : this.http
+          .get(`${'http://localhost:5000/'}api/auth/firebase`)
+          .pipe(
+            flatMap((token: { readonly firebaseToken: string }) =>
+              this.firebaseAuth(token)
+            )
+          )
+  }
+
+  private firebaseAuth(tokenObj: { readonly firebaseToken: string }) {
+    return fromPromise(
+      this.afAuth.auth.signInWithCustomToken(tokenObj.firebaseToken)
+    )
+    // .then(res => {
+    //   // tslint:disable-next-line:no-console
+    //   console.log(res)
+    //   // this.loggedInFirebase = true
+    //   // Schedule token renewal
+    //   // this.scheduleFirebaseRenewal()
+    // })
+    // .catch(err => {
+    //   // const errorCode = err.code
+    //   // const errorMessage = err.message
+    //   // console.error(`${errorCode} Could not log into Firebase: ${errorMessage}`)
+    //   // this.loggedInFirebase = false
+    // }))
+  }
+
+  // scheduleFirebaseRenewal() {
+  //   // If user isn't authenticated, check for Firebase subscription
+  //   // and unsubscribe, then return (don't schedule renewal)
+  //   if (!this.loggedInFirebase) {
+  //     if (this.firebaseSub) {
+  //       this.firebaseSub.unsubscribe();
+  //     }
+  //     return;
+  //   }
+  //   // Unsubscribe from previous expiration observable
+  //   this.unscheduleFirebaseRenewal();
+  //   // Create and subscribe to expiration observable
+  //   // Custom Firebase tokens minted by Firebase
+  //   // expire after 3600 seconds (1 hour)
+  //   const expiresAt = new Date().getTime() + (3600 * 1000);
+  //   const expiresIn$ = Observable.of(expiresAt)
+  //     .pipe(
+  //       mergeMap(
+  //         expires => {
+  //           const now = Date.now();
+  //           // Use timer to track delay until expiration
+  //           // to run the refresh at the proper time
+  //           return Observable.timer(Math.max(1, expires - now));
+  //         }
+  //       )
+  //     );
+
+  //   this.refreshFirebaseSub = expiresIn$
+  //     .subscribe(
+  //       () => {
+  //         console.log('Firebase token expired; fetching a new one');
+  //         this._getFirebaseToken();
+  //       }
+  //     );
+  // }
+
+  // unscheduleFirebaseRenewal() {
+  //   if (this.refreshFirebaseSub) {
+  //     this.refreshFirebaseSub.unsubscribe();
+  //   }
+  // }
 }

@@ -1,11 +1,7 @@
 // tslint:disable:no-require-imports
 
+import { auth0ServerValidationNoAngularFactory, azNoAngular } from './helpers'
 import { parse } from 'cookie'
-import {
-  Action,
-  useContainer,
-  useExpressServer as configApi
-} from 'routing-controllers'
 import { controllers } from './controllers'
 import { middlewares } from './middlewares'
 import { Container, Token } from 'typedi'
@@ -13,11 +9,16 @@ import {
   appAuthAccessTokenKey,
   appAuthIdTokenKey
 } from '../../client/app/app.module'
-import { auth0ServerValidationNoAngularFactory, azNoAngular } from './helpers'
+import {
+  Action,
+  useContainer,
+  useExpressServer as configApi
+} from 'routing-controllers'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { map } from 'rxjs/operators'
 import { AuthOptions } from 'auth0-js'
+import { credential, initializeApp } from 'firebase-admin'
 
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
@@ -40,6 +41,22 @@ Container.set(AUTH0_MANAGEMENT_CLIENT_CONFIG, {
   domain: process.env.AUTH0_DOMAIN || '',
   clientID: process.env.AUTH0_CLIENT_ID || ''
 } as AuthOptions)
+
+try {
+  initializeApp({
+    credential: credential.cert({
+      privateKey:
+        process.env.FIREBASE_PRIVATE_KEY &&
+        process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL
+    }),
+    databaseURL: process.env.FIREBASE_DATABASE_URL
+  })
+} catch (err) {
+  // tslint:disable-next-line:no-console
+  console.error(err)
+}
 
 export const useApi = (app: express.Application) => {
   const swaggerSpec = swaggerJSDoc({
@@ -134,7 +151,9 @@ export const useApi = (app: express.Application) => {
               key => uroles[key]
             )
             const userHasPermission =
-              user && userRoles.some(role => roles.some(r => r === role))
+              user &&
+              (roles.length === 0 ||
+                userRoles.some(role => roles.some(r => r === role)))
             return userHasPermission
           })
         )

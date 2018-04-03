@@ -40,10 +40,7 @@ export class UniversalRtDbService {
       : this.angularFireDatabase
           .object<T>(path)
           .valueChanges()
-          .pipe(
-            tap(value => this.cache(path, value)),
-            catchError(err => of(cached))
-          )
+          .pipe(catchError(err => of(cached)))
     ).pipe(distinctUntilChanged((x, y) => sha1(x) !== sha1(y)))
   }
 
@@ -57,7 +54,7 @@ export class UniversalRtDbService {
     )
     return (cached
       ? this.angularFireDatabase
-          .list<T>(path)
+          .list<T>(path, queryFn)
           .valueChanges()
           .pipe(
             startWith(cached as any),
@@ -65,20 +62,13 @@ export class UniversalRtDbService {
             catchError(err => of(cached))
           )
       : this.angularFireDatabase
-          .list<T>(path)
+          .list<T>(path, queryFn)
           .valueChanges()
-          .pipe(
-            tap(value => this.cache(path.toString(), value)),
-            catchError(err => of([]))
-          )
+          .pipe(catchError(err => of([])))
     ).pipe(distinctUntilChanged((x, y) => sha1(x) === sha1(y)))
   }
 
   private cacheKey(path: string) {
     return makeStateKey<string>(`${this.prefix}.${path}`)
-  }
-
-  private cache(path: string, value: any) {
-    this.ps.isServer && this.ts.set(this.cacheKey(path), value)
   }
 }

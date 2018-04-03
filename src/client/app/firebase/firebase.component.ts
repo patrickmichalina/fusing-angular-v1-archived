@@ -10,7 +10,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FirebaseComponent {
-  readonly notes$ = this.rtdb.serverCachedListValueChanges('notes')
+  readonly notes$ = this.rtdb.serverCachedListValueChanges('notes', ref =>
+    ref.limitToLast(3)
+  )
   readonly docs$ = this.fs.serverCachedCollectionValueChanges('docs')
 
   readonly noteForm = new FormGroup({

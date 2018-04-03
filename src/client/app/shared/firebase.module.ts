@@ -15,6 +15,7 @@ import {
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { EnvironmentService } from './services/environment.service'
+import { AngularFireAuthModule } from 'angularfire2/auth'
 
 export function firebaseConfigLoader(env: EnvironmentService) {
   return env.config.firebase
@@ -24,12 +25,14 @@ export function firebaseConfigLoader(env: EnvironmentService) {
   imports: [
     AngularFireModule,
     AngularFireDatabaseModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   exports: [
     AngularFireModule,
     AngularFireDatabaseModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [
     { provide: FIREBASE_FIRESTORE_TS_PREFIX, useValue: 'FS' },
