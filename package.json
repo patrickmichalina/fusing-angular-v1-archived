@@ -127,7 +127,7 @@
     "pretty-quick": "^1.4.1",
     "recursive-copy": "^2.0.9",
     "rimraf": "^2.6.2",
-    "semantic-release": "15.1.4",
+    "semantic-release": "15.1.5",
     "source-map-explorer": "1.5.0",
     "string-hash": "1.1.3",
     "superagent": "3.8.2",
