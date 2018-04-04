@@ -24,13 +24,23 @@ export class ServerUniversalRtDbService {
   ) {}
 
   serverCachedObjectValueChanges<T>(path: string) {
-    return this.angularFireDatabase
-      .object<T>(path)
-      .valueChanges()
+    const query = this.angularFireDatabase.database.ref(path)
+    const url = query.toString()
+
+    return this.http
+      .get<T>(`${url}.json`, {
+        params: new HttpParams({
+          fromObject: {
+            auth: this.auth.getCustomFirebaseToken() || ''
+          }
+        })
+      })
       .pipe(
-        tap(value => this.cache(path, value)),
         take(1),
-        catchError(err => of(undefined))
+        tap(value => this.cache(path.toString(), value)),
+        catchError(err => {
+          return of(undefined) // TODO
+        })
       )
   }
 
@@ -52,13 +62,13 @@ export class ServerUniversalRtDbService {
         })
       })
       .pipe(
+        take(1),
         map((val: { readonly [key: string]: any }) =>
           Object.keys(val).map(key => val[key] as T)
         ),
         tap(value => this.cache(path.toString(), value)),
         catchError(err => {
-          // TODO
-          return of([])
+          return of([]) // TODO
         })
       )
   }

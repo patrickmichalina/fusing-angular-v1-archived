@@ -13,7 +13,12 @@ export class FirebaseComponent {
   readonly notes$ = this.rtdb.serverCachedListValueChanges('notes', ref =>
     ref.limitToLast(3)
   )
-  readonly docs$ = this.fs.serverCachedCollectionValueChanges('docs')
+  readonly rtdbObj$ = this.rtdb.serverCachedObjectValueChanges(
+    'site-settings/i18n'
+  )
+  readonly docs$ = this.fs.serverCachedCollectionValueChanges('docs', ref =>
+    ref.limit(3)
+  )
 
   readonly noteForm = new FormGroup({
     note: new FormControl(undefined, [Validators.required])

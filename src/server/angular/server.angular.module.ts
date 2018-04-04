@@ -62,10 +62,10 @@ import { STATIC_ROUTE_RESPONSE_MAP } from './server.static-response'
 import { CookieService } from '../../client/app/shared/services/cookie.service'
 import { CookieService as ServerCookieService } from './cookie.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
-import { AngularFireAuth } from 'angularfire2/auth'
-import { AngularFireAuthService } from './firebase-auth.service'
 import { ServerUniversalRtDbService } from './server.firebase-rtdb.service'
 import { UniversalRtDbService } from '../../client/app/shared/services/firebase-rtdb.service'
+import { UniversalFirestoreService } from '../../client/app/shared/services/firebase-firestore.service'
+import { ServerUniversalFirestoreService } from './server.firebase-firestore.service'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -243,6 +243,10 @@ export function auth0ServerValidationFactory(
     {
       provide: UniversalRtDbService,
       useClass: ServerUniversalRtDbService
+    },
+    {
+      provide: UniversalFirestoreService,
+      useClass: ServerUniversalFirestoreService
     },
     {
       provide: MinifierService,

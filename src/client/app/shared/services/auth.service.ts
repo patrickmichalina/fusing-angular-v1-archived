@@ -194,7 +194,6 @@ export class AuthService {
 
     this.scheduleRenewal()
     this.getMintedTokenForFirebase().subscribe(us => {
-      console.log(us)
       this.cs.set('fbAuth', us.qa)
     })
   }

@@ -1,17 +1,27 @@
 <mat-card>
   <h2>Notes (Firebase Realtime Database</h2>
-  <form [formGroup]="noteForm" (ngSubmit)="addNote(noteForm.value.note)">
-    <mat-form-field>
-      <input matInput placeholder="add your note" formControlName="note">
-    </mat-form-field>
-    <div>
-      <button mat-raised-button color="primary" type="submit">Save</button>
-      <button mat-raised-button color="accent" type="button" (click)="clearNotes()">Delete All</button>
+  <div>
+    <h3>Collection</h3>
+    <form [formGroup]="noteForm" (ngSubmit)="addNote(noteForm.value.note)">
+      <mat-form-field>
+        <input matInput placeholder="add your note" formControlName="note">
+      </mat-form-field>
+      <div>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-raised-button color="accent" type="button" (click)="clearNotes()">Delete All</button>
+      </div>
+    </form>
+    <ul>
+      <li *ngFor="let note of notes$ | async; trackBy: trackByNote">{{ note }}</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Object</h3>
+    <div *ngIf="rtdbObj$ | async as obj">
+      {{ obj | json }}
     </div>
-  </form>
-  <ul>
-    <li *ngFor="let note of notes$ | async; trackBy: trackByNote">{{ note }}</li>
-  </ul>
+  </div>
+
 </mat-card>
 
 <mat-card>
