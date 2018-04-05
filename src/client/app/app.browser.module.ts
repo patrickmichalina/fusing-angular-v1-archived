@@ -136,7 +136,6 @@ export class AppBrowserModule {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
     auth.handleAuthentication()
-    auth.scheduleRenewal()
     // appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
     //   // auth.user$
     //   //   .pipe(filter(Boolean))

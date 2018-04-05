@@ -5,7 +5,6 @@ import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { CookieService } from './cookie.service'
 import { makeStateKey } from '@angular/platform-browser'
-import { Subscription } from 'rxjs/Subscription'
 import { EnvironmentService } from './environment.service'
 import {
   distinctUntilChanged,
@@ -86,17 +85,13 @@ export class AuthService {
   ) {
     if (ps.isServer) return
 
-    this.fbToken$.filter(Boolean).subscribe(token => {
+    this.fbToken$.pipe(filter(Boolean)).subscribe(token => {
       this.scheduleFirebaseRenewal()
     })
 
-    this.accessToken$.subscribe(token => {
-      if (token) {
-        this.scheduleRenewal()
-        this.fbIteration()
-      } else {
-        this.unscheduleRenewal()
-      }
+    this.accessToken$.pipe(filter(Boolean)).subscribe(token => {
+      this.scheduleRenewal()
+      this.fbIteration()
     })
 
     this.cookies$
@@ -106,9 +101,6 @@ export class AuthService {
       .pipe(map(a => a[FB_KEY]), distinctUntilChanged())
       .subscribe(s => this.fbTokenSource.next(s))
   }
-
-  // tslint:disable:readonly-keyword
-  private refreshSubscription = new Subscription()
 
   private readonly accessTokenSource = new BehaviorSubject<string | undefined>(
     this.cs.get(this.accessTokenStorageKey)
@@ -178,27 +170,18 @@ export class AuthService {
     return this.cs.get(FB_KEY)
   }
 
-  public unscheduleRenewal() {
-    this.refreshSubscription.unsubscribe()
-  }
-
   public scheduleRenewal() {
-    if (!this.isTokenValid()) return
-    this.unscheduleRenewal()
-
-    const expires = this.cs.get(this.accessTokenExpiryStorageKey)
-
-    const source = of(expires).pipe(
-      flatMap(expiresAt => {
-        return timer(Math.max(1, expiresAt - Date.now()))
-      })
-    )
-
-    // tslint:disable-next-line:no-object-mutation
-    this.refreshSubscription = source.subscribe(() => {
-      this.renewToken()
-      this.scheduleRenewal()
-    })
+    this.isTokenValid() &&
+      of(this.cs.get(this.accessTokenExpiryStorageKey))
+        .pipe(
+          flatMap(expiresAt => {
+            return timer(Math.max(1, expiresAt - Date.now()))
+          }),
+          take(1)
+        )
+        .subscribe(() => {
+          this.renewToken()
+        })
   }
 
   public isTokenValid(): boolean {
