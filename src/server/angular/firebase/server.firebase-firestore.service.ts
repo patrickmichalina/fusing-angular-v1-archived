@@ -1,18 +1,18 @@
 import { FIREBASE_FIRESTORE_TS_PREFIX } from '../../../client/app/shared/firebase/firebase-firestore.service'
-import {
-  catchError,
-  distinctUntilChanged,
-  flatMap,
-  startWith,
-  take,
-  tap
-} from 'rxjs/operators'
+// import {
+//   catchError,
+//   distinctUntilChanged,
+//   flatMap,
+//   startWith,
+//   take,
+//   tap
+// } from 'rxjs/operators'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
-import { sha1 } from 'object-hash'
+// import { sha1 } from 'object-hash'
 // tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
-import { Inject, Injectable, NgZone } from '@angular/core'
-import { AuthService } from '../../../client/app/shared/services/auth.service'
+import { Inject, Injectable } from '@angular/core'
+// import { AuthService } from '../../../client/app/shared/services/auth.service'
 // import { fromPromise } from 'rxjs/observable/fromPromise'
 import { QueryFn } from 'angularfire2/firestore'
 import { firestore } from 'firebase-admin'
@@ -22,8 +22,8 @@ export class ServerUniversalFirestoreService {
   constructor(
     private ts: TransferState,
     // public afs: AngularFirestore,
-    private auth: AuthService,
-    private zone: NgZone,
+    // private auth: AuthService,
+    // private zone: NgZone,
     @Inject(FIREBASE_FIRESTORE_TS_PREFIX) private prefix: string
   ) {}
 
@@ -46,7 +46,7 @@ export class ServerUniversalFirestoreService {
     //         catchError(err => of(cached))
     //       )
     // ).pipe(distinctUntilChanged((x, y) => sha1(x) !== sha1(y)))
-    return of({})
+    return of({} as T)
   }
 
   // serverCachedCollectionValueChanges<T>(path: string, queryFn?: QueryFn) {
@@ -80,7 +80,7 @@ export class ServerUniversalFirestoreService {
     // this.at.auth
     // tslint:disable-next-line:no-console
     console.log(query.firestore)
-    return of([])
+    return of([] as ReadonlyArray<T>)
     // return this.zone.runOutsideAngular<any>(() => {
     //   return this.auth.user$.pipe(
     //     // flatMap(user => {
