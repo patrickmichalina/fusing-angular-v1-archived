@@ -51,8 +51,8 @@ import { EnvironmentService } from '../../client/app/shared/services/environment
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
-import { WebSocketService } from '../../client/app/shared/services/web-socket.service'
-import { ServerWebSocketService } from './server.websocket.service'
+// import { WebSocketService } from '../../client/app/shared/services/web-socket.service'
+// import { ServerWebSocketService } from './server.websocket.service'
 import { HttpServerInterceptor } from './server.http-absolute'
 import { filter, first, take, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
@@ -62,10 +62,7 @@ import { STATIC_ROUTE_RESPONSE_MAP } from './server.static-response'
 import { CookieService } from '../../client/app/shared/services/cookie.service'
 import { CookieService as ServerCookieService } from './cookie.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
-import { ServerUniversalRtDbService } from './server.firebase-rtdb.service'
-import { UniversalRtDbService } from '../../client/app/shared/services/firebase-rtdb.service'
-import { UniversalFirestoreService } from '../../client/app/shared/services/firebase-firestore.service'
-import { ServerUniversalFirestoreService } from './server.firebase-firestore.service'
+import { FirebaseServerModule } from './firebase/firebase-server.module'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
@@ -195,7 +192,12 @@ export function auth0ServerValidationFactory(
 }
 
 @NgModule({
-  imports: [ServerModule, ServerTransferStateModule, AppModule],
+  imports: [
+    ServerModule,
+    ServerTransferStateModule,
+    AppModule,
+    FirebaseServerModule
+  ],
   providers: [
     { provide: WINDOW, useValue: {} },
     { provide: ResponseService, useClass: ServerResponseService },
@@ -236,18 +238,6 @@ export function auth0ServerValidationFactory(
         type: 'server-side'
       }
     },
-    // {
-    //   provide: AngularFireAuth,
-    //   useClass: AngularFireAuthService
-    // },
-    {
-      provide: UniversalRtDbService,
-      useClass: ServerUniversalRtDbService
-    },
-    {
-      provide: UniversalFirestoreService,
-      useClass: ServerUniversalFirestoreService
-    },
     {
       provide: MinifierService,
       useValue: {
@@ -255,11 +245,11 @@ export function auth0ServerValidationFactory(
           return new cleanCss({}).minify(css).styles || css
         }
       }
-    },
-    {
-      provide: WebSocketService,
-      useClass: ServerWebSocketService
     }
+    // {
+    //   provide: WebSocketService,
+    //   useClass: ServerWebSocketService
+    // }
   ],
   bootstrap: [AppComponent]
 })

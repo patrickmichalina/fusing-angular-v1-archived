@@ -22,8 +22,7 @@ import { Observable } from 'rxjs/Observable'
 import { AppModule } from './app.module'
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { InjectionService } from './shared/services/injection.service'
-import { WebSocketService } from './shared/services/web-socket.service'
-import { filter, first, tap } from 'rxjs/operators'
+import { tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
 import { REQUEST } from '@nguniversal/express-engine/tokens'
 import { ResponseService } from './shared/services/response.service'
@@ -121,7 +120,7 @@ export function auth0BrowserValidationFactory(
         type: 'client-side'
       }
     },
-    WebSocketService,
+    // WebSocketService,
     NgSwUpdateService
   ]
 })
@@ -131,21 +130,21 @@ export class AppBrowserModule {
     es: EnvironmentService,
     is: InjectionService,
     auth: AuthService,
-    wss: WebSocketService,
     appRef: ApplicationRef,
     ngsw: NgSwUpdateService
   ) {
     // tslint:disable-next-line:no-console
     console.log('logging environment: ', es.config)
     auth.handleAuthentication()
-    appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
-      auth.user$
-        .pipe(filter(Boolean))
-        .subscribe((user: auth0.Auth0UserProfile) =>
-          analytics.setUsername(user.sub)
-        )
-      auth.scheduleRenewal()
-      ngsw.init()
-    })
+    auth.scheduleRenewal()
+    // appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+    //   // auth.user$
+    //   //   .pipe(filter(Boolean))
+    //   //   .subscribe((user: auth0.Auth0UserProfile) =>
+    //   //     analytics.setUsername(user.sub)
+    //   //   )
+    //   // auth.scheduleRenewal()
+    //   // ngsw.init()
+    // })
   }
 }

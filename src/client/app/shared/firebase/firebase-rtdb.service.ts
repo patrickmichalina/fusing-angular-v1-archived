@@ -4,7 +4,12 @@ import {
   startWith,
   tap
 } from 'rxjs/operators'
-import { Inject, Injectable, InjectionToken } from '@angular/core'
+import {
+  ApplicationRef,
+  Inject,
+  Injectable,
+  InjectionToken
+} from '@angular/core'
 import { AngularFireDatabase } from 'angularfire2/database'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
 import { sha1 } from 'object-hash'
@@ -26,11 +31,22 @@ const cachedPiper = <T>(cached: T) => (source: Observable<T>) =>
 
 @Injectable()
 export class UniversalRtDbService {
+  // tslint:disable-next-line:readonly-keyword
+  readFromCache = true
   constructor(
     public angularFireDatabase: AngularFireDatabase,
     private ts: TransferState,
+    appRef: ApplicationRef,
     @Inject(FIREBASE_RTDB_TS_PREFIX) private prefix: string
-  ) {}
+  ) {
+    // tslint:disable-next-line:no-object-mutation
+    // appRef.isStable.pipe(filter(Boolean), take(1)).subscribe(() => this.readFromCache = false)
+  }
+
+  private turnOffCache() {
+    // tslint:disable-next-line:no-object-mutation
+    this.readFromCache = false
+  }
 
   serverCachedObjectValueChanges<T>(path: string) {
     const base = this.angularFireDatabase.object<T>(path).valueChanges()
@@ -50,13 +66,13 @@ export class UniversalRtDbService {
     obs: Observable<T>,
     failureReturn?: any
   ) {
-    const cached = this.ts.get<T | undefined>(this.cacheKey(path), undefined)
+    const cached =
+      (this.readFromCache &&
+        this.ts.get<T | undefined>(this.cacheKey(path), undefined)) ||
+      undefined
 
     return cached
-      ? obs.pipe(
-          cachedPiper(cached),
-          tap(() => this.ts.remove(this.cacheKey(path)))
-        )
+      ? obs.pipe(cachedPiper(cached), tap(() => this.turnOffCache()))
       : obs.pipe(piper(failureReturn))
   }
 

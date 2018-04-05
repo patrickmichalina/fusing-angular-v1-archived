@@ -29,7 +29,7 @@ import {
   AUTH_BEARER_HOSTS,
   HttpAuthInterceptor
 } from './shared/services/http-interceptors/http-authorization-interceptor.service'
-import { FirebaseModule } from './shared/firebase.module'
+import { FirebaseModule } from './shared/firebase/firebase.module'
 
 export const RXJS_DEFAULT_SCHEDULER = new InjectionToken<any>('cfg.rxjs.sch')
 

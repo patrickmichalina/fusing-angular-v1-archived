@@ -1,7 +1,7 @@
 import { Inject, Injectable, NgZone } from '@angular/core'
 import { Observer } from 'rxjs/Observer'
 import { Observable } from 'rxjs/Observable'
-import { webSocketServer } from '../server'
+// import { webSocketServer } from '../server'
 import {
   AUTH0_VALIDATION_FACTORY,
   AUTH_ID_TOKEN_STORAGE_KEY,
@@ -17,10 +17,10 @@ export class ServerWebSocketService {
   private readonly connectionSource = Observable.create(
     (obs: Observer<{ readonly ws: WebSocket; readonly req: any }>) => {
       this.ngZone.runOutsideAngular(() => {
-        webSocketServer.on('connection', (ws: WebSocket, req) => {
-          obs.next({ ws, req })
-          obs.complete()
-        })
+        // webSocketServer.on('connection', (ws: WebSocket, req) => {
+        //   obs.next({ ws, req })
+        //   obs.complete()
+        // })
       })
     }
   ).pipe(shareReplay(1)) as Observable<{

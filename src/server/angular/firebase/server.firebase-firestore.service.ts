@@ -1,4 +1,4 @@
-import { FIREBASE_FIRESTORE_TS_PREFIX } from '../../client/app/shared/services/firebase-firestore.service'
+import { FIREBASE_FIRESTORE_TS_PREFIX } from '../../../client/app/shared/firebase/firebase-firestore.service'
 import {
   catchError,
   distinctUntilChanged,
@@ -11,10 +11,10 @@ import { makeStateKey, TransferState } from '@angular/platform-browser'
 import { sha1 } from 'object-hash'
 // tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
-import { AngularFirestore, QueryFn } from 'angularfire2/firestore'
 import { Inject, Injectable, NgZone } from '@angular/core'
-import { AuthService } from '../../client/app/shared/services/auth.service'
+import { AuthService } from '../../../client/app/shared/services/auth.service'
 import { fromPromise } from 'rxjs/observable/fromPromise'
+import { AngularFirestore, QueryFn } from 'angularfire2/firestore'
 
 @Injectable()
 export class ServerUniversalFirestoreService {
@@ -24,10 +24,7 @@ export class ServerUniversalFirestoreService {
     private auth: AuthService,
     private zone: NgZone,
     @Inject(FIREBASE_FIRESTORE_TS_PREFIX) private prefix: string
-  ) {
-    // afs.firestore.collection('').
-    // auth.
-  }
+  ) {}
 
   serverCachedDocValueChanges<T>(path: string) {
     const cached = this.ts.get<T | undefined>(this.cacheKey(path), undefined)
@@ -80,7 +77,7 @@ export class ServerUniversalFirestoreService {
       this.afs.firestore.collection(path)
     // this.afs.firestore
     // this.at.auth
-    return this.zone.run<any>(() => {
+    return this.zone.runOutsideAngular<any>(() => {
       return this.auth.user$.pipe(
         // flatMap(user => {
         //   return fbAuth()

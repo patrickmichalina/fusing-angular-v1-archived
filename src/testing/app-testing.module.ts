@@ -44,8 +44,8 @@ import { RXJS_DEFAULT_SCHEDULER } from '../client/app/app.module'
 import { VirtualTimeScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import { WebAppService } from '../client/app/shared/services/web-app.service'
-import { UniversalRtDbService } from '../client/app/shared/services/firebase-rtdb.service'
-import { UniversalFirestoreService } from '../client/app/shared/services/firebase-firestore.service'
+import { UniversalRtDbService } from '../client/app/shared/firebase/firebase-rtdb.service'
+import { UniversalFirestoreService } from '../client/app/shared/firebase/firebase-firestore.service'
 
 @NgModule({
   imports: [
@@ -109,7 +109,8 @@ import { UniversalFirestoreService } from '../client/app/shared/services/firebas
     {
       provide: UniversalRtDbService,
       useValue: {
-        serverCachedListValueChanges: () => of([])
+        serverCachedListValueChanges: () => of([]),
+        serverCachedObjectValueChanges: () => of({})
       }
     },
     {

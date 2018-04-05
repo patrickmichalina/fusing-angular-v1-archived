@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core'
 import {
   FIREBASE_FIRESTORE_TS_PREFIX,
   UniversalFirestoreService
-} from './services/firebase-firestore.service'
+} from './firebase-firestore.service'
 import {
   FIREBASE_RTDB_TS_PREFIX,
   UniversalRtDbService
-} from './services/firebase-rtdb.service'
+} from './firebase-rtdb.service'
 import {
   AngularFireModule,
   FirebaseAppConfigToken,
@@ -14,7 +14,7 @@ import {
 } from 'angularfire2'
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFirestoreModule } from 'angularfire2/firestore'
-import { EnvironmentService } from './services/environment.service'
+import { EnvironmentService } from '../services/environment.service'
 import { AngularFireAuthModule } from 'angularfire2/auth'
 
 export function firebaseConfigLoader(env: EnvironmentService) {

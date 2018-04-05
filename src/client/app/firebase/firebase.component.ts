@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { UniversalRtDbService } from '../shared/services/firebase-rtdb.service'
-import { UniversalFirestoreService } from '../shared/services/firebase-firestore.service'
+import { UniversalRtDbService } from '../shared/firebase/firebase-rtdb.service'
+import { UniversalFirestoreService } from '../shared/firebase/firebase-firestore.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 
 @Component({
@@ -38,12 +38,12 @@ export class FirebaseComponent {
     this.rtdb.angularFireDatabase.list('notes').push(note)
   }
 
-  addDoc(doc: any) {
-    this.fs.afs.collection('docs').add(doc)
-  }
-
   clearNotes() {
     this.rtdb.angularFireDatabase.list('notes').remove()
+  }
+
+  addDoc(doc: any) {
+    this.fs.afs.collection('docs').add(doc)
   }
 
   clearDocs() {
