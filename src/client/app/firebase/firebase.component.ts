@@ -17,7 +17,10 @@ export class FirebaseComponent {
     'site-settings/i18n'
   )
   readonly docs$ = this.fs.serverCachedCollectionValueChanges('docs', ref =>
-    ref.limit(3)
+    ref
+      .limit(3)
+      .where('rating', '==', 132)
+      .orderBy('title')
   )
 
   readonly noteForm = new FormGroup({

@@ -1,6 +1,5 @@
 import { InjectionToken, NgModule, NgZone } from '@angular/core'
 // import { initializeApp } from 'firebase/app'
-import { credential, initializeApp } from 'firebase-admin'
 import {
   FIREBASE_RTDB_TS_PREFIX,
   UniversalRtDbService
@@ -11,6 +10,7 @@ import { ServerUniversalFirestoreService } from './server.firebase-firestore.ser
 import { AuthService } from '../../../client/app/shared/services/auth.service'
 import { TransferState } from '@angular/platform-browser'
 import { HttpClient } from '@angular/common/http'
+import { credential, initializeApp } from 'firebase-admin'
 
 try {
   initializeApp({
@@ -38,7 +38,7 @@ export function authGen(auth: AuthService) {
 
 @NgModule({
   imports: [],
-  exports: [],
+  // exports: [],
   providers: [
     {
       provide: UniversalRtDbService,

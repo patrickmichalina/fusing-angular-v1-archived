@@ -39,8 +39,7 @@ export function firebaseConfigLoader(env: EnvironmentService) {
     { provide: FIREBASE_RTDB_TS_PREFIX, useValue: 'RTDB' },
     {
       provide: FirebaseAppName,
-      useValue: 'universal-webapp',
-      deps: [EnvironmentService]
+      useValue: 'universal-webapp'
     },
     {
       provide: FirebaseAppConfigToken,

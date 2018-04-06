@@ -187,7 +187,7 @@
     "express-minify-html": "0.12.0",
     "express-urlrewrite": "1.2.0",
     "firebase": "4.12.1",
-    "firebase-admin": "5.11.0",
+    "firebase-admin": "5.12.0",
     "hammerjs": "2.0.8",
     "js-cookie": "2.2.0",
     "jsonwebtoken": "8.2.0",

@@ -72,8 +72,8 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
     AppRoutingModule,
     NotFoundModule,
     TransferHttpCacheModule,
-    SharedModule.forRoot(),
     FirebaseModule,
+    SharedModule.forRoot(),
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics], {
       pageTracking: {
         clearHash: true

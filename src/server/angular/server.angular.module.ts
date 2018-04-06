@@ -63,6 +63,7 @@ import { CookieService } from '../../client/app/shared/services/cookie.service'
 import { CookieService as ServerCookieService } from './cookie.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { FirebaseServerModule } from './firebase/firebase-server.module'
+import { FirebaseModule } from '../../client/app/firebase/firebase.module'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()
