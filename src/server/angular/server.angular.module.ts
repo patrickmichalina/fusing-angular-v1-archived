@@ -51,8 +51,6 @@ import { EnvironmentService } from '../../client/app/shared/services/environment
 import * as express from 'express'
 import * as cleanCss from 'clean-css'
 import * as Rollbar from 'rollbar'
-// import { WebSocketService } from '../../client/app/shared/services/web-socket.service'
-// import { ServerWebSocketService } from './server.websocket.service'
 import { HttpServerInterceptor } from './server.http-absolute'
 import { filter, first, take, tap } from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
@@ -63,7 +61,8 @@ import { CookieService } from '../../client/app/shared/services/cookie.service'
 import { CookieService as ServerCookieService } from './cookie.service'
 import { ResponseService } from '../../client/app/shared/services/response.service'
 import { FirebaseServerModule } from './firebase/firebase-server.module'
-import { FirebaseModule } from '../../client/app/firebase/firebase.module'
+// import { WebSocketService } from '../../client/app/shared/services/web-socket.service'
+// import { ServerWebSocketService } from './server.websocket.service'
 
 const envConfig = JSON.parse(process.env.ngConfig || '') as EnvConfig
 envConfig.env !== 'dev' && enableProdMode()

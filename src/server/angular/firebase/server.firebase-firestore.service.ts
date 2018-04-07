@@ -10,14 +10,15 @@ import { FIREBASE_FIRESTORE_TS_PREFIX } from '../../../client/app/shared/firebas
 import { makeStateKey, TransferState } from '@angular/platform-browser'
 // import { sha1 } from 'object-hash'
 // tslint:disable-next-line:import-blacklist
-import { Inject, Injectable, NgZone } from '@angular/core'
+import { Inject, Injectable } from '@angular/core'
 // import { AuthService } from '../../../client/app/shared/services/auth.service'
 // import { fromPromise } from 'rxjs/observable/fromPromise'
 import { AngularFirestore, QueryFn } from 'angularfire2/firestore'
 import { AuthService } from '../../../client/app/shared/services/auth.service'
-import { flatMap, take, tap, map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { FieldValue } from '@firebase/firestore-types'
+// tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
 // import { firestore, initializeApp } from 'firebase'
 
@@ -38,7 +39,6 @@ export class ServerUniversalFirestoreService {
     private ts: TransferState,
     public afs: AngularFirestore,
     private auth: AuthService,
-    private zone: NgZone,
     private http: HttpClient,
     @Inject(FIREBASE_FIRESTORE_TS_PREFIX) private prefix: string
   ) {}
@@ -69,10 +69,11 @@ export class ServerUniversalFirestoreService {
     const ref = this.afs.firestore.collection(path)
     const query = (queryFn && queryFn(ref as any)) || ref
 
+    // tslint:disable-next-line:no-console
     console.log(query)
 
     const url = `https://firestore.googleapis.com/v1beta1/projects/${
-      this.afs.app.options.projectId
+      (this.afs.app.options as any).projectId
     }/databases/(default)/documents/${path}`
     const auth = this.auth.getCustomFirebaseToken()
     const baseObs =

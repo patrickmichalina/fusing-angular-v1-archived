@@ -1,9 +1,4 @@
-import {
-  catchError,
-  distinctUntilChanged,
-  startWith,
-  tap
-} from 'rxjs/operators'
+import { catchError, distinctUntilChanged, startWith } from 'rxjs/operators'
 import { Inject, Injectable, InjectionToken } from '@angular/core'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
 import { sha1 } from 'object-hash'
@@ -40,16 +35,13 @@ export class UniversalFirestoreService {
       this.cacheKey(path),
       []
     )
-    // console.log(cached)
-    // console.log(JSON.parse(this.ts.toJson()))
     return this.afs
       .collection<T>(path, queryFn)
       .valueChanges()
       .pipe(
         startWith(cached),
         distinctUntilChanged((x, y) => sha1(x) === sha1(y)),
-        catchError(err => of(cached)),
-        tap(console.log)
+        catchError(err => of(cached))
       )
   }
 

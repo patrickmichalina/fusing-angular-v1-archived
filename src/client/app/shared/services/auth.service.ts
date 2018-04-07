@@ -1,14 +1,22 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core'
 import { Router } from '@angular/router'
+import { EnvironmentService } from './environment.service'
 import { Observable } from 'rxjs/Observable'
 import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { CookieService } from './cookie.service'
 import { makeStateKey } from '@angular/platform-browser'
-import { EnvironmentService } from './environment.service'
+import {
+  ApplicationRef,
+  Inject,
+  Injectable,
+  InjectionToken,
+  Injector,
+  NgZone
+} from '@angular/core'
 import {
   distinctUntilChanged,
   filter,
+  first,
   flatMap,
   map,
   shareReplay,
@@ -65,6 +73,8 @@ const FB_KEY = 'fbAuth'
 @Injectable()
 export class AuthService {
   readonly cookies$ = this.cs.valueChanges.pipe(shareReplay(1))
+  // tslint:disable-next-line:readonly-keyword
+  afAuth: AngularFireAuth | undefined // TODO: once fixed in angularfire2, inject normally
 
   constructor(
     @Inject(AUTH0_CLIENT) private az: auth0.WebAuth,
@@ -79,27 +89,35 @@ export class AuthService {
     private cs: CookieService,
     private router: Router,
     private http: HttpClient,
-    private afAuth: AngularFireAuth,
+    // @Optional() @Inject(AngularFireAuth) private afAuth: AngularFireAuth | undefined,
     private es: EnvironmentService,
-    ps: PlatformService
+    ps: PlatformService,
+    inj: Injector,
+    appRef: ApplicationRef,
+    private zone: NgZone
   ) {
-    if (ps.isServer) return
-
-    this.fbToken$.pipe(filter(Boolean)).subscribe(token => {
-      this.scheduleFirebaseRenewal()
+    this.zone.runOutsideAngular(() => {
+      // tslint:disable-next-line:no-object-mutation
+      this.afAuth = inj.get(AngularFireAuth)
     })
+    ps.isBrowser &&
+      appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+        this.fbToken$.pipe(filter(Boolean)).subscribe(token => {
+          this.scheduleFirebaseRenewal()
+        })
 
-    this.accessToken$.pipe(filter(Boolean)).subscribe(token => {
-      this.scheduleRenewal()
-      this.fbIteration()
-    })
+        this.accessToken$.pipe(filter(Boolean)).subscribe(token => {
+          this.scheduleRenewal()
+          this.fbIteration()
+        })
 
-    this.cookies$
-      .pipe(map(a => a[this.accessTokenStorageKey]), distinctUntilChanged())
-      .subscribe(user => this.accessTokenSource.next(user))
-    this.cookies$
-      .pipe(map(a => a[FB_KEY]), distinctUntilChanged())
-      .subscribe(s => this.fbTokenSource.next(s))
+        this.cookies$
+          .pipe(map(a => a[this.accessTokenStorageKey]), distinctUntilChanged())
+          .subscribe(user => this.accessTokenSource.next(user))
+        this.cookies$
+          .pipe(map(a => a[FB_KEY]), distinctUntilChanged())
+          .subscribe(s => this.fbTokenSource.next(s))
+      })
   }
 
   private readonly accessTokenSource = new BehaviorSubject<string | undefined>(
@@ -133,14 +151,24 @@ export class AuthService {
     this.az.authorize()
   }
 
+  // TODO cleanup
   public logout(redirect = '/'): void {
-    this.afAuth.auth.signOut().then(() => {
-      this.cs.remove(this.accessTokenStorageKey)
-      this.cs.remove(this.idTokenStorageKey)
-      this.cs.remove(this.accessTokenExpiryStorageKey)
-      this.cs.remove(FB_KEY)
+    if (this.afAuth) {
+      this.afAuth.auth.signOut().then(() => {
+        this.remoteAuth0Tokens()
+        this.cs.remove(FB_KEY)
+        redirect && this.router.navigate([redirect])
+      })
+    } else {
+      this.remoteAuth0Tokens()
       redirect && this.router.navigate([redirect])
-    })
+    }
+  }
+
+  private remoteAuth0Tokens() {
+    this.cs.remove(this.accessTokenStorageKey)
+    this.cs.remove(this.idTokenStorageKey)
+    this.cs.remove(this.accessTokenExpiryStorageKey)
   }
 
   public handleAuthentication(): void {
@@ -220,13 +248,15 @@ export class AuthService {
   }
 
   private getMintedCustomTokenForFirebase() {
-    return !this.isTokenValid()
+    return !this.isTokenValid() || !this.afAuth
       ? of(undefined)
       : this.http
           .get(`${this.es.config.siteUrl}/api/auth/firebase`)
           .pipe(
             flatMap((token: { readonly firebaseToken: string }) =>
-              this.afAuth.auth.signInWithCustomToken(token.firebaseToken)
+              (this.afAuth as AngularFireAuth).auth.signInWithCustomToken(
+                token.firebaseToken
+              )
             )
           )
   }
