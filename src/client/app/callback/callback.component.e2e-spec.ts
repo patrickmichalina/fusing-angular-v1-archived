@@ -4,7 +4,7 @@ describe('Callback Page', () => {
   it('should have title', async () => {
     const page = browser.goto(`${baseUrl}/callback`)
 
-    const text = await page.evaluate(() => document.title)
+    const text = await page.evaluate(() => document.title).end()
 
     expect(text).toContain('Callback')
   })

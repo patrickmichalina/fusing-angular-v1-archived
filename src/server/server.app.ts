@@ -27,6 +27,7 @@ require('ts-node/register')
 const app = express()
 rollbarInit(app)
 const isProd = argv['build-type'] === 'prod' || argv['prod']
+const isEndToEndTest = argv.e2e
 
 const staticOptions = {
   index: false,
@@ -41,14 +42,16 @@ const staticOptions = {
   }
 }
 
-const logger = createLogger({
-  name: 'Fusing-Angular',
-  type: 'node-express'
-})
-
-app.use(
-  bunyanMiddleware({ logger, excludeHeaders: ['authorization', 'cookie'] })
-)
+!isEndToEndTest &&
+  app.use(
+    bunyanMiddleware({
+      logger: createLogger({
+        name: 'Fusing-Angular',
+        type: 'node-express'
+      }),
+      excludeHeaders: ['authorization', 'cookie']
+    })
+  )
 
 const dir = resolve('dist')
 

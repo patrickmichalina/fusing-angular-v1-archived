@@ -1,12 +1,15 @@
 /* tslint:disable */
 import * as Nightmare from 'nightmare'
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 125000
+import { NIGHTMARE_URL as baseUrl } from '../config/build.config'
+import { argv } from 'yargs'
+
+const isCi = argv.ci
+
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 225000
 
 // tslint:disable:no-require-imports
 const browser = require('nightmare')({
-  show: false
+  show: isCi ? false : true
 }) as Nightmare
-
-const baseUrl = 'http://localhost:5000'
 
 export { browser, baseUrl }

@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { BundleProducer } from 'fuse-box'
 import { minify } from 'html-minifier'
 import { readFileSync } from 'fs'
@@ -8,31 +9,31 @@ const { JSDOM } = jsdom
 
 export interface WebIndexPluginOptions {
   // Defines the title of a document
-  title?: string
+  readonly title?: string
 
   // Defines a default address or a default target for all links on a page
-  base?: string
+  readonly base?: string
 
   // Defines a app root element in the body, typical for JS frameworks like Angular JS
-  appElement?: { name: string; innerHTML: string }
+  readonly appElement?: { name: string; innerHTML: string }
 
   // Output file
-  target?: string
+  readonly target?: string
 
-  minify?: boolean | Object
+  readonly minify?: boolean | Object
 
-  startingDocumentPath?: string
+  readonly startingDocumentPath?: string
 
   // bundled javascript to inject as script elements
-  bundles: string[]
+  readonly bundles: string[]
 
-  asyncBundles?: boolean | Object
+  readonly asyncBundles?: boolean | Object
 
-  bundleOrdering?: { [key: string]: number }
+  readonly bundleOrdering?: { [key: string]: number }
 
-  additionalDeps?: Dependency[]
+  readonly additionalDeps?: Dependency[]
 
-  transformByQuery?: [
+  readonly transformByQuery?: [
     {
       query: string
       transformer: (element: NodeListOf<Element>) => NodeListOf<Element>
@@ -46,10 +47,7 @@ export interface WebIndexPluginOptions {
 export class WebIndexPluginClass {
   public dependencies: ['jsdom', 'fs', 'string-hash', 'html-minifier']
 
-  constructor(public opts: WebIndexPluginOptions) {
-    if (!opts.additionalDeps) this.opts.additionalDeps = []
-    if (!opts.bundles) this.opts.bundles = []
-  }
+  constructor(public opts: WebIndexPluginOptions) {}
 
   producerEnd(producer: BundleProducer) {
     const baseDeps: any[] = [
@@ -82,7 +80,9 @@ export class WebIndexPluginClass {
       appElement,
       ...producer
         .sortBundles()
-        .filter(bundle => this.opts.bundles.some(b => b === bundle.name))
+        .filter(bundle =>
+          (this.opts.bundles || []).some(b => b === bundle.name)
+        )
         .filter(bundle => bundle.context.output)
         .filter(bundle => bundle.context.output.lastPrimaryOutput)
         .map(bundle => {
@@ -98,7 +98,7 @@ export class WebIndexPluginClass {
             }
           } as Dependency
         }),
-      ...(this.opts.additionalDeps as Dependency[]),
+      ...(this.opts.additionalDeps || ([] as Dependency[])),
       ...baseDeps
     ].filter(a => a)
 
