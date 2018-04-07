@@ -75,6 +75,7 @@ export const NIGHTMARE_URL = ENV_CONFIG_INSTANCE.siteUrl
 export const cdn = process.env.CDN_ORIGIN ? process.env.CDN_ORIGIN : undefined
 export const isBuildServer: boolean = argv.ci
 export const isAot: boolean = argv.aot
+export const isServiceWorkerEnabled: boolean = argv.sw
 export const isProdBuild =
   selectedBuildType === 'prod' ||
   selectedBuildType === 'production' ||

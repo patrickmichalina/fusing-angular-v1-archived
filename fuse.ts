@@ -4,7 +4,8 @@ import {
   BUILD_CONFIG,
   ENV_CONFIG_INSTANCE,
   isProdBuild,
-  typeHelper
+  typeHelper,
+  isServiceWorkerEnabled
 } from './tools/config/build.config'
 import { WebIndexPlugin } from './tools/plugins/web-index'
 import { init, reload, active } from 'browser-sync'
@@ -64,7 +65,7 @@ const appOptions = {
   target: 'browser@es5',
   plugins: [
     NgAotPlugin(),
-    isProdBuild && NgSwPlugin(),
+    isServiceWorkerEnabled && NgSwPlugin(),
     isProdBuild && NgOptimizerPlugin(),
     ...baseOptions.plugins,
     WebIndexPlugin({
