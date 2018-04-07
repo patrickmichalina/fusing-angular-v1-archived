@@ -5,7 +5,7 @@ describe('Demos Page', () => {
     expect.assertions(1)
     const page = browser.goto(`${baseUrl}/demos`)
 
-    const text = await page.evaluate(() => document.title)
+    const text = await page.evaluate(() => document.title).end()
 
     expect(text).toContain('Demos')
   })

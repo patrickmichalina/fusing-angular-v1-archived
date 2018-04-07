@@ -1,31 +1,31 @@
 import { Dependency } from '../plugins/web-index'
 
 export interface BuildConfiguration {
-  dependencies: Dependency[]
-  baseHref: string
-  outputDir: string
-  clientAssetsDir: string
-  sourceDir: string
-  clientDir: string
-  prodOutDir: string
-  assetParentDir: string
-  minifyIndex: boolean
-  toolsDir: string
-  browserSyncPort: number
-  host: string
-  port: number
-  icons: string[]
-  favicon: {
-    src: string
-    config: {
-      path: string
-      appDescription: string
-      appName: string
-      short_name: string
-      background: string
-      theme_color: string
-      start_url: string
-      lang: string
+  readonly dependencies: ReadonlyArray<Dependency>
+  readonly baseHref: string
+  readonly outputDir: string
+  readonly clientAssetsDir: string
+  readonly sourceDir: string
+  readonly clientDir: string
+  readonly prodOutDir: string
+  readonly assetParentDir: string
+  readonly minifyIndex: boolean
+  readonly toolsDir: string
+  readonly browserSyncPort: number
+  readonly host: string
+  readonly port: number
+  readonly icons: ReadonlyArray<string>
+  readonly favicon: {
+    readonly src: string
+    readonly config: {
+      readonly path: string
+      readonly appDescription: string
+      readonly appName: string
+      readonly short_name: string
+      readonly background: string
+      readonly theme_color: string
+      readonly start_url: string
+      readonly lang: string
     }
   }
 }

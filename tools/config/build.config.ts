@@ -1,3 +1,4 @@
+/* tslint:disable:no-implicit-dependencies */
 import { BuildConfiguration } from './build.interfaces'
 import { argv } from 'yargs'
 import { basename } from 'path'
@@ -38,7 +39,7 @@ export const BUILD_CONFIG: BuildConfiguration = {
         content: 'width=device-width, initial-scale=1'
       }
     }
-  ] as any[],
+  ] as ReadonlyArray<any>,
   icons: [
     'account_circle',
     'menu',
@@ -70,6 +71,7 @@ const TypeHelper = require('fuse-box-typechecker').TypeHelper
 export const taskName = (nodeFilename: string) =>
   basename(nodeFilename).replace('.ts', '')
 export const ENV_CONFIG_INSTANCE = envConfig
+export const NIGHTMARE_URL = ENV_CONFIG_INSTANCE.siteUrl
 export const cdn = process.env.CDN_ORIGIN ? process.env.CDN_ORIGIN : undefined
 export const isBuildServer: boolean = argv.ci
 export const isAot: boolean = argv.aot
