@@ -1,11 +1,14 @@
 import { catchError, map, take, tap } from 'rxjs/operators'
-import { PathReference, QueryFn } from 'angularfire2/database'
+import {
+  AngularFireDatabase,
+  PathReference,
+  QueryFn
+} from 'angularfire2/database'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
-import { Inject, Injectable, NgZone } from '@angular/core'
+import { Inject, Injectable, Injector, NgZone } from '@angular/core'
 import { FIREBASE_RTDB_TS_PREFIX } from '../../../client/app/shared/firebase/firebase-rtdb.service'
 import { QueryParams } from '@firebase/database/dist/esm/src/core/view/QueryParams'
 import { HttpClient, HttpParams } from '@angular/common/http'
-import { database } from 'firebase-admin'
 import { FIREBASE_USER_AUTH_TOKEN } from './firebase-server.module'
 // tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
@@ -16,13 +19,15 @@ export class ServerUniversalRtDbService {
     private ts: TransferState,
     private http: HttpClient,
     private zone: NgZone,
+    private inj: Injector,
     @Inject(FIREBASE_RTDB_TS_PREFIX) private prefix: string,
     @Inject(FIREBASE_USER_AUTH_TOKEN) private authToken: string
   ) {}
 
   serverCachedObjectValueChanges<T>(path: string) {
     return this.zone.runOutsideAngular(() => {
-      const query = database().ref(path)
+      const db = this.inj.get(AngularFireDatabase)
+      const query = db.database.ref(path)
       const url = `${query.toString()}.json`
       const baseObs = this.authToken
         ? this.http.get<T>(url, {
@@ -45,9 +50,10 @@ export class ServerUniversalRtDbService {
 
   serverCachedListValueChanges<T>(path: PathReference, queryFn?: QueryFn) {
     return this.zone.runOutsideAngular(() => {
+      const db = this.inj.get(AngularFireDatabase)
       const query =
-        (queryFn && queryFn(database().ref(path.toString()))) ||
-        database().ref(path.toString())
+        (queryFn && queryFn(db.database.ref(path.toString()))) ||
+        db.database.ref(path.toString())
       const internalQueryParams = (query as any).queryParams_ as QueryParams
       const paramsFromString = internalQueryParams.toRestQueryStringParameters()
       const url = `${query.toString()}.json`
