@@ -108,9 +108,9 @@ workflows:
       - unit_tests:
           requires:
             - build
-      # - e2e_tests:
-      #     requires:
-      #       - build
+      - e2e_tests:
+          requires:
+            - build
       - lint:
           requires:
             - build
@@ -121,7 +121,7 @@ workflows:
           requires:
             - build
             - unit_tests
-            # - e2e_tests
+            - e2e_tests
             - lint
             - bundlesize
           filters:
