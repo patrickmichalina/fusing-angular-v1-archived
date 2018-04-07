@@ -108,25 +108,25 @@ workflows:
       - unit_tests:
           requires:
             - build
-      - e2e_tests:
-          requires:
-            - build
+    #   - e2e_tests:
+    #       requires:
+    #         - build
       - lint:
           requires:
             - build
       - bundlesize:
           requires:
             - build
-      - semver:
-          requires:
-            - build
-            - unit_tests
-            - e2e_tests
-            - lint
-            - bundlesize
-          filters:
-            branches:
-              only: master
+    #   - semver:
+    #       requires:
+    #         - build
+    #         - unit_tests
+    #         - e2e_tests
+    #         - lint
+    #         - bundlesize
+    #       filters:
+    #         branches:
+    #           only: master
     #   - deploy:
     #       requires:
     #         - build
