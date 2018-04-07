@@ -1,11 +1,11 @@
 <div>
-  <pm-navbar (menuIconClick)="sidenav.toggle()"></pm-navbar>
+  <pm-navbar (menuIconClick)="toggle()"></pm-navbar>
   <div class="nav-filler"></div>
   <mat-sidenav-container class="sidenav-container mat-typography" *ngIf="view$ | async as view">
     <mat-sidenav #sidenav class="sidenav mat-elevation-z6" [mode]="view.mode" [opened]="view.opened">
       <mat-nav-list>
         <mat-toolbar #sidenavTb color="primary">
-          <button mat-icon-button (click)="sidenav.toggle()" angulartics2On="click" angularticsAction="ToggleSideMenu" title="toggle menu">
+          <button mat-icon-button (click)="toggle()" angulartics2On="click" angularticsAction="ToggleSideMenu" title="toggle menu">
             <mat-icon pmSvg="menu_24"></mat-icon>
           </button>
           <a routerLink mat-button title="Fusing Angular">

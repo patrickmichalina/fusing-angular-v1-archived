@@ -14,10 +14,10 @@ import {
 } from '@angular/core'
 import { SEOService } from './shared/services/seo.service'
 import { NavigationEnd, Router } from '@angular/router'
-import { filter } from 'rxjs/operators'
+import { filter, startWith } from 'rxjs/operators'
 import { AuthService } from './shared/services/auth.service'
 // tslint:disable-next-line:import-blacklist
-import { combineLatest } from 'rxjs'
+import { combineLatest, Subject } from 'rxjs'
 import { WindowService } from './shared/services/utlities/window.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 
@@ -33,6 +33,9 @@ export class AppComponent implements AfterViewInit {
   @ViewChild(MatSidenav) readonly sidenav: MatSidenav | undefined
   @ViewChild(NavbarComponent, { read: ElementRef })
   readonly navbarRef: ElementRef | undefined
+
+  readonly sideToggleSource = new Subject<boolean>()
+  readonly sideToggled$ = this.sideToggleSource.pipe(startWith(false))
 
   readonly routesChanges = this.router.events.pipe(
     filter(event => event instanceof NavigationEnd)
@@ -65,26 +68,27 @@ export class AppComponent implements AfterViewInit {
   }
 
   applyNavShadowListener() {
+    if (!this.navbarElement) return
     this.doc.addEventListener('scroll', e => {
-      if (this.ws.window().scrollY <= 0) {
-        this.navbarElement &&
-          this.rdr.removeClass(this.navbarElement, SHADOW_CLASS)
-      } else {
-        this.navbarElement &&
-          this.rdr.addClass(this.navbarElement, SHADOW_CLASS)
-      }
+      this.ws.window().scrollY <= 0
+        ? this.rdr.removeClass(this.navbarElement, SHADOW_CLASS)
+        : this.rdr.addClass(this.navbarElement, SHADOW_CLASS)
     })
   }
 
   ngAfterViewInit() {
     this.applyNavShadowListener()
-    this.routesChanges.subscribe(() => {
-      this.closeNav()
-    })
+    this.routesChanges.subscribe(() => this.closeNav())
   }
 
   closeNav() {
     this.sidenav && this.sidenav.mode !== 'side' && this.sidenav.close()
+  }
+
+  toggle() {
+    if (!this.sidenav) return
+    this.sidenav.toggle()
+    this.sideToggleSource.next(this.sidenav.opened)
   }
 
   login() {
@@ -98,11 +102,12 @@ export class AppComponent implements AfterViewInit {
   readonly view$ = combineLatest(
     this.auth.user$,
     this.isHandset$,
-    (user, isHandset) => {
+    this.sideToggled$,
+    (user, isHandset, toggled) => {
       return {
         loggedIn: user ? 1 : 0,
         mode: isHandset.matches ? 'over' : 'side',
-        opened: !isHandset.matches
+        opened: !isHandset.matches && toggled
       }
     }
   )
