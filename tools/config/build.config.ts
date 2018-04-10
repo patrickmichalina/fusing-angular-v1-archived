@@ -3,57 +3,9 @@ import { BuildConfiguration } from './build.interfaces'
 import { argv } from 'yargs'
 import { basename } from 'path'
 import { OVERRIDES } from './build.ci.replace'
+import { EnvConfig } from './app.config'
 
-export const BUILD_CONFIG: BuildConfiguration = {
-  baseHref: '/',
-  outputDir: 'dist',
-  sourceDir: 'src',
-  clientDir: 'src/client',
-  clientAssetsDir: 'src/client/assets',
-  prodOutDir: './dist/prod',
-  assetParentDir: 'src/client',
-  toolsDir: './tools',
-  minifyIndex: true,
-  browserSyncPort: 5000,
-  host: 'http://localhost',
-  port: 5001,
-  favicon: {
-    src: './src/client/assets/svg/logo.svg',
-    config: {
-      path: '/assets/favicons',
-      appDescription: 'starter repo for fast Angular Universal app development',
-      appName: 'Fusing Angular',
-      short_name: 'Fusing-Ng',
-      background: '#ffffff',
-      theme_color: '#ffffff',
-      start_url: '/index.html',
-      lang: 'en-US'
-    }
-  },
-  dependencies: [
-    {
-      inHead: true,
-      element: 'meta',
-      attributes: {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1'
-      }
-    }
-  ] as ReadonlyArray<any>,
-  icons: [
-    'account_circle',
-    'menu',
-    'book',
-    'functions',
-    'important_devices',
-    'storage',
-    'home',
-    'airplanemode_inactive',
-    'exit_to_app'
-  ]
-}
-
-let envConfig
+let envConfig: EnvConfig
 const selectedEnv = argv['env-config'] || 'dev'
 const selectedBuildType = argv['build-type'] || 'dev'
 
@@ -91,4 +43,53 @@ export const typeHelper = (sync = true, throwOnTsLint = true) => {
     throwOnTsLint
   })
   sync ? _runner.runSync() : _runner.runAsync()
+}
+
+export const BUILD_CONFIG: BuildConfiguration = {
+  baseHref: '/',
+  outputDir: 'dist',
+  sourceDir: 'src',
+  clientDir: 'src/client',
+  clientAssetsDir: 'src/client/assets',
+  prodOutDir: './dist/prod',
+  assetParentDir: 'src/client',
+  toolsDir: './tools',
+  minifyIndex: true,
+  browserSyncPort: 5000,
+  host: 'http://localhost',
+  port: 5001,
+  favicon: {
+    src: './src/client/assets/svg/logo.svg',
+    config: {
+      path: '/assets/favicons',
+      appDescription: 'starter repo for fast Angular Universal app development',
+      appName: envConfig.appName,
+      short_name: envConfig.appShortName || '',
+      background: '#ffffff',
+      theme_color: '#ffffff',
+      start_url: '/index.html',
+      lang: 'en-US'
+    }
+  },
+  dependencies: [
+    {
+      inHead: true,
+      element: 'meta',
+      attributes: {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      }
+    }
+  ] as ReadonlyArray<any>,
+  icons: [
+    'account_circle',
+    'menu',
+    'book',
+    'functions',
+    'important_devices',
+    'storage',
+    'home',
+    'airplanemode_inactive',
+    'exit_to_app'
+  ]
 }

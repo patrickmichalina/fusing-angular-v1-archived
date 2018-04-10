@@ -20,6 +20,7 @@ import { AuthService } from './shared/services/auth.service'
 import { combineLatest, Subject } from 'rxjs'
 import { WindowService } from './shared/services/utlities/window.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
+import { EnvironmentService } from './shared/services/environment.service'
 
 const SHADOW_CLASS = 'mat-elevation-z6'
 
@@ -53,6 +54,7 @@ export class AppComponent implements AfterViewInit {
     private ws: WindowService,
     private brkpt: BreakpointObserver,
     private rdr: Renderer2,
+    private es: EnvironmentService,
     analytics: Angulartics2GoogleAnalytics,
     seo: SEOService,
     rds: RouteDataService
@@ -107,7 +109,8 @@ export class AppComponent implements AfterViewInit {
       return {
         loggedIn: user ? 1 : 0,
         mode: isHandset.matches ? 'over' : 'side',
-        opened: !isHandset.matches && toggled
+        opened: !isHandset.matches && toggled,
+        appName: this.es.config.appName
       }
     }
   )
