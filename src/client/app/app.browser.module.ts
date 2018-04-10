@@ -127,14 +127,11 @@ export function auth0BrowserValidationFactory(
 export class AppBrowserModule {
   constructor(
     analytics: Angulartics2GoogleAnalytics,
-    es: EnvironmentService,
     is: InjectionService,
     auth: AuthService,
     appRef: ApplicationRef,
     ngsw: NgSwUpdateService
   ) {
-    // tslint:disable-next-line:no-console
-    console.log('logging environment: ', es.config)
     auth.handleAuthentication()
     appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
       auth.scheduleRenewal()

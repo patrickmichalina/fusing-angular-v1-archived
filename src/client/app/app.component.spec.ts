@@ -18,6 +18,7 @@ import { AppTestingModule } from '../../testing/app-testing.module'
 
 export const TESTING_CONFIG: EnvConfig = {
   siteUrl: 'http://localhost:5000',
+  appName: 'fusing-angular',
   // tslint:disable-next-line:max-line-length
   endpoints: {
     api: 'http://localhost:5000/api',

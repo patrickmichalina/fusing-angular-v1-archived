@@ -24,8 +24,8 @@
     "sendgrid:starter"
   ],
   "env": {
-    "HEROKU_APP_NAME": {
-      "description": "Your application's name.",
+    "APP_SHORT_NAME": {
+      "description": "Used for PWA icon title",
       "required": true
     },
     "NODE_MODULES_CACHE": {
