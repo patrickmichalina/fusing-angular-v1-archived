@@ -8,9 +8,9 @@
           <button mat-icon-button (click)="toggle()" angulartics2On="click" angularticsAction="ToggleSideMenu" title="toggle menu">
             <mat-icon pmSvg="menu_24"></mat-icon>
           </button>
-          <a routerLink mat-button title="Fusing Angular">
+          <a routerLink mat-button [title]="view.appName">
             <mat-icon pmSvg="logo"></mat-icon>
-            <span>Fusing Angular</span>
+            <span>{{ view.appName }}</span>
           </a>
         </mat-toolbar>
         <a routerLink="readme" mat-list-item title="I am a lazy module for the about page">

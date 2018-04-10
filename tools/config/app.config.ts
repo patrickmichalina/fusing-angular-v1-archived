@@ -1,7 +1,11 @@
 export interface EnvConfig {
   readonly siteUrl: string
+  readonly appName: string
+  readonly appShortName?: string
   readonly env?: string
   readonly revision?: string
+  readonly rolesKey?: string
+  readonly pwaUpdateInterval?: number
   readonly endpoints?: {
     readonly api?: string
     readonly websocketServer?: string
@@ -13,6 +17,4 @@ export interface EnvConfig {
     readonly responseType: string
     readonly scope: string
   }
-  readonly rolesKey?: string
-  readonly pwaUpdateInterval?: number
 }
