@@ -15,6 +15,13 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NavbarService } from './shared/navbar/navbar.service'
 import { AppTestingModule } from '../../testing/app-testing.module'
+import { AboutComponent } from './about/about.component'
+import { AboutModule } from './about/about.module'
+import { DemosComponent } from './demos/demos.component'
+import { DemosModule } from './demos/demos.module'
+import { ReadmeModule } from './readme/readme.module'
+import { CallbackModule } from './callback/callback.module'
+import { CallbackComponent } from './callback/callback.component'
 
 export const TESTING_CONFIG: EnvConfig = {
   siteUrl: 'http://localhost:5000',
@@ -33,50 +40,62 @@ export const TESTING_CONFIG: EnvConfig = {
 class TestComponent {}
 
 describe('App component', () => {
-  const config: ReadonlyArray<Route> = [{ path: '', component: HomeComponent }]
+  const config: ReadonlyArray<Route> = [
+    {
+      path: '',
+      component: HomeComponent
+    },
+    {
+      path: 'anout',
+      component: AboutComponent
+    },
+    {
+      path: 'demos',
+      component: DemosComponent
+    },
+    {
+      path: 'callback',
+      component: CallbackComponent
+    }
+  ]
 
   let fixture: ComponentFixture<TestComponent>
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          AppModule,
-          AppTestingModule.forRoot(),
-          AppBrowserModule,
-          SharedModule,
-          HttpClientTestingModule,
-          RouterTestingModule.withRoutes(config as any),
-          Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
-        ],
-        declarations: [TestComponent, HomeComponent],
-        providers: [
-          { provide: APP_BASE_HREF, useValue: '/' },
-          { provide: ENV_CONFIG, useValue: TESTING_CONFIG },
-          EnvironmentService,
-          NavbarService
-        ]
-      }).compileComponents()
-    })
-  )
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        AppModule,
+        AppTestingModule.forRoot(),
+        AppBrowserModule,
+        SharedModule,
+        AboutModule,
+        DemosModule,
+        ReadmeModule,
+        CallbackModule,
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes(config as any),
+        Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
+      ],
+      declarations: [TestComponent, HomeComponent],
+      providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
+        { provide: ENV_CONFIG, useValue: TESTING_CONFIG },
+        EnvironmentService,
+        NavbarService
+      ]
+    }).compileComponents()
+  }))
 
-  beforeEach(
-    async(() => {
-      fixture = TestBed.createComponent(TestComponent)
-    })
-  )
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(TestComponent)
+  }))
 
-  afterEach(
-    async(() => {
-      TestBed.resetTestingModule()
-    })
-  )
+  afterEach(async(() => {
+    TestBed.resetTestingModule()
+  }))
 
-  it(
-    'should build without a problem',
-    async(() => {
-      expect(fixture.nativeElement).toBeTruthy()
-      expect(fixture.nativeElement).toMatchSnapshot()
-    })
-  )
+  it('should build without a problem', async(() => {
+    expect(fixture.nativeElement).toBeTruthy()
+    expect(fixture.nativeElement).toMatchSnapshot()
+  }))
 })
