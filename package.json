@@ -114,7 +114,7 @@
     "jest": "22.4.3",
     "jest-junit-reporter": "1.1.0",
     "jest-preset-angular": "5.2.1",
-    "jsdom": "11.8.0",
+    "jsdom": "11.9.0",
     "last-release-git": "0.0.3",
     "material-design-icons": "3.0.1",
     "mkdirp": "0.5.1",
