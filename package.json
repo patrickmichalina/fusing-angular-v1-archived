@@ -155,7 +155,7 @@
     "@angular/router": "6.0.0-rc.5",
     "@angular/service-worker": "6.0.0-rc.5",
     "@expo/bunyan": "1.8.10",
-    "@nguniversal/common": "5.0.0",
+    "@nguniversal/common": "6.0.0-rc.0",
     "@nguniversal/express-engine": "5.0.0",
     "@sendgrid/mail": "6.2.1",
     "angulartics2": "5.3.0",
