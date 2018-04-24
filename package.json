@@ -199,7 +199,7 @@
     "ts-node": "5.0.1",
     "tsickle": "0.27.5",
     "typedi": "0.7.2",
-    "typeorm": "0.2.0",
+    "typeorm": "0.2.1",
     "typeorm-routing-controllers-extensions": "0.2.0",
     "typeorm-typedi-extensions": "0.2.1",
     "ua-parser-js": "0.7.17",
