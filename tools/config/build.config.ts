@@ -67,7 +67,7 @@ export const BUILD_CONFIG: BuildConfiguration = {
       short_name: envConfig.appShortName || '',
       background: '#ffffff',
       theme_color: '#ffffff',
-      start_url: '/index.html',
+      start_url: './',
       lang: 'en-US'
     }
   },
