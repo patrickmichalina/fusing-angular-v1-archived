@@ -2,7 +2,6 @@ import { catchError, distinctUntilChanged, startWith } from 'rxjs/operators'
 import { Inject, Injectable, InjectionToken } from '@angular/core'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
 import { sha1 } from 'object-hash'
-// tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
 import { AngularFirestore, QueryFn } from 'angularfire2/firestore'
 
@@ -24,7 +23,7 @@ export class UniversalFirestoreService {
       .doc<T>(path)
       .valueChanges()
       .pipe(
-        startWith(cached),
+        startWith(cached as T),
         distinctUntilChanged((x, y) => sha1(x) !== sha1(y)),
         catchError(err => of(cached))
       )

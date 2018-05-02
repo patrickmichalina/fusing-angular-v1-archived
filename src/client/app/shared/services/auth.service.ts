@@ -26,7 +26,6 @@ import { of } from 'rxjs/observable/of'
 import { HttpClient } from '@angular/common/http'
 import { AngularFireAuth } from 'angularfire2/auth'
 import { PlatformService } from './platform.service'
-// tslint:disable-next-line:import-blacklist
 import { timer } from 'rxjs'
 import * as auth0 from 'auth0-js'
 

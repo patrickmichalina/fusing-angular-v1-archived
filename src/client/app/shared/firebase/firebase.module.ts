@@ -9,7 +9,7 @@ import {
 } from './firebase-rtdb.service'
 import {
   AngularFireModule,
-  FirebaseAppConfigToken,
+  FirebaseAppConfig,
   FirebaseAppName
 } from 'angularfire2'
 import { AngularFireDatabaseModule } from 'angularfire2/database'
@@ -42,7 +42,7 @@ export function firebaseConfigLoader(env: EnvironmentService) {
       useValue: 'universal-webapp'
     },
     {
-      provide: FirebaseAppConfigToken,
+      provide: FirebaseAppConfig,
       useFactory: firebaseConfigLoader,
       deps: [EnvironmentService]
     },

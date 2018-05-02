@@ -73,7 +73,7 @@ export class ServerUniversalFirestoreService {
     console.log(query)
 
     const url = `https://firestore.googleapis.com/v1beta1/projects/${
-      (this.afs.app.options as any).projectId
+      (this.afs.firestore.app.options as any).projectId
     }/databases/(default)/documents/${path}`
     const auth = this.auth.getCustomFirebaseToken()
     const baseObs =

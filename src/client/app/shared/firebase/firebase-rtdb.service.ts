@@ -13,7 +13,6 @@ import {
 import { AngularFireDatabase } from 'angularfire2/database'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
 import { sha1 } from 'object-hash'
-// tslint:disable-next-line:import-blacklist
 import { Observable, of } from 'rxjs'
 import { Query, Reference } from '@firebase/database-types'
 
