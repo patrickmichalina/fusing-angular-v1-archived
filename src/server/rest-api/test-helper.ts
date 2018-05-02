@@ -1,5 +1,4 @@
 // tslint:disable:no-require-imports
-// tslint:disable-next-line:import-blacklist
 import 'rxjs'
 import * as supertest from 'supertest'
 import { useApi } from './index'

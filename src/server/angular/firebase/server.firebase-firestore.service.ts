@@ -1,24 +1,11 @@
 import { FIREBASE_FIRESTORE_TS_PREFIX } from '../../../client/app/shared/firebase/firebase-firestore.service'
-// import {
-//   catchError,
-//   distinctUntilChanged,
-//   flatMap,
-//   startWith,
-//   take,
-//   tap
-// } from 'rxjs/operators'
 import { makeStateKey, TransferState } from '@angular/platform-browser'
-// import { sha1 } from 'object-hash'
-// tslint:disable-next-line:import-blacklist
 import { Inject, Injectable } from '@angular/core'
-// import { AuthService } from '../../../client/app/shared/services/auth.service'
-// import { fromPromise } from 'rxjs/observable/fromPromise'
 import { AngularFirestore, QueryFn } from 'angularfire2/firestore'
 import { AuthService } from '../../../client/app/shared/services/auth.service'
 import { map, tap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
 import { FieldValue } from '@firebase/firestore-types'
-// tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
 // import { firestore, initializeApp } from 'firebase'
 
@@ -66,11 +53,11 @@ export class ServerUniversalFirestoreService {
   }
 
   serverCachedCollectionValueChanges<T>(path: string, queryFn?: QueryFn) {
-    const ref = this.afs.firestore.collection(path)
-    const query = (queryFn && queryFn(ref as any)) || ref
+    // const ref = this.afs.firestore.collection(path)
+    // const query = (queryFn && queryFn(ref as any)) || ref
 
-    // tslint:disable-next-line:no-console
-    console.log(query)
+    // // tslint:disable-next-line:no-console
+    // console.log(query)
 
     const url = `https://firestore.googleapis.com/v1beta1/projects/${
       (this.afs.firestore.app.options as any).projectId

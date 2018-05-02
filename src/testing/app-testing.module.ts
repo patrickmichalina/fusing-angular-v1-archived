@@ -40,7 +40,6 @@ import {
 } from '../client/app/shared/services/utlities/window.service'
 import { MaterialModule } from '../client/app/shared/material.module'
 import { RXJS_DEFAULT_SCHEDULER } from '../client/app/app.module'
-// tslint:disable-next-line:import-blacklist
 import { VirtualTimeScheduler } from 'rxjs'
 import { of } from 'rxjs/observable/of'
 import { WebAppService } from '../client/app/shared/services/web-app.service'

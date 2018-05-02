@@ -10,7 +10,6 @@ import { FIREBASE_RTDB_TS_PREFIX } from '../../../client/app/shared/firebase/fir
 import { QueryParams } from '@firebase/database/dist/esm/src/core/view/QueryParams'
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { FIREBASE_USER_AUTH_TOKEN } from './firebase-server.module'
-// tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
 
 @Injectable()
