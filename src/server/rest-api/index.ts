@@ -18,7 +18,7 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { map } from 'rxjs/operators'
 import { AuthOptions } from 'auth0-js'
-// import { credential, initializeApp } from 'firebase-admin'
+import { credential, initializeApp } from 'firebase-admin'
 
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
@@ -42,21 +42,21 @@ Container.set(AUTH0_MANAGEMENT_CLIENT_CONFIG, {
   clientID: process.env.AUTH0_CLIENT_ID || ''
 } as AuthOptions)
 
-// try {
-//   initializeApp({
-//     credential: credential.cert({
-//       privateKey:
-//         process.env.FIREBASE_PRIVATE_KEY &&
-//         process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-//       projectId: process.env.FIREBASE_PROJECT_ID,
-//       clientEmail: process.env.FIREBASE_CLIENT_EMAIL
-//     }),
-//     databaseURL: process.env.FIREBASE_DATABASE_URL
-//   })
-// } catch (err) {
-//   // tslint:disable-next-line:no-console
-//   console.error(err)
-// }
+try {
+  initializeApp({
+    credential: credential.cert({
+      privateKey:
+        process.env.FIREBASE_PRIVATE_KEY &&
+        process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL
+    }),
+    databaseURL: process.env.FIREBASE_DATABASE_URL
+  })
+} catch (err) {
+  // tslint:disable-next-line:no-console
+  console.error(err)
+}
 export const useApi = (app: express.Application) => {
   const swaggerSpec = swaggerJSDoc({
     swaggerDefinition: {

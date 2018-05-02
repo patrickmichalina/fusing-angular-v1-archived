@@ -1,5 +1,6 @@
 import {
   Authorized,
+  BadRequestError,
   CurrentUser,
   Get,
   JsonController
@@ -27,9 +28,16 @@ export class AuthController {
   @Get('/firebase')
   @Authorized()
   get(@CurrentUser() user: any) {
-    const roles = (user && user[process.env.AUTH0_ROLES_KEY as string]) || {}
+    const roles =
+      (user &&
+        process.env.AUTH0_ROLES_KEY &&
+        user[process.env.AUTH0_ROLES_KEY]) ||
+      {}
     return auth()
       .createCustomToken(user.sub, { email: user.email, roles })
       .then(customToken => ({ firebaseToken: customToken }))
+      .catch(err => {
+        throw new BadRequestError()
+      })
   }
 }
