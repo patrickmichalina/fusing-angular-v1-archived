@@ -1,7 +1,7 @@
 defaults: &defaults
   # resource_class: xlarge
   docker:
-    - image: circleci/node:9.9.0
+    - image: circleci/node:9.11.1
 version: 2
 jobs:
   build:

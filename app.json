@@ -26,7 +26,8 @@
   "env": {
     "APP_SHORT_NAME": {
       "description": "Used for PWA icon title",
-      "required": true
+      "required": true,
+      "value": "Fusing NG"
     },
     "NODE_MODULES_CACHE": {
       "description":

@@ -62,6 +62,7 @@ Below are some guides to help you bring in common features into your starter.
 
 # Table of Contents
 
+* [Showcase](#showcase)
 * [Quick Start](#quick-start)
 * [Testing](#testing)
 * [Favicons](#favicons)
@@ -70,6 +71,14 @@ Below are some guides to help you bring in common features into your starter.
 * [File Structure](#file-structure)
 * [Change Log](#change-log)
 * [License](#license)
+
+# Showcase
+
+Apps using this starter of set of tools
+
+* [FloSports](https://www.flowrestling.org): an Innovator in Live Digital Sports and Original Content
+* [Hip Fit](https://app.hip.fit): Micro-workouts, stretches and physical therapy inspired exercises.
+* [Notion Ninja](https://www.notion.ninja): Share and explore startup and business ideas
 
 # Quick Start
 
