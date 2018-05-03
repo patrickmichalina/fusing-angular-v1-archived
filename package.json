@@ -66,7 +66,7 @@
     "@compodoc/compodoc": "1.1.2",
     "@types/auth0-js": "8.11.2",
     "@types/body-parser": "1.17.0",
-    "@types/browser-sync": "0.0.39",
+    "@types/browser-sync": "0.0.40",
     "@types/bunyan": "1.8.4",
     "@types/chalk": "2.2.0",
     "@types/clean-css": "3.4.30",
