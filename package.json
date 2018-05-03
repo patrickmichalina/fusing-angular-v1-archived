@@ -152,7 +152,7 @@
     "@angular/platform-browser": "6.0.0-rc.6",
     "@angular/platform-browser-dynamic": "6.0.0-rc.6",
     "@angular/platform-server": "6.0.0-rc.6",
-    "@angular/router": "6.0.0-rc.6",
+    "@angular/router": "6.0.0",
     "@angular/service-worker": "6.0.0-rc.6",
     "@expo/bunyan": "1.8.10",
     "@nguniversal/common": "5.0.0",
