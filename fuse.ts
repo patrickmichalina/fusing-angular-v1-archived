@@ -66,7 +66,7 @@ const appOptions = {
   plugins: [
     NgAotPlugin(),
     isServiceWorkerEnabled && NgSwPlugin(),
-    isProdBuild && NgOptimizerPlugin(),
+    // isProdBuild && NgOptimizerPlugin(), TODO: broken with firestore
     ...baseOptions.plugins,
     WebIndexPlugin({
       base: ENV_CONFIG_INSTANCE.host,

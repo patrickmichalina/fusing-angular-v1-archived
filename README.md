@@ -10,7 +10,7 @@
 
 The goal of this project is to provide a developer friendly Angular Universal starting point. It differs from the Angular-CLI by focusing soley on Universal applications and uses a faster testing framework and bundler. You can deploy a boilerplate application with a single click via Heroku.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/patrickmichalina/fusing-angular/tree/fb)
 
 # Features
 

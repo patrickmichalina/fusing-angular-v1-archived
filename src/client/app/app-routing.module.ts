@@ -29,6 +29,10 @@ export function readmeModule() {
   return import('./readme/readme.module').then(m => m.ReadmeModule)
 }
 
+export function firebaseModule() {
+  return import('./firebase/firebase.module').then(m => m.FirebaseModule)
+}
+
 export const routes: Routes = [
   { path: '', loadChildren: homeModule },
   { path: 'about', loadChildren: aboutModule },
@@ -36,7 +40,8 @@ export const routes: Routes = [
   { path: 'callback', loadChildren: callbackModule },
   { path: 'logout', loadChildren: logoutModule },
   { path: 'account', loadChildren: accountModule },
-  { path: 'readme', loadChildren: readmeModule }
+  { path: 'readme', loadChildren: readmeModule },
+  { path: 'firebase', loadChildren: firebaseModule }
 ]
 
 @NgModule({

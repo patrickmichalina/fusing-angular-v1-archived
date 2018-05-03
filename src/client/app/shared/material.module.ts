@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core'
 import {
   MatButtonModule,
   MatCardModule,
+  MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
   MatListModule,
   MatMenuModule,
   MatProgressSpinnerModule,
@@ -23,7 +25,9 @@ import {
     MatTabsModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     MatButtonModule,
@@ -35,7 +39,9 @@ import {
     MatTabsModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
   // providers: [NativeDateAdapter],
   // entryComponents: [MatExpansionPanel],

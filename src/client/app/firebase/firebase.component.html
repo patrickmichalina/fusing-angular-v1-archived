@@ -1,0 +1,48 @@
+<mat-card>
+  <h2>Notes (Firebase Realtime Database)</h2>
+  <div>
+    <h3>Collection</h3>
+    <form [formGroup]="noteForm" (ngSubmit)="addNote(noteForm.value.note)">
+      <mat-form-field>
+        <input matInput placeholder="add your note" formControlName="note">
+      </mat-form-field>
+      <div>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <button mat-raised-button color="accent" type="button" (click)="clearNotes()">Delete All</button>
+      </div>
+    </form>
+    <ul>
+      <li *ngFor="let note of notes$ | async; trackBy: trackByNote">{{ note }}</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Object</h3>
+    <div *ngIf="rtdbObj$ | async as obj">
+      {{ obj | json }}
+    </div>
+  </div>
+
+</mat-card>
+
+<mat-card>
+  <h2>Docs (Firestore)</h2>
+  <!-- <form [formGroup]="docsForm" (ngSubmit)="addDoc(docsForm.value)">
+    <mat-form-field>
+      <input matInput placeholder="title" formControlName="title">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="rating" formControlName="rating" type="number">
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="accent" type="button" (click)="clearDocs()">Delete All</button>
+    </div>
+  </form> -->
+  <!-- <p>{{ doc$ | async | json }}</p> -->
+  <ul>
+    <li *ngFor="let doc of docs$ | async; trackBy: trackByDoc">
+      <p>Title: {{ doc.title }}</p>
+      <p>Rating: {{ doc.rating }}</p>
+    </li>
+  </ul>
+</mat-card>

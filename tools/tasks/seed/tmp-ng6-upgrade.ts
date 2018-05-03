@@ -18,3 +18,17 @@ Sparky.task(taskName(__filename), () =>
     }
   )
 )
+
+Sparky.task('jest.zone.fix', () =>
+  Sparky.src('node_modules/jest-preset-angular/**').file(
+    'setupJest.js',
+    (file: SparkyFile) => {
+      file.read()
+      const text = (file.contents as Buffer).toString()
+      const regex = new RegExp(/require\('zone.js\/dist\/zone.js'\);/, 'g')
+      const replacedText = text.replace(regex, "require('zone.js');")
+      file.setContent(replacedText)
+      file.save()
+    }
+  )
+)

@@ -3,7 +3,7 @@ newRelic()
 import { createServer } from 'http'
 import { argv } from 'yargs'
 import { app } from './server.app'
-import { initWebSocketServer } from './server.websockets'
+// import { initWebSocketServer } from './server.websockets'
 import { initDb } from './server.database'
 import chalk from 'chalk'
 
@@ -22,4 +22,4 @@ initDb()
     throw Error(err)
   })
 
-export const webSocketServer = initWebSocketServer(server)
+// export const webSocketServer = initWebSocketServer(server)

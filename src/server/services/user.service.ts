@@ -1,5 +1,4 @@
 import { Inject, Service } from 'typedi'
-// tslint:disable:import-blacklist
 import { Authentication, Management } from 'auth0-js'
 import {
   AUTH0_CERT,

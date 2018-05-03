@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core'
 import { PlatformService } from '../platform.service'
 import { Observable } from 'rxjs/Observable'
 import { catchError, switchMap } from 'rxjs/operators'
-// tslint:disable-next-line:import-blacklist
 import { of } from 'rxjs'
 
 export interface IAdBlockService {

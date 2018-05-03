@@ -1,15 +1,32 @@
+import { Router } from '@angular/router'
 import { EnvironmentService } from './environment.service'
-import { Inject, Injectable, InjectionToken } from '@angular/core'
 import { Observable } from 'rxjs/Observable'
 import { sha1 } from 'object-hash'
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import { CookieService } from './cookie.service'
 import { makeStateKey } from '@angular/platform-browser'
-import { Subscription } from 'rxjs/Subscription'
-import { Router } from '@angular/router'
-import { distinctUntilChanged, flatMap, map, shareReplay } from 'rxjs/operators'
+import {
+  ApplicationRef,
+  Inject,
+  Injectable,
+  InjectionToken,
+  Injector,
+  NgZone
+} from '@angular/core'
+import {
+  distinctUntilChanged,
+  filter,
+  first,
+  flatMap,
+  map,
+  shareReplay,
+  take
+} from 'rxjs/operators'
 import { of } from 'rxjs/observable/of'
-import { timer } from 'rxjs/observable/timer'
+import { HttpClient } from '@angular/common/http'
+import { AngularFireAuth } from 'angularfire2/auth'
+import { PlatformService } from './platform.service'
+import { timer } from 'rxjs'
 import * as auth0 from 'auth0-js'
 
 export type IAuth0ValidationFactory = (
@@ -50,10 +67,15 @@ export interface ExtendedUser extends auth0.Auth0UserProfile {
   readonly roles?: { readonly [key: string]: boolean }
 }
 
+const FB_KEY = 'fbAuth'
+
 @Injectable()
 export class AuthService {
+  readonly cookies$ = this.cs.valueChanges.pipe(shareReplay(1))
+  // tslint:disable-next-line:readonly-keyword
+  afAuth: AngularFireAuth | undefined // TODO: once fixed in angularfire2, inject normally
+
   constructor(
-    private cs: CookieService,
     @Inject(AUTH0_CLIENT) private az: auth0.WebAuth,
     @Inject(AUTH_ROLES_KEY) private rolesKey: string,
     @Inject(AUTH_ID_TOKEN_STORAGE_KEY) private idTokenStorageKey: string,
@@ -63,22 +85,54 @@ export class AuthService {
     private accessTokenExpiryStorageKey: string,
     @Inject(AUTH0_VALIDATION_FACTORY)
     private validationFactory: IAuth0ValidationFactory,
-    private router: Router
+    private cs: CookieService,
+    private router: Router,
+    private http: HttpClient,
+    // @Optional() @Inject(AngularFireAuth) private afAuth: AngularFireAuth | undefined,
+    private es: EnvironmentService,
+    ps: PlatformService,
+    inj: Injector,
+    appRef: ApplicationRef,
+    private zone: NgZone
   ) {
-    cs.valueChanges
-      .pipe(map(a => a[this.accessTokenStorageKey]))
-      .subscribe(user => this.accessTokenSource.next(user))
-  }
+    this.zone.runOutsideAngular(() => {
+      // tslint:disable-next-line:no-object-mutation
+      this.afAuth = inj.get(AngularFireAuth)
+    })
+    ps.isBrowser &&
+      appRef.isStable.pipe(filter(a => a), first()).subscribe(() => {
+        this.fbToken$.pipe(filter(Boolean)).subscribe(token => {
+          this.scheduleFirebaseRenewal()
+        })
 
-  // tslint:disable-next-line:readonly-keyword
-  private refreshSubscription = new Subscription()
+        this.accessToken$.pipe(filter(Boolean)).subscribe(token => {
+          this.scheduleRenewal()
+          this.fbIteration()
+        })
+
+        this.cookies$
+          .pipe(map(a => a[this.accessTokenStorageKey]), distinctUntilChanged())
+          .subscribe(user => this.accessTokenSource.next(user))
+        this.cookies$
+          .pipe(map(a => a[FB_KEY]), distinctUntilChanged())
+          .subscribe(s => this.fbTokenSource.next(s))
+      })
+  }
 
   private readonly accessTokenSource = new BehaviorSubject<string | undefined>(
     this.cs.get(this.accessTokenStorageKey)
   )
+  private readonly fbTokenSource = new BehaviorSubject<string | undefined>(
+    this.cs.get(FB_KEY)
+  )
 
   private readonly accessToken$ = this.accessTokenSource.pipe(
-    distinctUntilChanged()
+    distinctUntilChanged(),
+    shareReplay(1)
+  )
+  private readonly fbToken$ = this.fbTokenSource.pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
   )
 
   public readonly user$ = this.accessToken$.pipe(
@@ -96,18 +150,31 @@ export class AuthService {
     this.az.authorize()
   }
 
+  // TODO cleanup
   public logout(redirect = '/'): void {
+    if (this.afAuth) {
+      this.afAuth.auth.signOut().then(() => {
+        this.remoteAuth0Tokens()
+        this.cs.remove(FB_KEY)
+        redirect && this.router.navigate([redirect])
+      })
+    } else {
+      this.remoteAuth0Tokens()
+      redirect && this.router.navigate([redirect])
+    }
+  }
+
+  private remoteAuth0Tokens() {
     this.cs.remove(this.accessTokenStorageKey)
     this.cs.remove(this.idTokenStorageKey)
     this.cs.remove(this.accessTokenExpiryStorageKey)
-    this.unscheduleRenewal()
-    redirect && this.router.navigate([redirect])
   }
 
   public handleAuthentication(): void {
     this.az.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
+        this.fbIteration()
         this.router.navigate(['/'])
       } else if (err) {
         this.router.navigate(['/'])
@@ -126,27 +193,22 @@ export class AuthService {
     return this.isTokenValid() && token
   }
 
-  public unscheduleRenewal() {
-    this.refreshSubscription.unsubscribe()
+  public getCustomFirebaseToken(): string | undefined {
+    return this.cs.get(FB_KEY)
   }
 
   public scheduleRenewal() {
-    if (!this.isTokenValid()) return
-    this.unscheduleRenewal()
-
-    const expires = this.cs.get(this.accessTokenExpiryStorageKey)
-
-    const source = of(expires).pipe(
-      flatMap(expiresAt => {
-        return timer(Math.max(1, expiresAt - Date.now()))
-      })
-    )
-
-    // tslint:disable-next-line:no-object-mutation
-    this.refreshSubscription = source.subscribe(() => {
-      this.renewToken()
-      this.scheduleRenewal()
-    })
+    this.isTokenValid() &&
+      of(this.cs.get(this.accessTokenExpiryStorageKey))
+        .pipe(
+          flatMap(expiresAt => {
+            return timer(Math.max(1, expiresAt - Date.now()))
+          }),
+          take(1)
+        )
+        .subscribe(() => {
+          this.renewToken()
+        })
   }
 
   public isTokenValid(): boolean {
@@ -182,7 +244,33 @@ export class AuthService {
     this.cs.set(this.accessTokenStorageKey, authResult.accessToken, { expires })
     this.cs.set(this.idTokenStorageKey, authResult.idToken, { expires })
     this.cs.set(this.accessTokenExpiryStorageKey, _expires, { expires })
+  }
 
-    this.scheduleRenewal()
+  private getMintedCustomTokenForFirebase() {
+    return !this.isTokenValid() || !this.afAuth
+      ? of(undefined)
+      : this.http.get(`${this.es.config.siteUrl}/api/auth/firebase`).pipe(
+          flatMap((token: { readonly firebaseToken: string }) => {
+            return (this.afAuth as AngularFireAuth).auth.signInWithCustomToken(
+              token.firebaseToken
+            )
+          })
+        )
+  }
+
+  private setFirebaseSession(token: string) {
+    this.cs.set(FB_KEY, token)
+  }
+
+  private fbIteration() {
+    this.getMintedCustomTokenForFirebase()
+      .pipe(filter(a => a && a.qa), take(1))
+      .subscribe(t => this.setFirebaseSession(t.qa))
+  }
+
+  scheduleFirebaseRenewal() {
+    timer(0, 3600 * 1000)
+      .pipe(take(1))
+      .subscribe(() => this.fbIteration())
   }
 }

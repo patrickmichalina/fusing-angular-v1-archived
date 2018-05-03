@@ -16,7 +16,6 @@ import { SEOService } from './shared/services/seo.service'
 import { NavigationEnd, Router } from '@angular/router'
 import { filter, startWith } from 'rxjs/operators'
 import { AuthService } from './shared/services/auth.service'
-// tslint:disable-next-line:import-blacklist
 import { combineLatest, Subject } from 'rxjs'
 import { WindowService } from './shared/services/utlities/window.service'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
