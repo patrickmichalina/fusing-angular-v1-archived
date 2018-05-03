@@ -24,7 +24,7 @@ export class UniversalFirestoreService {
       .valueChanges()
       .pipe(
         startWith(cached as T),
-        distinctUntilChanged((x, y) => sha1(x) !== sha1(y)),
+        distinctUntilChanged((x, y) => sha1(x) === sha1(y)),
         catchError(err => of(cached))
       )
   }

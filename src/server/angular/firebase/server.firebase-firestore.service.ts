@@ -5,19 +5,45 @@ import { AngularFirestore, QueryFn } from 'angularfire2/firestore'
 import { AuthService } from '../../../client/app/shared/services/auth.service'
 import { map, tap } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
-import { FieldValue } from '@firebase/firestore-types'
 import { of } from 'rxjs'
-// import { firestore, initializeApp } from 'firebase'
+import { FieldPath } from '@firebase/firestore-types'
 
-interface FirestoreHttpCollectionResponse {
-  readonly documents: [
-    {
-      readonly name: string
-      readonly fields: {
-        readonly [key: string]: FieldValue
-      }
-    }
-  ]
+interface HttpResponseDocument {
+  readonly name: string
+  readonly fields: any
+}
+
+interface HttpResponseDocumentWrapper {
+  readonly document: HttpResponseDocument
+}
+
+interface OrderBy {
+  readonly field: any
+  readonly dir: any
+  readonly isKeyOrderBy: boolean
+}
+
+interface RelationFilter {
+  readonly field: FieldPath
+  readonly op: { readonly name: string }
+  readonly value: Object
+}
+
+const mapOrderBy = (ordBy: OrderBy) => {
+  return {
+    field: {
+      fieldPath: ordBy.field.segments.pop()
+    },
+    direction: ordBy.dir.name
+      ? ordBy.dir.name === 'desc'
+        ? 'DESCENDING'
+        : 'ASCENDING'
+      : 'DIRECTION_UNSPECIFIED'
+  }
+}
+
+const mapOrderByCollection = (ordBy: ReadonlyArray<OrderBy>) => {
+  return ordBy.map(a => mapOrderBy(a))
 }
 
 @Injectable()
@@ -31,46 +57,73 @@ export class ServerUniversalFirestoreService {
   ) {}
 
   serverCachedDocValueChanges<T>(path: string) {
-    // const cached = this.ts.get<T | undefined>(this.cacheKey(path), undefined)
-    // return (cached
-    //   ? this.afs
-    //       .doc<T>(path)
-    //       .valueChanges()
-    //       .pipe(
-    //         startWith(cached),
-    //         tap(a => this.ts.remove(this.cacheKey(path))),
-    //         catchError(err => of(cached))
-    //       )
-    //   : this.afs
-    //       .doc<T>(path)
+    // console.log(this.auth.getCustomFirebaseToken())
+    // try {
+    //   return fromPromise(this.fbAuth.auth
+    //     .pipe(flatMap(() => this.afs.doc<T>(path)
     //       .valueChanges()
     //       .pipe(
     //         tap(value => this.cache(path, value)),
-    //         catchError(err => of(cached))
-    //       )
-    // ).pipe(distinctUntilChanged((x, y) => sha1(x) !== sha1(y)))
+    //         catchError(err => of(undefined))
+    //       )))
+    // } catch (err) {
+    //   return of(undefined)
+    // }
+
+    // .then(console.log).then(console.log)
+    // firestore()
+    //   .doc(path).get().then(snap => {
+    //     snap.
+    //       console.log(snap.data())
+    //     return snap.data()
+    //   })
+
     return of({} as T)
+    // .valueChanges()
+    // .pipe(
+    //   tap(value => this.cache(path, value)),
+    //   catchError(err => of(undefined))
+    // )
   }
 
   serverCachedCollectionValueChanges<T>(path: string, queryFn?: QueryFn) {
-    // const ref = this.afs.firestore.collection(path)
-    // const query = (queryFn && queryFn(ref as any)) || ref
+    const ref = this.afs.firestore.collection(path)
+    const query = (queryFn && queryFn(ref as any)) || ref
 
-    // // tslint:disable-next-line:no-console
-    // console.log(query)
+    const limit = (query as any)._query.limit
+    const filters = (query as any)._query.filters as ReadonlyArray<
+      RelationFilter
+    >
+    const orderBy = (query as any)._query.explicitOrderBy as ReadonlyArray<
+      OrderBy
+    >
+
+    // tslint:disable-next-line:no-console
+    console.log(filters)
 
     const url = `https://firestore.googleapis.com/v1beta1/projects/${
       (this.afs.firestore.app.options as any).projectId
-    }/databases/(default)/documents/${path}`
-    const auth = this.auth.getCustomFirebaseToken()
+    }/databases/(default)/documents:runQuery`
+
+    const structuredQuery = {
+      limit,
+      from: [{ collectionId: path }],
+      orderBy: mapOrderByCollection(orderBy)
+    }
+
+    const fbToken = this.auth.getCustomFirebaseToken()
     const baseObs =
-      auth !== undefined
-        ? this.http.get(url, { headers: { Authorization: `Bearer ${auth}` } })
-        : this.http.get(url)
+      fbToken !== undefined
+        ? this.http.post(
+            url,
+            { structuredQuery },
+            { headers: { Authorization: `Bearer ${fbToken}` } }
+          )
+        : this.http.post(url, { structuredQuery })
 
     return baseObs.pipe(
-      map((a: FirestoreHttpCollectionResponse) => {
-        return a.documents.map(doc => this.reduceFields(doc.fields) as T)
+      map((docs: ReadonlyArray<HttpResponseDocumentWrapper>) => {
+        return docs.map(doc => this.reduceFields(doc.document.fields) as T)
       }),
       tap(value => this.cache(path.toString(), value))
     )

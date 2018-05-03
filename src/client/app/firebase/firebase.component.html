@@ -25,8 +25,8 @@
 </mat-card>
 
 <mat-card>
-  <h2>Docs (Firebase Firestore)</h2>
-  <form [formGroup]="docsForm" (ngSubmit)="addDoc(docsForm.value)">
+  <h2>Docs (Firestore)</h2>
+  <!-- <form [formGroup]="docsForm" (ngSubmit)="addDoc(docsForm.value)">
     <mat-form-field>
       <input matInput placeholder="title" formControlName="title">
     </mat-form-field>
@@ -37,7 +37,8 @@
       <button mat-raised-button color="primary" type="submit">Save</button>
       <button mat-raised-button color="accent" type="button" (click)="clearDocs()">Delete All</button>
     </div>
-  </form>
+  </form> -->
+  <!-- <p>{{ doc$ | async | json }}</p> -->
   <ul>
     <li *ngFor="let doc of docs$ | async; trackBy: trackByDoc">
       <p>Title: {{ doc.title }}</p>

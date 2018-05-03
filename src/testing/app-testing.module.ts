@@ -115,7 +115,8 @@ import { UniversalFirestoreService } from '../client/app/shared/firebase/firebas
     {
       provide: UniversalFirestoreService,
       useValue: {
-        serverCachedCollectionValueChanges: () => of([])
+        serverCachedCollectionValueChanges: () => of([]),
+        serverCachedDocValueChanges: () => of({})
       }
     }
   ]

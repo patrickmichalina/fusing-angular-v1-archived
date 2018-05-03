@@ -16,7 +16,12 @@ export class FirebaseComponent {
   readonly rtdbObj$ = this.rtdb.serverCachedObjectValueChanges(
     'site-settings/i18n'
   )
-  readonly docs$ = this.fs.serverCachedCollectionValueChanges('docs')
+  readonly doc$ = this.fs.serverCachedDocValueChanges(
+    'docs/1vLiOknyAYYg4ekCWzbU'
+  )
+  readonly docs$ = this.fs.serverCachedCollectionValueChanges('docs', a =>
+    a.limit(5)
+  )
 
   readonly noteForm = new FormGroup({
     note: new FormControl(undefined, [Validators.required])

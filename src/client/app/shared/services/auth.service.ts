@@ -249,15 +249,13 @@ export class AuthService {
   private getMintedCustomTokenForFirebase() {
     return !this.isTokenValid() || !this.afAuth
       ? of(undefined)
-      : this.http
-          .get(`${this.es.config.siteUrl}/api/auth/firebase`)
-          .pipe(
-            flatMap((token: { readonly firebaseToken: string }) =>
-              (this.afAuth as AngularFireAuth).auth.signInWithCustomToken(
-                token.firebaseToken
-              )
+      : this.http.get(`${this.es.config.siteUrl}/api/auth/firebase`).pipe(
+          flatMap((token: { readonly firebaseToken: string }) => {
+            return (this.afAuth as AngularFireAuth).auth.signInWithCustomToken(
+              token.firebaseToken
             )
-          )
+          })
+        )
   }
 
   private setFirebaseSession(token: string) {
