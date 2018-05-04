@@ -13,7 +13,7 @@ import { rollbarInit } from './add-ons/rollbar'
 import { useApi } from './rest-api/index'
 import ms = require('ms')
 
-const shrinkRay = require('shrink-ray')
+const shrinkRay = require('shrink-rayed')
 const minifyHTML = require('express-minify-html')
 const bunyanMiddleware = require('bunyan-middleware')
 const xhr2 = require('xhr2')
