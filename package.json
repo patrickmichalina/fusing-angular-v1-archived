@@ -160,7 +160,7 @@
     "@sendgrid/mail": "6.2.1",
     "angulartics2": "6.0.0",
     "auth0-js": "9.5.1",
-    "body-parser": "1.18.2",
+    "body-parser": "1.18.3",
     "bufferutil": "3.0.5",
     "bunyan-middleware": "0.8.0",
     "chalk": "2.4.1",
