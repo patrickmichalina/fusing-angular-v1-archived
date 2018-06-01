@@ -187,7 +187,7 @@
     "pg": "7.4.2",
     "reflect-metadata": "0.1.12",
     "request": "2.87.0",
-    "rollbar": "2.4.0",
+    "rollbar": "2.4.1",
     "routing-controllers": "0.7.7",
     "rxjs": "6.1.0",
     "rxjs-compat": "6.1.0",
