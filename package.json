@@ -190,7 +190,7 @@
     "rollbar": "2.4.0",
     "routing-controllers": "0.7.7",
     "rxjs": "6.1.0",
-    "rxjs-compat": "6.1.0",
+    "rxjs-compat": "6.2.1",
     "shrink-rayed": "^0.2.0",
     "supertest": "3.1.0",
     "swagger-jsdoc": "1.9.7",
