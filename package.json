@@ -134,7 +134,7 @@
     "svg2png": "4.1.1",
     "ts-jest": "22.4.5",
     "tslint": "5.10.0",
-    "tslint-immutable": "4.5.4",
+    "tslint-immutable": "4.6.0",
     "typescript": "2.7.2",
     "uglify-js": "3.3.23"
   },
