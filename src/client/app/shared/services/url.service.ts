@@ -3,11 +3,11 @@ import { parse } from 'uri-js'
 import { LoggingService } from './logging.service'
 
 export interface IUrlService {
-  // Returns hostname with TLD only
+  // returns hostname with TLD only
   // ex: api.something.com => something.com
   parseBaseDomain(url: string): string
 
-  // Returns hostname with no TLD
+  // returns hostname with no TLD
   // ex: api.something.com => something
   parseRootDomain(url: string): string
 

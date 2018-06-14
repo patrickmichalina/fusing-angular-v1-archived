@@ -55,7 +55,7 @@ export class NotesController {
       .find({
         // take: params.take,
         // skip: params.page,
-        // join: TODO params.expand
+        // TODO: params.expand
         select: params.select && params.select.split(',')
       })
       .then(res => {
