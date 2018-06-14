@@ -51,7 +51,7 @@ export function rollbarFactory(ts: TransferState, es: EnvironmentService) {
         environment: es.config.env,
         code_version: es.config.revision,
         source_map_enabled: true
-        // person: { // TODO
+        // person: {
         //   // id: user && user.user_id,
         //   // username: user && user.username,
         //   // email: user && user.email
@@ -78,7 +78,7 @@ export const appAuthAccessExpiryTokenKey = 'access-token-expiry'
       }
     }),
     BrowserModule.withServerTransition({ appId: 'pm-app' })
-    // HttpCacheTagModule.forRoot(
+    // httpCacheTagModule.forRoot(
     //   {
     //     provide: CACHE_TAG_CONFIG,
     //     useValue: {

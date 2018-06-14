@@ -41,7 +41,7 @@ export class ServerWebSocketService {
         authValidator(undefined, clientAuthorizationToken)
           .pipe(take(1))
           .subscribe(user => {
-            // TOOD: send this even off to be processed
+            // TODO: send this even off to be processed
           })
       })
     })

@@ -7,7 +7,7 @@ const filter = BUILD_CONFIG.icons.map(a => {
 })
 
 // copies font-awesome
-// TODO: speed up the REGEX!
+// TODO speed up the REGEX!
 Sparky.task(taskName(__filename), () =>
   copy(
     './node_modules/material-design-icons',
