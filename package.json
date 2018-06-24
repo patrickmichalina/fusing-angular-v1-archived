@@ -95,7 +95,7 @@
     "@types/ws": "4.0.2",
     "@types/yargs": "11.0.0",
     "angular-tslint-rules": "1.4.1",
-    "browser-sync": "2.24.4",
+    "browser-sync": "2.24.5",
     "bundlesize": "0.17.0",
     "codelyzer": "4.3.0",
     "concurrently": "3.5.1",
