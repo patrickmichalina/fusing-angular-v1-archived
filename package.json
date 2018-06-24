@@ -158,7 +158,7 @@
     "@nguniversal/common": "6.0.0",
     "@nguniversal/express-engine": "6.0.0",
     "@sendgrid/mail": "6.2.1",
-    "angulartics2": "6.1.0",
+    "angulartics2": "6.1.1",
     "auth0-js": "9.5.1",
     "body-parser": "1.18.3",
     "bufferutil": "3.0.5",
