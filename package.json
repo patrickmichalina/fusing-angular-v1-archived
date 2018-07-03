@@ -161,7 +161,7 @@
     "angulartics2": "6.1.0",
     "auth0-js": "9.5.1",
     "body-parser": "1.18.3",
-    "bufferutil": "3.0.5",
+    "bufferutil": "4.0.0",
     "bunyan-middleware": "0.8.0",
     "chalk": "2.4.1",
     "class-validator": "0.8.5",
