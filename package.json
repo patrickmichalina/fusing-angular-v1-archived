@@ -159,7 +159,7 @@
     "@nguniversal/express-engine": "6.0.0",
     "@sendgrid/mail": "6.2.1",
     "angulartics2": "6.1.0",
-    "auth0-js": "9.5.1",
+    "auth0-js": "9.7.0",
     "body-parser": "1.18.3",
     "bufferutil": "3.0.5",
     "bunyan-middleware": "0.8.0",
