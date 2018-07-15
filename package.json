@@ -167,7 +167,7 @@
     "class-validator": "0.8.5",
     "clean-css": "4.1.11",
     "compressible": "2.0.13",
-    "compression": "1.7.2",
+    "compression": "1.7.3",
     "cookie": "0.3.1",
     "cookie-parser": "1.4.3",
     "core-js": "2.5.7",
