@@ -139,7 +139,7 @@
     "uglify-js": "3.4.0"
   },
   "dependencies": {
-    "@angular-devkit/build-optimizer": "0.6.3",
+    "@angular-devkit/build-optimizer": "0.7.0",
     "@angular/animations": "6.1.0-rc.0",
     "@angular/cdk": "6.3.3",
     "@angular/common": "6.1.0-rc.0",
