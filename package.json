@@ -197,7 +197,7 @@
     "swagger-ui-express": "3.0.9",
     "systemjs": "0.21.3",
     "ts-node": "5.0.1",
-    "tsickle": "0.29.0",
+    "tsickle": "0.32.1",
     "typedi": "0.7.2",
     "typeorm": "0.2.1",
     "typeorm-routing-controllers-extensions": "0.2.0",
