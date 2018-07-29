@@ -204,7 +204,7 @@
     "typeorm-typedi-extensions": "0.2.1",
     "ua-parser-js": "0.7.18",
     "uri-js": "4.2.2",
-    "url-parse": "1.4.1",
+    "url-parse": "1.4.3",
     "utf-8-validate": "4.0.2",
     "uuid": "3.2.1",
     "ws": "5.2.0",
