@@ -196,7 +196,7 @@
     "swagger-jsdoc": "1.9.7",
     "swagger-ui-express": "3.0.9",
     "systemjs": "0.21.3",
-    "ts-node": "5.0.1",
+    "ts-node": "7.0.1",
     "tsickle": "0.29.0",
     "typedi": "0.7.2",
     "typeorm": "0.2.1",
